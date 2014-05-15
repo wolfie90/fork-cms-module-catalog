@@ -30,3 +30,10 @@ Visit the [Fork CMS Documentation](http://www.fork-cms.com/community/documentati
 ## Support
 
 * E-mail: tim@webleads.nl
+
+## Contributions
+
+Feel free to contribute any time. This can be done in the following ways:
+
+* Raise an [issue] (https://github.com/timvanwolfswinkel/catalog/issues)
+* Send a Pull Request with bug fixes and/or new features
