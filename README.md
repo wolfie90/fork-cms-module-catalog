@@ -14,12 +14,12 @@ Visit the [Fork CMS Documentation](http://www.fork-cms.com/community/documentati
 
 ## Features
 
-* comment on products
-* put products in shopping cart (based on cookies)
-* order products (without paying methods)
-* add products in categories and subcategories
-* add dynamic specifications
-* add images, files and videos to a product
+* Comment on products
+* Put products in shopping cart (based on cookies)
+* Order products (without paying methods)
+* Add products in categories and subcategories
+* Add dynamic specifications
+* Add images, files and videos to a product
 
 ## Improvements
 
