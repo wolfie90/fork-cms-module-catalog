@@ -276,7 +276,7 @@ class CatalogInstaller extends ModuleInstaller
 						'specification_id' => $specificationId,
 						'value' => 'UN32F5500'
 			));
-			
+
 			// insert sample image 1
 			$db->insert('catalog_images', array(
 						'product_id' => $productId,

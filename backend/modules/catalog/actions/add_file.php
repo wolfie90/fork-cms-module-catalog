@@ -13,7 +13,15 @@
  */
 class BackendCatalogAddFile extends BackendBaseActionAdd
 {
-	/**
+    /**
+     * The allowed file extensions
+     *
+     * @var	array
+     *
+     */
+    private $allowedExtensions = array('pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pps', 'ppsx', 'zip');
+
+    /**
 	 * The product record
 	 *
 	 * @var	array
@@ -58,6 +66,7 @@ class BackendCatalogAddFile extends BackendBaseActionAdd
 		$this->frm = new BackendForm('addFile');
 		$this->frm->addText('title');
 		$this->frm->addFile('file');
+        $this->frm->getField('file')->setAttribute('extension', implode(', ', $this->allowedExtensions));
 	}
 
 	/**
@@ -85,7 +94,14 @@ class BackendCatalogAddFile extends BackendBaseActionAdd
             
 			$this->frm->getField('title')->isFilled(BL::err('NameIsRequired'));
 			$file->isFilled(BL::err('FieldIsRequired'));
-			            
+
+            // validate the file
+            if($this->frm->getField('file')->isFilled())
+            {
+                // file extension
+                $this->frm->getField('file')->isAllowedExtension($this->allowedExtensions, BL::err('FileExtensionNotAllowed'));
+            }
+
 			// no errors?
 			if($this->frm->isCorrect())
 			{

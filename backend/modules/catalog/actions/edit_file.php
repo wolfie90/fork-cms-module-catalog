@@ -14,7 +14,15 @@
  */
 class BackendCatalogEditFile extends BackendBaseActionEdit
 {
-	/**
+    /**
+     * The allowed file extensions
+     *
+     * @var	array
+     *
+     */
+    private $allowedExtensions = array('pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pps', 'ppsx', 'zip');
+
+    /**
 	 * Execute the action
 	 */
 	public function execute()
@@ -45,6 +53,7 @@ class BackendCatalogEditFile extends BackendBaseActionEdit
 		$this->file = BackendCatalogModel::getFile($this->getParameter('id', 'int'));
 		$this->file['data'] = unserialize($this->record['data']);
 		$this->file['link'] = $this->record['data']['link'];
+
 	}
 
 	/**
@@ -55,6 +64,7 @@ class BackendCatalogEditFile extends BackendBaseActionEdit
 		$this->frm = new BackendForm('editFile');
 		$this->frm->addText('title', $this->file['title']);
 		$this->frm->addFile('file');
+        $this->frm->getField('file')->setAttribute('extension', implode(', ', $this->allowedExtensions));
 	}
 
 	/**
@@ -84,8 +94,15 @@ class BackendCatalogEditFile extends BackendBaseActionEdit
 
 			$this->frm->getField('title')->isFilled(BL::err('NameIsRequired'));
 			if($this->file['filename'] === null) $file->isFilled(BL::err('FieldIsRequired'));
-                        
-			// no errors?
+
+            // validate the file
+            if($this->frm->getField('file')->isFilled())
+            {
+                // file extension
+                $this->frm->getField('file')->isAllowedExtension($this->allowedExtensions, BL::err('FileExtensionNotAllowed'));
+            }
+
+            // no errors?
 			if($this->frm->isCorrect())
 			{
 				// build image record to insert

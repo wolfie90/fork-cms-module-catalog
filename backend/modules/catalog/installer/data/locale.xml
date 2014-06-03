@@ -326,6 +326,10 @@
 				<translation language="nl"><![CDATA[Weet je zeker dat je de specificatie "%1$s" wilt verwijderen?]]></translation>
 				<translation language="en"><![CDATA[Are you sure you want to remove the specification "%1$s"?]]></translation>
 			</item>
+            <item type="error" name="FileExtensionNotAllowed">
+                <translation language="nl"><![CDATA[De extensie die u wilt uploaden is niet toegestaan.]]></translation>
+                <translation language="en"><![CDATA[The extension you are trying to upload is not allowed.]]></translation>
+            </item>
 		</catalog>
 		<core>
 			<item type="label" name="Catalog">
