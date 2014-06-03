@@ -23,6 +23,20 @@ class BackendCatalogEditFile extends BackendBaseActionEdit
     private $allowedExtensions = array('pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pps', 'ppsx', 'zip');
 
     /**
+     * The product
+     *
+     * @var	array
+     */
+    private $product;
+
+    /**
+     * The file of a product
+     *
+     * @var	array
+     */
+    private $file;
+
+    /**
 	 * Execute the action
 	 */
 	public function execute()
@@ -131,7 +145,7 @@ class BackendCatalogEditFile extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_file', array('item' => $item));
 								
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('media') . '&product_id=' . $this->product['id'] . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id'] . '#tabFiles');
+				$this->redirect(BackendModel::createURLForAction('media') . '&product_id=' . $this->product['id'] . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id . '#tabFiles');
 			}
 		}
 	}

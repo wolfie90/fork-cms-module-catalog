@@ -19,7 +19,21 @@ class FrontendCatalogIndex extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $products, $categories, $categoriesTree;
+	private $products;
+
+    /**
+     * All categories in flat view
+     *
+     * @var	array
+     */
+    private $categories;
+
+    /**
+     * All categories in tree view
+     *
+     * @var	array
+     */
+    private $categoriesTree;
 
 	/**
 	 * The pagination array

@@ -14,7 +14,14 @@
  */
 class BackendCatalogAddVideo extends BackendBaseActionAdd
 {
-	/**
+    /**
+     * The product id
+     *
+     * @var	int
+     */
+    private $id;
+
+    /**
 	 * The product record
 	 *
 	 * @var	array

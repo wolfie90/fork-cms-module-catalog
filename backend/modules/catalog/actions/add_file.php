@@ -14,6 +14,13 @@
 class BackendCatalogAddFile extends BackendBaseActionAdd
 {
     /**
+     * The product id
+     *
+     * @var	int
+     */
+    private $id;
+
+    /**
      * The allowed file extensions
      *
      * @var	array

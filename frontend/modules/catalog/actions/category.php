@@ -19,9 +19,32 @@ class FrontendCatalogCategory extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $record, $products, $subcategories, $subcategoriesTree;
+	private $record;
+
+    /**
+     * All products within the category
+     *
+     * @var	array
+     */
+    private $products;
+
+    /**
+     * All subcategories in flat view
+     *
+     * @var	array
+     */
+    private $subcategories;
+
+    /**
+     * All subcategories in tree view
+     *
+     * @var	array
+     */
+    private $subcategoriesTree;
 	
 	/**
+     * URL parameters
+     *
 	 * @var	array
 	 */
 	private $parameters;

@@ -15,7 +15,21 @@
  */
 class BackendCatalogEditImage extends BackendBaseActionEdit
 {
-	/**
+    /**
+     * The product
+     *
+     * @var	array
+     */
+    private $product;
+
+    /**
+     * The image of a product
+     *
+     * @var	array
+     */
+    private $image;
+
+    /**
 	 * Execute the action
 	 */
 	public function execute()
@@ -118,7 +132,7 @@ class BackendCatalogEditImage extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_image', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('media') . '&product_id=' . $this->product['id'] . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+				$this->redirect(BackendModel::createURLForAction('media') . '&product_id=' . $this->product['id'] . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
 			}
 		}
 	}

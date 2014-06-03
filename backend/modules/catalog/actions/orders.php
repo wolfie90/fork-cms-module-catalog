@@ -19,7 +19,7 @@ class BackendCatalogOrders extends BackendBaseActionIndex
 	 *
 	 * @var	BackendDataGridDB
 	 */
-	private $dgModeration, $dgComplete;
+	private $dgModeration, $dgCompleted;
 
 	/**
 	 * Add productdata into the order

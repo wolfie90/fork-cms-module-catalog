@@ -14,7 +14,21 @@
  */
 class BackendCatalogEditVideo extends BackendBaseActionEdit
 {
-	/**
+    /**
+     * The product
+     *
+     * @var	array
+     */
+    private $product;
+
+    /**
+     * The video of a product
+     *
+     * @var	array
+     */
+    private $video;
+
+    /**
 	 * Execute the action
 	 */
 	public function execute()

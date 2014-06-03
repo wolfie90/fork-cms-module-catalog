@@ -15,12 +15,19 @@
  */
 class BackendCatalogMedia extends BackendBaseActionIndex
 {
-	/**
+    /**
+     * The product id
+     *
+     * @var	int
+     */
+    private $id;
+
+    /**
 	 * The project record
 	 *
 	 * @var	array
 	 */
-	private $product = array();
+	private $product;
     
 	/**
 	 * Datagrid with published items

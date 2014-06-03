@@ -14,7 +14,14 @@
  */
 class BackendCatalogSpecifications extends BackendBaseAction
 {
-	/**
+    /**
+     * DataGrid
+     *
+     * @var	BackendDataGridDB
+     */
+    private $dataGrid;
+
+    /**
 	 * Execute the action
 	 */
 	public function execute()

@@ -52,7 +52,7 @@ class BackendCatalogEditOrder extends BackendBaseActionEdit
 		// get the record
 		$this->record = (array) BackendCatalogModel::getOrder($this->id);
         
-		// datagrid for the products within an order
+		// dataGrid for the products within an order
 		$this->dgProducts = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_PRODUCTS_ORDER, array($this->id));
 
 		// hide columns

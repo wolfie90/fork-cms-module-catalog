@@ -19,9 +19,58 @@ class FrontendCatalogDetail extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $record, $specifications, $comments, $settings, $relatedProducts, $videos, $files;
+	private $record;
 
-	/**
+    /**
+     * The specifications of a product
+     *
+     * @var	array
+     */
+    private $specifications;
+
+    /**
+     * The comments of a product
+     *
+     * @var	array
+     */
+    private $comments;
+
+    /**
+     * Module settings
+     *
+     * @var	array
+     */
+    private $settings;
+
+    /**
+     * The related products
+     *
+     * @var	array
+     */
+    private $relatedProducts;
+
+    /**
+     * Videos from a product
+     *
+     * @var	array
+     */
+    private $videos;
+
+    /**
+     * Files from a product
+     *
+     * @var	array
+     */
+    private $files;
+
+    /**
+     * Images from a product
+     *
+     * @var	array
+     */
+    private $images;
+
+    /**
 	 * Execute the action
 	 */
 	public function execute()

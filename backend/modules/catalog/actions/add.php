@@ -13,8 +13,36 @@
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
 class BackendCatalogAdd extends BackendBaseActionAdd
-{			
-	/**
+{
+    /**
+     * The product id
+     *
+     * @var	int
+     */
+    private $id;
+
+    /**
+     * All categories
+     *
+     * @var	array
+     */
+    private $categories;
+
+    /**
+     * Products grouped by categories
+     *
+     * @var	array
+     */
+    private $allProductsGroupedByCategories;
+
+    /**
+     * All specifications
+     *
+     * @var	array
+     */
+    private $specifications;
+
+    /**
 	 * Execute the actions
 	 */
 	public function execute()

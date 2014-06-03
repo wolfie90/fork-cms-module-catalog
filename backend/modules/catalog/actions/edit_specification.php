@@ -14,7 +14,21 @@
  */
 class BackendCatalogEditSpecification extends BackendBaseActionAdd
 {
-	/**
+    /**
+     * The specification id
+     *
+     * @var	array
+     */
+    private $id;
+
+    /**
+     * The specification record
+     *
+     * @var	array
+     */
+    private $record;
+
+    /**
 	 * Execute the action
 	 */
 	public function execute()

@@ -14,7 +14,42 @@
  */
 class BackendCatalogEdit extends BackendBaseActionEdit
 {
-	/**
+    /**
+     * All categories
+     *
+     * @var	array
+     */
+    private $categories;
+
+    /**
+     * Products grouped by categories
+     *
+     * @var	array
+     */
+    private $allProductsGroupedByCategories;
+
+    /**
+     * All specifications
+     *
+     * @var	array
+     */
+    private $specifications;
+
+    /**
+     * All products
+     *
+     * @var	array
+     */
+    private $products;
+
+    /**
+     * All related products
+     *
+     * @var	array
+     */
+    private $relatedProducts;
+
+    /**
 	 * Execute the action
 	 */
 	public function execute()
