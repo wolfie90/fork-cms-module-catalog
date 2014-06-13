@@ -1479,24 +1479,24 @@ class BackendCatalogModel
 			foreach($languages as $language) BackendModel::invalidateFrontendCache('catalog', $language);
 		}
 	}
-	
-	/**
-	 * Update a certain specification
-	 *
-	 * @param int $id
-	 * @param array $item 
-	 */
-	public static function updateSpecification($item)
-	{
-		BackendModel::getContainer()->get('database')->update('catalog_specifications', $item, 'id = ?', array($item['id']));
-	}
-	
+
+    /**
+     * Update a certain specification
+     *
+     * @param int $id
+     * @param array $item
+     */
+    public static function updateSpecification($id, $item)
+    {
+        BackendModel::getContainer()->get('database')->update('catalog_specifications', $item, 'id = ?', array($id));
+    }
+
 	/**
 	 * Update value of a certain specification
 	 *
 	 * @param int $specificationId
 	 * @param int $productId
-	 * @param array $item 
+	 * @param array $item
 	 */
 	public static function updateSpecificationValue($specificationId, $productId, $item)
 	{
