@@ -28,6 +28,7 @@ NOTE: The .zip file is too large to upload within the cms itself (because of exa
 * Need to add other [languages than Dutch and English] (http://www.fork-cms.com/community/documentation/detail/module-guide/translations-or-locale)
 * Add paying methods
 * Add social media buttons
+* Product rating system
 
 ## Support
 
