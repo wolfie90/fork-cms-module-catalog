@@ -29,6 +29,8 @@ NOTE: The .zip file is too large to upload within the cms itself (because of exa
 * Add paying methods
 * Add social media buttons
 * Product rating system
+* Add filtering options
+* Connect profile module (login customers)
 
 ## Support
 
