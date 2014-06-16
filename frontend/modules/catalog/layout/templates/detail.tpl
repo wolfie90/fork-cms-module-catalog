@@ -67,10 +67,9 @@
 	{/option:files}
 	
 	<div class="addProductToShoppingCart">
-			<p><b>{$lblAmount|ucfirst}:</b>
+		<p><b>{$lblAmount|ucfirst}:</b>
 			
-			<select id="productAmount{$item.id}">
-          <option value="0">0</option>
+        <select id="productAmount{$item.id}">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -81,9 +80,9 @@
           <option value="8">8</option>
           <option value="9">9</option>
           <option value="10">10</option>
-       </select>
+        </select>
 			
-			<a href="#" id="{$item.id}">{$lblAddProductToShoppingCart|ucfirst}</a></p>
+		<a href="#" id="{$item.id}">{$lblAddProductToShoppingCart|ucfirst}</a></p>
 	</div>
 	
 	{* Product specifications *}
@@ -112,7 +111,6 @@
 					<p><b>{$lblAmount|ucfirst}:</b>
 						
 					<select id="productAmount{$related.id}">
-							<option value="0">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>

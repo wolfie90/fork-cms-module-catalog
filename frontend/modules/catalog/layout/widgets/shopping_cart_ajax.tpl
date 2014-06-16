@@ -21,9 +21,9 @@
 								<td><a href="{$productsInShoppingCart.full_url}">{$productsInShoppingCart.title}</a></td>
 								<td>{$productsInShoppingCart.amount}</td>
 								<td>{$productsInShoppingCart.subtotal_price|formatcurrency}</td>
-		<td data-title="{$lblDelete|ucfirst}">
-		    <div class="removeProductFromShoppingCart"><a href="#" id="{$productsInShoppingCart.product_id}">{$lblDelete|ucfirst}</a></div>
-		</td>
+                                <td data-title="{$lblDelete|ucfirst}">
+                                    <div class="removeProductFromShoppingCart"><a href="#" id="{$productsInShoppingCart.product_id}">{$lblDelete|ucfirst}</a></div>
+                                </td>
 						</tr>
 						{/iteration:productsInShoppingCart}
 						<tr>
