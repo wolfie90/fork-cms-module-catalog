@@ -95,8 +95,8 @@ class BackendCatalogAdd extends BackendBaseActionAdd
 		$this->frm->addCheckbox('allow_comments', true);
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDropdown('related_products', $this->allProductsGroupedByCategories, null, true);
-		
-		$this->frm->addDropdown('category_id', $this->categories, null);
+
+		$this->frm->addDropdown('category_id', $this->categories, SpoonFilter::getGetValue('category', null, null, 'int'));
 		
 		$specificationsHTML = array();
 		
@@ -153,7 +153,8 @@ class BackendCatalogAdd extends BackendBaseActionAdd
 			// required fields
 			$fields['title']->isFilled(BL::err('FieldIsRequired'));
 			$fields['summary']->isFilled(BL::err('FieldIsRequired'));
-			if($this->id == null) $fields['category_id']->isFilled(BL::err('FieldIsRequired'));
+			$fields['category_id']->isFilled(BL::err('FieldIsRequired'));
+			if($fields['category_id']->getValue() == 'no_category') $fields['category_id']->addError(BL::err('FieldIsRequired'));
 			
 			// validate meta
 			$this->meta->validate();

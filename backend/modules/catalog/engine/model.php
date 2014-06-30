@@ -549,7 +549,7 @@ class BackendCatalogModel
 			$tree = array();
 			
 			$categoryTree = self::buildTree($tree, $allCategories);
-			$categoryTree = array('0' => ucfirst(BL::lbl('None'))) + $categoryTree;
+			$categoryTree = array('no_category' => ucfirst(BL::getLabel('None'))) + $categoryTree;
 			
 			return $categoryTree;
 		}		
