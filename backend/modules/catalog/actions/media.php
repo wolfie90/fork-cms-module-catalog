@@ -87,8 +87,7 @@ class BackendCatalogMedia extends BackendBaseActionIndex
 	  $this->dgImages->setColumnsSequence('dragAndDropHandle');
       $this->dgImages->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
 	  	  
-	  $this->dgImages->setRowAttributes(array('data-id' => '[id]'));	
-	  $this->dgImages->setSortingColumns(array('title', 'sequence'), 'sequence');
+	  $this->dgImages->setRowAttributes(array('data-id' => '[id]'));
       $this->dgImages->setSortParameter('asc');
 	  $this->dgImages->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_image') . '&amp;id=[id]&amp;product_id=[product_id]', BL::lbl('Edit'));
       
@@ -100,6 +99,8 @@ class BackendCatalogMedia extends BackendBaseActionIndex
 	  $ddmMassAction = new SpoonFormDropdown('action', array('deleteImages' => BL::lbl('Delete')), 'deleteImages');
       $this->dgImages->setMassAction($ddmMassAction);
 	  $this->dgImages->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
+
+	  $this->dgImages->setAttributes(array('data-action' => "sequence_media_images"));
     }
 
 	/**

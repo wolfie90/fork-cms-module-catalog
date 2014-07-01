@@ -122,7 +122,7 @@ class CatalogInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'catalog', 'add_image');
 		$this->setActionRights(1, 'catalog', 'edit_image');
 		$this->setActionRights(1, 'catalog', 'delete_image');
-		//$this->setActionRights(1, 'catalog', 'sequence_images');
+		$this->setActionRights(1, 'catalog', 'sequence_media_images');
 		
 		// files
 		$this->setActionRights(1, 'catalog', 'add_file');
