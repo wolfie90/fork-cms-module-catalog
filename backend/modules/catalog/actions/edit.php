@@ -171,6 +171,7 @@ class BackendCatalogEdit extends BackendBaseActionEdit
 			$fields['title']->isFilled(BL::err('FieldIsRequired'));
 			$fields['summary']->isFilled(BL::err('FieldIsRequired'));
 			$fields['category_id']->isFilled(BL::err('FieldIsRequired'));
+			if($fields['category_id']->getValue() == 'no_category') $fields['category_id']->addError(BL::err('FieldIsRequired'));
 
 			// validate meta
 			$this->meta->validate();

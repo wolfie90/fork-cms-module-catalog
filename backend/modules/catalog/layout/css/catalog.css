@@ -39,9 +39,16 @@
 }
 
 .relatedProducts select{
-  height: 250px; 
+  height: 250px;
+  width: 100%;
 }
 
 .specificationInput input {
   margin-left: 20px;
+}
+
+/* Products */
+
+#catalog.catalogAddEdit #categoryId {
+	width: 170px;
 }

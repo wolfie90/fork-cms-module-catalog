@@ -84,7 +84,7 @@
 								<label for="price">{$lblPrice|ucfirst}</label>
 								{$txtPrice} {$txtPriceError}
 							</div>
-							<div class="options horizontal">
+							<div class="options">
 								<label for="categoryId">{$lblCategory|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 								{$ddmCategoryId} {$ddmCategoryIdError}
 							</div>
