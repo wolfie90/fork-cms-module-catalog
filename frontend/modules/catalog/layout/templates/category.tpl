@@ -17,21 +17,7 @@
 		<div class="price"><p>{$lblPrice|ucfirst}: {$products.price|formatcurrency}</p></div>
 		<div class="summary"><p>{$products.summary}</p></div>
 		<div class="addProductToShoppingCart">
-		<p>{$lblAmount|ucfirst}:
-			<select id="productAmount{$products.id}">
-			   <option value="1">1</option>
-			   <option value="2">2</option>
-			   <option value="3">3</option>
-			   <option value="4">4</option>
-			   <option value="5">5</option>
-			   <option value="6">6</option>
-			   <option value="7">7</option>
-			   <option value="8">8</option>
-			   <option value="9">9</option>
-			   <option value="10">10</option>
-			</select>
-			<a href="#" id="{$products.id}">{$lblAddProductToShoppingCart|ucfirst}</a>
-		</p>
+			<p><a href="#" id="{$products.id}">{$lblAddProductToShoppingCart|ucfirst}</a></p>
 		</div>
 		<hr>
 	{/iteration:products}

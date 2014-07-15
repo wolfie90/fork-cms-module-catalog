@@ -67,22 +67,7 @@
 	{/option:files}
 	
 	<div class="addProductToShoppingCart">
-		<p><b>{$lblAmount|ucfirst}:</b>
-			
-        <select id="productAmount{$item.id}">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
-			
-		<a href="#" id="{$item.id}">{$lblAddProductToShoppingCart|ucfirst}</a></p>
+		<p><a href="#" id="{$item.id}">{$lblAddProductToShoppingCart|ucfirst}</a></p>
 	</div>
 	
 	{* Product specifications *}
@@ -108,22 +93,7 @@
 				<div class="price"><p><b>{$lblPrice|ucfirst}:</b> {$related.price|formatcurrency}</p></div>
 				<div class="category"><p><b>{$lblCategory|ucfirst}:</b> <a href="{$item.category_full_url}">{$item.category_title}</a></p></div>
 				<div class="addProductToShoppingCart">
-					<p><b>{$lblAmount|ucfirst}:</b>
-						
-					<select id="productAmount{$related.id}">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-					 </select>
-						
-						<a href="#" id="{$related.id}">{$lblAddProductToShoppingCart}</a></p>
+					<p><a href="#" id="{$related.id}">{$lblAddProductToShoppingCart}</a></p>
 				</div>
 			</div>
 			{/iteration:related}

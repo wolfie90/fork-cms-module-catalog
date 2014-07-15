@@ -39,20 +39,7 @@ class FrontendCatalogAjaxSaveShoppingCart extends FrontendBaseAJAXAction
 		
 		// check if cookies are enabled
 		$cookiesEnabled = CommonCookie::set('enabled', 'true');
-		$cookieExists = CommonCookie::exists('enabled');
-		
-		// enabled
-		//if ($cookieExists == true)
-		//{
-		//	die(print_r('cookies aan!'));
-		//}
-		//
-		//// disabled
-		//else
-		//{
-		//	die(print_r('cookies uit!'));
-		//}
-		
+		$cookieExists = CommonCookie::exists('enabled');		
 		
 		// check if cookies are set, when true update the order
 		if(isset($cookieOrderId) && FrontendCatalogModel::existsOrder($cookieOrderId) == true)

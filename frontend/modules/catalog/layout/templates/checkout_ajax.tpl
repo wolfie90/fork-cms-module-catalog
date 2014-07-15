@@ -21,7 +21,12 @@
             {iteration:productsInShoppingCart}
             <tr>
                 <td><a href="{$productsInShoppingCart.full_url}">{$productsInShoppingCart.title}</a></td>
-                <td>{$productsInShoppingCart.amount}</td>
+                <td>
+                    <div class="editProductAmountInCheckout">
+                        <input type="text" name="amountOfProducts" id="inputAmountOfProducts-{$productsInShoppingCart.product_id}" value="{$productsInShoppingCart.amount}">
+                        <p><a href="#" id="{$productsInShoppingCart.product_id}">{$lblRecalculatePrice|ucfirst}</a></p>
+                    </div>
+                </td>
                 <td>{$productsInShoppingCart.price|formatcurrency}</td>
                 <td>{$productsInShoppingCart.subtotal_price|formatcurrency}</td>
                 <td>
