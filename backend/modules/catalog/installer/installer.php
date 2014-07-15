@@ -9,12 +9,17 @@ namespace Backend\Modules\Catalog\Installer;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+ 
+use Backend\Core\Installer\ModuleInstaller;
+ 
 /**
  * Installer for the Catalog module
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class CatalogInstaller extends ModuleInstaller
+class Installer extends ModuleInstaller
 {
 	/**
 	 * @var	int
@@ -60,104 +65,104 @@ class CatalogInstaller extends ModuleInstaller
 	public function install()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/Data/install.sql');
 
 		// add 'catalog' as a module
-		$this->addModule('catalog');
+		$this->addModule('Catalog');
 
 		// import locale
-		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
+		$this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 		
 		// general settings
-		$this->setSetting('catalog', 'allow_comments', true);
-		$this->setSetting('catalog', 'requires_akismet', true);
-		$this->setSetting('catalog', 'spamfilter', false);
-		$this->setSetting('catalog', 'moderation', true);
-		$this->setSetting('catalog', 'overview_num_items', 10);
-		$this->setSetting('catalog', 'recent_products_full_num_items', 3);
-		$this->setSetting('catalog', 'allow_multiple_categories', true);
+		$this->setSetting('Catalog', 'allow_comments', true);
+		$this->setSetting('Catalog', 'requires_akismet', true);
+		$this->setSetting('Catalog', 'spamfilter', false);
+		$this->setSetting('Catalog', 'moderation', true);
+		$this->setSetting('Catalog', 'overview_num_items', 10);
+		$this->setSetting('Catalog', 'recent_products_full_num_items', 3);
+		$this->setSetting('Catalog', 'allow_multiple_categories', true);
 		
-		$this->setSetting('catalog', 'width1', (int)400);
-		$this->setSetting('catalog', 'height1', (int)300);
-		$this->setSetting('catalog', 'allow_enlargment1', true);
-		$this->setSetting('catalog', 'force_aspect_ratio1', true);
+		$this->setSetting('Catalog', 'width1', (int)400);
+		$this->setSetting('Catalog', 'height1', (int)300);
+		$this->setSetting('Catalog', 'allow_enlargment1', true);
+		$this->setSetting('Catalog', 'force_aspect_ratio1', true);
 		
-		$this->setSetting('catalog', 'width2', (int)800);
-		$this->setSetting('catalog', 'height2', (int)600);
-		$this->setSetting('catalog', 'allow_enlargment2', true);
-		$this->setSetting('catalog', 'force_aspect_ratio2', true);
+		$this->setSetting('Catalog', 'width2', (int)800);
+		$this->setSetting('Catalog', 'height2', (int)600);
+		$this->setSetting('Catalog', 'allow_enlargment2', true);
+		$this->setSetting('Catalog', 'force_aspect_ratio2', true);
 		
-		$this->setSetting('catalog', 'width3', (int)1600);
-		$this->setSetting('catalog', 'height3', (int)1200);
-		$this->setSetting('catalog', 'allow_enlargment3', true);
-		$this->setSetting('catalog', 'force_aspect_ratio3', true);
+		$this->setSetting('Catalog', 'width3', (int)1600);
+		$this->setSetting('Catalog', 'height3', (int)1200);
+		$this->setSetting('Catalog', 'allow_enlargment3', true);
+		$this->setSetting('Catalog', 'force_aspect_ratio3', true);
 		
-		$this->makeSearchable('catalog');
+		$this->makeSearchable('Catalog');
 		
 		// module rights
-		$this->setModuleRights(1, 'catalog');
+		$this->setModuleRights(1, 'Catalog');
 		
 		// products and index
-		$this->setActionRights(1, 'catalog', 'index');
-		$this->setActionRights(1, 'catalog', 'add');
-		$this->setActionRights(1, 'catalog', 'edit');
-		$this->setActionRights(1, 'catalog', 'delete');
+		$this->setActionRights(1, 'Catalog', 'Index');
+		$this->setActionRights(1, 'Catalog', 'Add');
+		$this->setActionRights(1, 'Catalog', 'Edit');
+		$this->setActionRights(1, 'Catalog', 'Delete');
 		
 		// categories
-		$this->setActionRights(1, 'catalog', 'categories');
-		$this->setActionRights(1, 'catalog', 'add_category');
-		$this->setActionRights(1, 'catalog', 'edit_category');
-		$this->setActionRights(1, 'catalog', 'delete_category');
-		$this->setActionRights(1, 'catalog', 'sequence_categories');
+		$this->setActionRights(1, 'Catalog', 'Categories');
+		$this->setActionRights(1, 'Catalog', 'AddCategory');
+		$this->setActionRights(1, 'Catalog', 'EditCategory');
+		$this->setActionRights(1, 'Catalog', 'DeleteCategory');
+		$this->setActionRights(1, 'Catalog', 'SequenceCategories');
 		
 		// specifications
-		$this->setActionRights(1, 'catalog', 'specifications');
-		$this->setActionRights(1, 'catalog', 'edit_specification');
-		$this->setActionRights(1, 'catalog', 'delete_specification');
-		$this->setActionRights(1, 'catalog', 'sequence_specifications');
+		$this->setActionRights(1, 'Catalog', 'Specifications');
+		$this->setActionRights(1, 'Catalog', 'EditSpecification');
+		$this->setActionRights(1, 'Catalog', 'DeleteSpecification');
+		$this->setActionRights(1, 'Catalog', 'SequenceSpecifications');
 		
 		// media
-		$this->setActionRights(1, 'catalog', 'mass_media_action');
-		$this->setActionRights(1, 'catalog', 'media');
+		$this->setActionRights(1, 'Catalog', 'MassMediaAction');
+		$this->setActionRights(1, 'Catalog', 'Media');
 		
 		// images
-		$this->setActionRights(1, 'catalog', 'add_image');
-		$this->setActionRights(1, 'catalog', 'edit_image');
-		$this->setActionRights(1, 'catalog', 'delete_image');
-		$this->setActionRights(1, 'catalog', 'sequence_media_images');
+		$this->setActionRights(1, 'Catalog', 'AddImage');
+		$this->setActionRights(1, 'Catalog', 'EditImage');
+		$this->setActionRights(1, 'Catalog', 'DeleteImage');
+		$this->setActionRights(1, 'Catalog', 'SequenceMediaImages');
 		
 		// files
-		$this->setActionRights(1, 'catalog', 'add_file');
-		$this->setActionRights(1, 'catalog', 'edit_file');
-		$this->setActionRights(1, 'catalog', 'delete_file');
-		//$this->setActionRights(1, 'catalog', 'sequence_files');
+		$this->setActionRights(1, 'Catalog', 'AddFile');
+		$this->setActionRights(1, 'Catalog', 'EditFile');
+		$this->setActionRights(1, 'Catalog', 'DeleteFile');
+		//$this->setActionRights(1, 'Catalog', 'SequenceFiles');
 		
 		// videos
-		$this->setActionRights(1, 'catalog', 'add_video');
-		$this->setActionRights(1, 'catalog', 'edit_video');
-		$this->setActionRights(1, 'catalog', 'delete_video');
-		//$this->setActionRights(1, 'catalog', 'sequence_videos');
+		$this->setActionRights(1, 'Catalog', 'AddVideo');
+		$this->setActionRights(1, 'Catalog', 'EditVideo');
+		$this->setActionRights(1, 'Catalog', 'DeleteVideo');
+		//$this->setActionRights(1, 'Catalog', 'SequenceVideos');
 				
 		// comments
-		$this->setActionRights(1, 'catalog', 'comments');
-		$this->setActionRights(1, 'catalog', 'edit_comment');
-		$this->setActionRights(1, 'catalog', 'delete_spam');
-		$this->setActionRights(1, 'catalog', 'mass_comment_action');
+		$this->setActionRights(1, 'Catalog', 'Comments');
+		$this->setActionRights(1, 'Catalog', 'EditComment');
+		$this->setActionRights(1, 'Catalog', 'DeleteSpam');
+		$this->setActionRights(1, 'Catalog', 'MassCommentAction');
 		
 		// orders
-		$this->setActionRights(1, 'catalog', 'orders');
-		$this->setActionRights(1, 'catalog', 'edit_order');
-		$this->setActionRights(1, 'catalog', 'delete_completed');
-		$this->setActionRights(1, 'catalog', 'mass_order_action');
+		$this->setActionRights(1, 'Catalog', 'Orders');
+		$this->setActionRights(1, 'Catalog', 'EditOrder');
+		$this->setActionRights(1, 'Catalog', 'DeleteCompleted');
+		$this->setActionRights(1, 'Catalog', 'MassOrderAction');
 		
 		// settings
-		$this->setActionRights(1, 'catalog', 'settings');
+		$this->setActionRights(1, 'Catalog', 'Settings');
 		
 		// add extra's
-		$catalogId = $this->insertExtra('catalog', 'block', 'Catalog', null, null, 'N', 1000);
-		$this->insertExtra('catalog', 'widget', 'Categories', 'categories', null, 'N', 1004);
-		$this->insertExtra('catalog', 'widget', 'ShoppingCart', 'shopping_cart', null, 'N', 1005);
-		$this->insertExtra('catalog', 'widget', 'RecentProducts', 'recent_products', null, 'N', 1006);
+		$catalogId = $this->insertExtra('Catalog', 'block', 'Catalog', null, null, 'N', 1000);
+		$this->insertExtra('Catalog', 'widget', 'Categories', 'Categories', null, 'N', 1004);
+		$this->insertExtra('Catalog', 'widget', 'ShoppingCart', 'ShoppingCart', null, 'N', 1005);
+		$this->insertExtra('Catalog', 'widget', 'RecentProducts', 'RecentProducts', null, 'N', 1006);
 		
 		foreach($this->getLanguages() as $language)
 		{
@@ -184,8 +189,7 @@ class CatalogInstaller extends ModuleInstaller
 										null,
 										array('extra_id' => $catalogId));
 			}
-		
-
+			
 			$this->installExampleData($language);
 		}
 		
@@ -224,27 +228,27 @@ class CatalogInstaller extends ModuleInstaller
 		{	
 			// insert sample product
 			$productId = $db->insert( 'catalog_products', array(
-									'category_id' => $this->defaultCategoryId,
-									'meta_id' => $this->insertMeta('Samsung', 'Samsung', 'Samsung', 'samsung'),
-									'language' => $language,
-									'title' => 'Samsung UN32F5500',
-									'summary' => '	Discover More of the TV You Love with the New Samsung Smart TV
-													Get Content Recommendations While Watching TV
-													Connect to Your Network Wirelessly with Built-in Wi-Fi
-													Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-													Donec arcu tellus, luctus at aliquam eu, viverra et turpis.
-													Curabitur sed purus nisl. Phasellus non justo auctor,
-													tincidunt mauris ac, placerat sem. Proin mattis metus bibendum vulputate aliquam.
-													Curabitur lacus est, lobortis ultrices erat ac, scelerisque fermentum lacus.
-													Nam eu ipsum ipsum. Mauris lorem sapien, mollis at interdum a, eleifend vitae metus.
-													Duis luctus felis et feugiat adipiscing. Proin vestibulum risus eu dapibus tincidunt.
-													Etiam porttitor faucibus viverra.',
-									'text' => ' This is the main text of the product.',				
-									'created_on' => gmdate('Y-m-d H:i:00'),
-									'price' => '399',
-									'allow_comments' => 'Y',
-									'num_comments' => '0',
-									'sequence' => 1				
+				'category_id' => $this->defaultCategoryId,
+				'meta_id' => $this->insertMeta('Samsung', 'Samsung', 'Samsung', 'samsung'),
+				'language' => $language,
+				'title' => 'Samsung UN32F5500',
+				'summary' => '	Discover More of the TV You Love with the New Samsung Smart TV
+						Get Content Recommendations While Watching TV
+						Connect to Your Network Wirelessly with Built-in Wi-Fi
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						Donec arcu tellus, luctus at aliquam eu, viverra et turpis.
+						Curabitur sed purus nisl. Phasellus non justo auctor,
+						tincidunt mauris ac, placerat sem. Proin mattis metus bibendum vulputate aliquam.
+						Curabitur lacus est, lobortis ultrices erat ac, scelerisque fermentum lacus.
+						Nam eu ipsum ipsum. Mauris lorem sapien, mollis at interdum a, eleifend vitae metus.
+						Duis luctus felis et feugiat adipiscing. Proin vestibulum risus eu dapibus tincidunt.
+						Etiam porttitor faucibus viverra.',
+				'text' => ' This is the main text of the product.',				
+				'created_on' => gmdate('Y-m-d H:i:00'),
+				'price' => '399',
+				'allow_comments' => 'Y',
+				'num_comments' => '0',
+				'sequence' => 1				
 			));
 			
 			// insert sample specification 1
@@ -328,8 +332,9 @@ class CatalogInstaller extends ModuleInstaller
 			));
 			
 			// copy images into files path
-			SpoonDirectory::create(PATH_WWW . '/frontend/files/catalog/');
-			SpoonDirectory::copy(PATH_WWW . '/backend/modules/catalog/installer/data/images', PATH_WWW . '/frontend/files/catalog/' . $productId);
+			$fs = new Filesystem();
+			if(!$fs->exists(PATH_WWW . '/src/Frontend/Files/Catalog/')) $fs->mkdir(PATH_WWW . '/src/Frontend/Files/Catalog/');
+			$fs->symlink(PATH_WWW . '/src/Backend/Modules/Catalog/Installer/Data/Images/', PATH_WWW . '/src/Frontend/Files/Catalog/test' . $productId, true);
 		}
 	}
 }
