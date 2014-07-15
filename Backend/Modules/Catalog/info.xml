@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>Catalog</name>
+	<version>2.0.1</version>
+	<requirements>
+		<minimum_version>3.7.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			With the Catalog module it is possible to show products (i.e. clothing, bicycles or whatever) on your website. Your visitors can view, discuss and order (for now without paying methods) products. A few features of this module:
+			* comment on products
+			* put products in shopping cart (based on cookies)
+			* order products (without paying methods)
+			* add products in categories and subcategories
+			* add dynamic specifications
+			* add images, files and videos to a product
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Tim van Wolfswinkel]]></name>
+			<url><![CDATA[http://www.webleads.nl]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a product is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a product is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a product is edited.]]></event>
+		<event application="backend" name="after_add_category"><![CDATA[Triggered when a category is added.]]></event>
+		<event application="backend" name="after_delete_category"><![CDATA[Triggered when a category is deleted.]]></event>
+		<event application="backend" name="after_edit_category"><![CDATA[Triggered when a category is edited.]]></event>
+		<event application="backend" name="after_add_specification"><![CDATA[Triggered when a specification is added.]]></event>
+		<event application="backend" name="after_delete_specification"><![CDATA[Triggered when a specification is deleted.]]></event>
+		<event application="backend" name="after_edit_specification"><![CDATA[Triggered when a specification is edited.]]></event>
+		<event application="backend" name="after_add_image"><![CDATA[Triggered when a image is added.]]></event>
+		<event application="backend" name="after_edit_image"><![CDATA[Triggered when a image is edited.]]></event>
+		<event application="backend" name="after_add_file"><![CDATA[Triggered when a file is added.]]></event>
+		<event application="backend" name="after_edit_file"><![CDATA[Triggered when a file is edited.]]></event>
+		<event application="backend" name="after_add_video"><![CDATA[Triggered when a video is added.]]></event>
+		<event application="backend" name="after_edit_video"><![CDATA[Triggered when a video is edited.]]></event>
+		<event application="backend" name="after_edit_comment"><![CDATA[Triggered when a comment is edited.]]></event>
+		<event application="backend" name="after_edit_order"><![CDATA[Triggered when a order is edited.]]></event>
+		<event application="frontend" name="after_add_comment"><![CDATA[Triggered when a comment is added.]]></event>
+		<event application="frontend" name="after_add_order"><![CDATA[Triggered when a order is added.]]></event>
+	</events>
+</module>

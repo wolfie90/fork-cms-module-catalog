@@ -1,0 +1,54 @@
+/*
+  Catalog extending CSS
+  
+  @author Tim van Wolfswinkel <tim@webleads.nl>
+*/
+
+/* Specifications */
+
+.specificationWrapper {
+  float: left;
+  width: 81%;
+  padding: 0;
+  border: 0;
+}
+
+#specificationsHolder .inputButton {
+  color: #3A3A3A;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid #B0B0B0;
+  background: #eee;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#C5C5C5), color-stop(.0454545,#F7F7F7), color-stop(.9545455,#DDD));
+  background: -moz-linear-gradient(#FFF, #f7f7f7 4.5454545%, #DDD 95.454545%, #C5C5C5);
+  white-space: nowrap;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  padding: 3px;
+}
+
+.horizontal .inputList {
+  float: left;
+  padding: 0;
+}
+
+.add{
+  background: #eee !important;
+}
+
+.relatedProducts select{
+  height: 250px;
+  width: 100%;
+}
+
+.specificationInput input {
+  margin-left: 20px;
+}
+
+/* Products */
+
+#catalog.catalogAddEdit #categoryId {
+	width: 170px;
+}

@@ -1,0 +1,89 @@
+h1 {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 10px 0px;
+}
+
+h2 {
+  font-size: 21px;
+  font-weight: bold;
+  margin: 10px 0px;
+}
+
+h3{
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0px;
+}
+
+p, label {
+  margin: 10px 0px;
+}
+
+.images ul {
+  padding: 0px;
+  list-style-type:none;
+}
+
+.images li{
+  display: inline;
+  margin: 0px 15px 0px 0px;
+}
+
+/* Related Products*/
+.relatedProduct {
+  width: 32%;
+  margin-right: 1%;
+  margin-bottom: 5px;
+  float: left;
+  padding-left: 10px;
+  background-color: #F2F2F2;
+}
+
+/* Shopping Cart*/
+.shopping-cart {
+  padding: 5px 10px 10px 10px;
+  background-color: #F5F5F5;
+}
+
+.productsInShoppingCart label {
+  cursor: pointer;
+  margin: 0px;
+}
+
+/* Shopping Cart Table */
+table {
+  width: 100%;
+  font-size: 12px;
+  color: #5B636B;
+  border: 1px solid #CCC;
+  border-collapse: separate;
+  border-spacing: 1px;
+  background-color: #FFF;
+}
+
+table tr {
+  height: 30px;
+}
+
+table tr:first-child {
+  background-color: #ECEEF4;
+}
+
+table tr:last-child {
+  font-weight: bold;
+  border: none;
+}
+
+table th {
+  padding: 10px;
+}
+
+table td {
+  padding: 10px;
+  border-right: 3px solid white;
+}
+
+table td:last-child {
+  border-right: 0;   
+}
