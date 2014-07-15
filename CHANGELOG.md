@@ -3,7 +3,7 @@
 
 Bugfixes:
 
-* Removed zero from dropdown amount of products
+* Removed dropdown amount of products
 * Added media images sequence
 * Added validation on category dropdown when adding or editing a product
 * Fixed arguments when updating a specification
