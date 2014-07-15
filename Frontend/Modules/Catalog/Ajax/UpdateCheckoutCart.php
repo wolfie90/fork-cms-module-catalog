@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Catalog\Ajax;
+
 /*
  * This file is part of Fork CMS.
  *

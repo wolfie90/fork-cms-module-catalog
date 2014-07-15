@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Catalog\Ajax;
+
 /**
  * Alters the sequence of Catalog categories
  *

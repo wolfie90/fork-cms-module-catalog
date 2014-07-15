@@ -1,5 +1,5 @@
-{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
-{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblCatalog|ucfirst}: {$lblAddProduct|ucfirst}</h2>
@@ -121,7 +121,7 @@
 		</div>
 
 		<div id="tabSEO">
-			{include:{$BACKEND_CORE_PATH}/layout/templates/seo.tpl}
+			{include:{$BACKEND_CORE_PATH}/Layout/Templates/Seo.tpl}
 		</div>
 	</div>
 
@@ -147,5 +147,5 @@
 	</div>
 {/form:add}
 
-{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
-{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
