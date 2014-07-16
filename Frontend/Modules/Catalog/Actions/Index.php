@@ -9,12 +9,17 @@ namespace Frontend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+
 /**
- * This is the index-action (default), it will display the overview of Catalog posts
+ * This is the overview-action
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogIndex extends FrontendBaseBlock
+class Index extends FrontendBaseBlock
 {
 	/**
 	 * The items
@@ -23,19 +28,19 @@ class FrontendCatalogIndex extends FrontendBaseBlock
 	 */
 	private $products;
 
-    /**
-     * All categories in flat view
-     *
-     * @var	array
-     */
-    private $categories;
-
-    /**
-     * All categories in tree view
-     *
-     * @var	array
-     */
-    private $categoriesTree;
+	/**
+	 * All categories in flat view
+	 *
+	 * @var	array
+	 */
+	private $categories;
+    
+	/**
+	 * All categories in tree view
+	 *
+	 * @var	array
+	 */
+	private $categoriesTree;
 
 	/**
 	 * The pagination array
@@ -98,10 +103,10 @@ class FrontendCatalogIndex extends FrontendBaseBlock
 	protected function parse()
 	{		
 		// add css 
-		$this->header->addCSS('/frontend/modules/' . $this->getModule() . '/layout/css/catalog.css');
+		$this->header->addCSS('/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
 		
 		// add noty js
-		$this->header->addJS('/frontend/modules/' . $this->getModule() . '/js/noty/packaged/jquery.noty.packaged.min.js');
+		$this->header->addJS('/src/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
 		
 		// assign items
 		$this->tpl->assign('products', $this->products);

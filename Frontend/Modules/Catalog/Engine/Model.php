@@ -9,12 +9,19 @@ namespace Frontend\Modules\Catalog\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Url as FrontendURL;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+
 /**
  * In this file we store all generic functions that we will be using in the Catalog module
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogModel
+class Model implements FrontendTagsInterface
 {
 	/**
 	 * Fetches a certain item
@@ -57,8 +64,8 @@ class FrontendCatalogModel
 		if(empty($item)) return array();
 
 		// create full url
-		$item['full_url'] = FrontendNavigation::getURLForBlock('catalog', 'detail') . '/' . $item['url'];
-		$item['category_full_url'] =  FrontendNavigation::getURLForBlock('catalog', 'category') . '/' . $item['category_url'];
+		$item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Detail') . '/' . $item['url'];
+		$item['category_full_url'] =  FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $item['category_url'];
 		
 		// create image
 		$img = FrontendModel::getContainer()->get('database')->getRecord('SELECT * FROM catalog_images WHERE product_id = ? ORDER BY sequence', array((int)$item['id']));
@@ -113,7 +120,7 @@ class FrontendCatalogModel
 			else $item['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';
 			
 			// create full url
-			$item['full_url'] = FrontendNavigation::getURLForBlock('catalog', 'detail') . '/' . $item['url'];
+			$item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Detail') . '/' . $item['url'];
 			
 			// calculate subtotal
 			$productAmount = (int)$item['amount'];
@@ -145,7 +152,7 @@ class FrontendCatalogModel
 		if(empty($items)) return array();
 
 		// get detail action url
-		$detailUrl = FrontendNavigation::getURLForBlock('catalog', 'detail');
+		$detailUrl = FrontendNavigation::getURLForBlock('Catalog', 'Detail');
 
 		// prepare items for search
 		foreach($items as &$item)
@@ -196,7 +203,7 @@ class FrontendCatalogModel
 		if(empty($items)) return array();
 		
 		// get detail action url
-		$detailUrl = FrontendNavigation::getURLForBlock('catalog', 'detail');
+		$detailUrl = FrontendNavigation::getURLForBlock('Catalog', 'Detail');
 		
 		// prepare items for search
 		foreach($items as &$item)
@@ -231,7 +238,7 @@ class FrontendCatalogModel
 		);
 		
 		// init var
-		$baseUrl = FrontendNavigation::getURLForBlock('catalog', 'category');
+		$baseUrl = FrontendNavigation::getURLForBlock('Catalog', 'Category');
 		
 		// loop items and unserialize
 		foreach($items as &$row)
@@ -262,6 +269,64 @@ class FrontendCatalogModel
 		}
 		
 		return $items;
+	}
+	
+	/**
+	 * Fetch the list of tags for a list of items
+	 *
+	 * @param array $ids The ids of the items to grab.
+	 * @return array
+	 */
+	public static function getForTags(array $ids)
+	{
+	    // fetch items
+	    $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
+		'SELECT i.title, m.url
+		 FROM blog_posts AS i
+		 INNER JOIN meta AS m ON m.id = i.meta_id
+		 WHERE i.status = ? AND i.hidden = ? AND i.id IN (' . implode(',', $ids) . ')
+		 ORDER BY i.publish_on DESC',
+		array('active', 'N')
+	    );
+    
+	    // has items
+	    if (!empty($items)) {
+		// init var
+		$link = FrontendNavigation::getURLForBlock('Catalog', 'Detail');
+		$folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Catalog/Images', true);
+    
+		// reset url
+		foreach ($items as &$row) {
+		    $row['full_url'] = $link . '/' . $row['url'];
+    
+		    // image?
+		    if (isset($row['image'])) {
+			foreach ($folders as $folder) {
+			    $row['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] .
+								  '/' . $row['image'];
+			}
+		    }
+		}
+	    }
+    
+	    // return
+	    return $items;
+	}
+	
+	/**
+	 * Get the id of an item by the full URL of the current page.
+	 * Selects the proper part of the full URL to get the item's id from the database.
+	 *
+	 * @param FrontendURL $URL The current URL.
+	 * @return int
+	 */
+	public static function getIdForTags(FrontendURL $URL)
+	{
+	    // select the proper part of the full URL
+	    $itemURL = (string) $URL->getParameter(1);
+    
+	    // return the item
+	    return self::get($itemURL);
 	}
 
 	/**
@@ -440,9 +505,9 @@ class FrontendCatalogModel
 			
 			// create full url
 			if($url != null){
-				$row['full_url'] = FrontendNavigation::getURLForBlock('catalog', 'category') . '/' . $url . '/' . $row['url'];
+				$row['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $url . '/' . $row['url'];
 			} else {
-				$row['full_url'] = FrontendNavigation::getURLForBlock('catalog', 'category') . '/' . $row['url'];
+				$row['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $row['url'];
 			}
 
 			if(isset($row['meta_data'])) $row['meta_data'] = @unserialize($row['meta_data']);
@@ -474,7 +539,7 @@ class FrontendCatalogModel
 		if(empty($item)) return array();
 
 		// create full url
-		$item['full_url'] = FrontendNavigation::getURLForBlock('catalog', 'category') . '/' . $item['url'];
+		$item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $item['url'];
 
 		return $item;
 	}
@@ -502,7 +567,7 @@ class FrontendCatalogModel
 		if(empty($item)) return array();
 
 		// create full url
-		$item['full_url'] = FrontendNavigation::getURLForBlock('catalog', 'category') . '/' . $item['url'];
+		$item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $item['url'];
 
 		return $item;
 	}
@@ -566,7 +631,7 @@ class FrontendCatalogModel
 		);
 
 		// init var
-		$link = FrontendNavigation::getURLForBlock('catalog', 'category');
+		$link = FrontendNavigation::getURLForBlock('Catalog', 'Category');
 
 		// build the item url
 		foreach($items as &$item){
@@ -853,8 +918,8 @@ class FrontendCatalogModel
 		$notifyByMailOnCommentToModerate = FrontendModel::getModuleSetting('catalog', 'notify_by_email_on_new_comment_to_moderate', false);
 
 		// create URLs
-		$URL = SITE_URL . FrontendNavigation::getURLForBlock('catalog', 'detail') . '/' . $comment['product_url'] . '#comment-' . $comment['id'];
-		$backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'catalog') . '#tabModeration';
+		$URL = SITE_URL . FrontendNavigation::getURLForBlock('Catalog', 'Detail') . '/' . $comment['product_url'] . '#comment-' . $comment['id'];
+		$backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('Comments', 'Catalog') . '#tabModeration';
 
 		// notify on all comments
 		if($notifyByMailOnComment)
@@ -991,7 +1056,7 @@ class FrontendCatalogModel
 		);
 		
 		// get detail action url
-		$detailUrl = FrontendNavigation::getURLForBlock('catalog', 'detail');
+		$detailUrl = FrontendNavigation::getURLForBlock('Catalog', 'Detail');
 
 		// prepare items for search
 		foreach($items as &$item)

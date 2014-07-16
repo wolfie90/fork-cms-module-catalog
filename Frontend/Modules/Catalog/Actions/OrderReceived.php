@@ -9,12 +9,17 @@ namespace Frontend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+ 
 /**
  * This is the personal-data-action (default), it will display a personal data form
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogOrderReceived extends FrontendBaseBlock
+class OrderReceived extends FrontendBaseBlock
 {
 	/**
 	 * The url for catalog index

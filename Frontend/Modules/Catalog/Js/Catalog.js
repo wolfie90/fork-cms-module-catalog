@@ -15,7 +15,6 @@ jsFrontend.catalog =
 	// constructor
 	init: function()
 	{
-		//jsFrontend.catalog.areCookiesEnabled();
 		jsFrontend.catalog.onChange();
 	},
 	
@@ -50,7 +49,7 @@ jsFrontend.catalog =
 			$.ajax({
 				type: 'POST',
 				data: {
-					fork: { module: 'catalog', action: 'save_shopping_cart'},
+					fork: { module: 'Catalog', action: 'SaveShoppingCart'},
 					productAmount: $productAmount,
 					productId: $productId,
 					action: $action,
@@ -77,7 +76,7 @@ jsFrontend.catalog =
 			$.ajax({
 				type: 'POST',
 				data: {
-					fork: { module: 'catalog', action: 'save_shopping_cart'},
+					fork: { module: 'Catalog', action: 'SaveShoppingCart'},
 					productAmount: $productAmount,
 					productId: $productId,
 					action: $action,
@@ -104,7 +103,7 @@ jsFrontend.catalog =
 			$.ajax({
 				type: 'POST',
 				data: {
-					fork: { module: 'catalog', action: 'save_shopping_cart'},
+					fork: { module: 'Catalog', action: 'SaveShoppingCart'},
 					productId: $productId,
 					action: $action,
 					value: $this.val()
@@ -122,7 +121,7 @@ jsFrontend.catalog =
 	{
 	    $.ajax({
 		data: {
-		    fork: { module: 'catalog', action: 'update_shopping_cart' }
+		    fork: { module: 'Catalog', action: 'UpdateShoppingCart' }
 		},
 		success: function (result) {
 		    var $target = $('#shoppingCartWidget');
@@ -138,7 +137,7 @@ jsFrontend.catalog =
 	{
 	    $.ajax({
 		data: {
-		    fork: { module: 'catalog', action: 'update_checkout_cart' }
+		    fork: { module: 'Catalog', action: 'UpdateCheckoutCart' }
 		},
 		success: function (result) {
 		    var $target = $('#shoppingCartCheckout');
@@ -159,17 +158,6 @@ jsFrontend.catalog =
 		    layout      : layout,
 		    theme       : 'defaultTheme'
 		});
-	},
-	
-	areCookiesEnabled: function()
-	{
-		$cookieEnabled = navigator.cookieEnabled;
-		
-		if ($cookieEnabled == true) {
-			console.log('true');
-		} else {
-			console.log('false');
-		}
 	}
 }
 

@@ -9,12 +9,17 @@ namespace Frontend\Modules\Catalog\Widgets;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie;
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+
 /**
  * This is a widget for the shopping cart
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogWidgetShoppingCart extends FrontendBaseWidget
+class ShoppingCart extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
@@ -33,7 +38,7 @@ class FrontendCatalogWidgetShoppingCart extends FrontendBaseWidget
 	private function getData()
 	{
 		// check if cookie exists
-		if(!CommonCookie::exists('order_id')){
+		if(!\SpoonCookie::exists('order_id')){
 			return;
 		}
 	}

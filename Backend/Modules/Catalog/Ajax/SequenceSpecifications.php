@@ -2,19 +2,30 @@
 
 namespace Backend\Modules\Catalog\Ajax;
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * Alters the sequence of Catalog categories
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogAjaxSequenceSpecifications extends BackendBaseAJAXAction
+class SequenceSpecifications extends BackendBaseAJAXAction
 {
 	public function execute()
 	{		
 		parent::execute();
 		
 		// get parameters
-		$newIdSequence = trim(SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
+		$newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
 
 		// list id
 		$ids = (array) explode(',', rtrim($newIdSequence, ','));

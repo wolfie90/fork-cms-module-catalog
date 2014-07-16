@@ -9,12 +9,17 @@ namespace Frontend\Modules\Catalog\Ajax;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+ 
 /**
  * This is a ajax call to save products in an order
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogAjaxSaveShoppingCart extends FrontendBaseAJAXAction
+class SaveShoppingCart extends FrontendBaseAJAXAction
 {
 	/**
 	 * The order values

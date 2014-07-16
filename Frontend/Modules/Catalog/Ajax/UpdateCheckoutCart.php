@@ -9,12 +9,17 @@ namespace Frontend\Modules\Catalog\Ajax;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+
 /**
  * This is a ajax call to update the view of the checkout cart
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogAjaxUpdateCheckoutCart extends FrontendBaseAJAXAction
+class UpdateCheckoutCart extends FrontendBaseAJAXAction
 {
 	/**
 	 * The order id

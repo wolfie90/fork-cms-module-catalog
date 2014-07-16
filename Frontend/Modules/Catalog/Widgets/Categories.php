@@ -9,12 +9,16 @@ namespace Frontend\Modules\Catalog\Widgets;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+ 
 /**
  * This is a widget with the Catalog-categories
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogWidgetCategories extends FrontendBaseWidget
+class Categories extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
@@ -41,7 +45,7 @@ class FrontendCatalogWidgetCategories extends FrontendBaseWidget
 		if(!empty($categories))
 		{
 			// build link
-			$link = FrontendNavigation::getURLForBlock('catalog', 'category');
+			$link = FrontendNavigation::getURLForBlock('Catalog', 'Category');
 
 			// loop and reset url
 			foreach($categories as &$row) $row['url'] = $link . '/' . $row['url'];

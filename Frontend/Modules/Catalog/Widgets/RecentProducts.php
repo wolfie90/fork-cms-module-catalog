@@ -9,12 +9,16 @@ namespace Frontend\Modules\Catalog\Widgets;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+
 /**
  * This is a widget with recent products
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogWidgetRecentProducts extends FrontendBaseWidget
+class RecentProducts extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
@@ -32,7 +36,7 @@ class FrontendCatalogWidgetRecentProducts extends FrontendBaseWidget
 	private function parse()
 	{
 		// get list of recent products
-		$numItems = FrontendModel::getModuleSetting('catalog', 'recent_products_full_num_items', 3);
+		$numItems = FrontendModel::getModuleSetting('Catalog', 'recent_products_full_num_items', 3);
         $recentProducts = FrontendCatalogModel::getAll($numItems);
         
 		$this->tpl->assign('widgetCatalogRecentProducts', $recentProducts);

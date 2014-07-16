@@ -9,12 +9,16 @@ namespace Backend\Modules\Catalog\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * Alters the sequence of media images
  *
  * @author Jesse Dobbelaere <jesse@dobbelaere-ae.be>
  */
-class BackendCatalogAjaxSequenceMediaImages extends BackendBaseAJAXAction
+class SequenceMediaImages extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
@@ -25,7 +29,7 @@ class BackendCatalogAjaxSequenceMediaImages extends BackendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$newIdSequence = trim(SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
+		$newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
 
 		// list id
 		$ids = (array) explode(',', rtrim($newIdSequence, ','));

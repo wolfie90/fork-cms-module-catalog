@@ -9,12 +9,17 @@ namespace Frontend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+
 /**
  * This is the checkout-action (default), it will display the overview of the shopping cart
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogCheckout extends FrontendBaseBlock
+class Checkout extends FrontendBaseBlock
 {
 	/**
 	 * The order id
@@ -95,10 +100,10 @@ class FrontendCatalogCheckout extends FrontendBaseBlock
 	protected function parse()
 	{
 		// add css
-		$this->header->addCSS('/frontend/modules/' . $this->getModule() . '/layout/css/catalog.css');
+		$this->header->addCSS('/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
 		
 		// add noty js
-		$this->header->addJS('/frontend/modules/' . $this->getModule() . '/js/noty/packaged/jquery.noty.packaged.min.js');
+		$this->header->addJS('/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
 		
 		// url for next step
 		$this->personalDataUrl = FrontendNavigation::getURLForBlock('catalog', 'personal_data');

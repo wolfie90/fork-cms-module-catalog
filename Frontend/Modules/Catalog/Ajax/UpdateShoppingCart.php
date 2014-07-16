@@ -9,12 +9,18 @@ namespace Frontend\Modules\Catalog\Ajax;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie;
+use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+
 /**
  * This is a ajax call to update the view of the shopping cart
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogAjaxUpdateShoppingCart extends FrontendBaseAJAXAction
+class UpdateShoppingCart extends FrontendBaseAJAXAction
 {
 	/**
 	 * The order id
@@ -86,6 +92,9 @@ class FrontendCatalogAjaxUpdateShoppingCart extends FrontendBaseAJAXAction
 		// check if cookies are available
 		$cookie = CommonCookie::set('cookie', 'true');
 		$cookieExists = CommonCookie::exists('cookie');		
+		$this->cookiesEnabled = CommonCookie::hasAllowedCookies();
+		
+		die(print_r(CommonCookie::hasAllowedCookies()));
 		
 		// check if cookies exists
 		if($this->orderId || $cookieExists)
@@ -113,13 +122,13 @@ class FrontendCatalogAjaxUpdateShoppingCart extends FrontendBaseAJAXAction
 			// insert total price in db
 			FrontendCatalogModel::updateOrder($this->totalPriceArr, $this->orderId);
 			
-			$this->cookiesEnabled = true;
+			//$this->cookiesEnabled = true;
 		}
 		
 		// set cookies enabled to false
 		else
 		{
-		    $this->cookiesEnabled = false;
+		    //$this->cookiesEnabled = false;
 		}	
 	}
 	

@@ -9,12 +9,18 @@ namespace Frontend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+
 /**
  * This is the category-action, it will display the overview of products/subcategories within a category
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class FrontendCatalogCategory extends FrontendBaseBlock
+class Category extends FrontendBaseBlock
 {
 	/**
 	 * The items
@@ -23,26 +29,26 @@ class FrontendCatalogCategory extends FrontendBaseBlock
 	 */
 	private $record;
 
-    /**
-     * All products within the category
-     *
-     * @var	array
-     */
-    private $products;
-
-    /**
-     * All subcategories in flat view
-     *
-     * @var	array
-     */
-    private $subcategories;
-
-    /**
-     * All subcategories in tree view
-     *
-     * @var	array
-     */
-    private $subcategoriesTree;
+	/**
+	 * All products within the category
+	 *
+	 * @var	array
+	 */
+	private $products;
+    
+	/**
+	 * All subcategories in flat view
+	 *
+	 * @var	array
+	 */
+	private $subcategories;
+    
+	/**
+	 * All subcategories in tree view
+	 *
+	 * @var	array
+	 */
+	private $subcategoriesTree;
 	
 	/**
      * URL parameters
@@ -123,10 +129,10 @@ class FrontendCatalogCategory extends FrontendBaseBlock
 	protected function parse()
 	{
 		// add css 
-		$this->header->addCSS('/frontend/modules/' . $this->getModule() . '/layout/css/catalog.css');
+		$this->header->addCSS('/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
 		
 		// add noty js
-		$this->header->addJS('/frontend/modules/' . $this->getModule() . '/js/noty/packaged/jquery.noty.packaged.min.js');
+		$this->header->addJS('/src/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
 		
 		// add breadcrumbs
 		$categories = FrontendCatalogModel::getAllCategories();
