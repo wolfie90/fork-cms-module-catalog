@@ -9,12 +9,23 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\HttpFoundation\File\File;
+ 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+ 
 /**
  * This is the add action, it will display a form to add an file to a product.
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogAddFile extends BackendBaseActionAdd
+class AddFile extends BackendBaseActionAdd
 {
     /**
      * The product id
@@ -45,7 +56,7 @@ class BackendCatalogAddFile extends BackendBaseActionAdd
 	{
 		$this->id = $this->getParameter('product_id', 'int');
 		
-        if($this->id !== null && BackendCatalogModel::exists($this->id))
+		if($this->id !== null && BackendCatalogModel::exists($this->id))
 		{
 			parent::execute();
 
@@ -76,7 +87,7 @@ class BackendCatalogAddFile extends BackendBaseActionAdd
 		$this->frm = new BackendForm('addFile');
 		$this->frm->addText('title');
 		$this->frm->addFile('file');
-        $this->frm->getField('file')->setAttribute('extension', implode(', ', $this->allowedExtensions));
+		$this->frm->getField('file')->setAttribute('extension', implode(', ', $this->allowedExtensions));
 	}
 
 	/**
@@ -105,12 +116,12 @@ class BackendCatalogAddFile extends BackendBaseActionAdd
 			$this->frm->getField('title')->isFilled(BL::err('NameIsRequired'));
 			$file->isFilled(BL::err('FieldIsRequired'));
 
-            // validate the file
-            if($this->frm->getField('file')->isFilled())
-            {
-                // file extension
-                $this->frm->getField('file')->isAllowedExtension($this->allowedExtensions, BL::err('FileExtensionNotAllowed'));
-            }
+			// validate the file
+			if($this->frm->getField('file')->isFilled())
+			{
+			    // file extension
+			    $this->frm->getField('file')->isAllowedExtension($this->allowedExtensions, BL::err('FileExtensionNotAllowed'));
+			}
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -123,8 +134,11 @@ class BackendCatalogAddFile extends BackendBaseActionAdd
 				$filePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/' . $item['product_id'] . '/source';
                 
 				// create folders if needed
-				if(!SpoonDirectory::exists($filePath)) SpoonDirectory::create($filePath);
-
+				$fs = new Filesystem();
+				if (!$fs->exists($filePath)) {
+				    $fs->mkdir($filePath);
+				}
+				
 				// file provided?
 				if($file->isFilled())
 				{
@@ -132,7 +146,7 @@ class BackendCatalogAddFile extends BackendBaseActionAdd
 					$item['filename'] = time() . '.' . $file->getExtension();
 
 					// upload the file
-					$file->moveFile($filePath . '/' . $item['filename']);
+					$fs->move($filePath . '/' . $item['filename'], $item['filename']);
 				}
                 
 				$item['sequence'] = BackendCatalogModel::getMaximumFilesSequence($item['product_id'])+1;

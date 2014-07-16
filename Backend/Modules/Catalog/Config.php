@@ -9,24 +9,26 @@ namespace Backend\Modules\Catalog;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+ 
 /**
  * This is the configuration-object for the Catalog module
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-final class BackendCatalogConfig extends BackendBaseConfig
+class Config extends BackendBaseConfig
 {
-	/**
-	 * The default action
-	 *
-	 * @var string
-	 */
-	protected $defaultAction = 'index';
+    /**
+     * The default action
+     *
+     * @var string
+     */
+    protected $defaultAction = 'index';
 
-	/**
-	 * The disabled actions
-	 *
-	 * @var array
-	 */
-	protected $disabledActions = array();
+    /**
+     * The disabled actions
+     *
+     * @var array
+     */
+    protected $disabledActions = array();
 }

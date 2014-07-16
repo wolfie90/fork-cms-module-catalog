@@ -9,12 +9,21 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+ 
 /**
  * This is the add-action, it will display a form to create a new product
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * The product id
@@ -98,7 +107,7 @@ class BackendCatalogAdd extends BackendBaseActionAdd
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDropdown('related_products', $this->allProductsGroupedByCategories, null, true);
 
-		$this->frm->addDropdown('category_id', $this->categories, SpoonFilter::getGetValue('category', null, null, 'int'));
+		$this->frm->addDropdown('category_id', $this->categories, \SpoonFilter::getGetValue('category', null, null, 'int'));
 		
 		$specificationsHTML = array();
 		
@@ -116,7 +125,7 @@ class BackendCatalogAdd extends BackendBaseActionAdd
 			$this->tpl->assign('field', $specificationHTML);
 			$this->tpl->assign('spec', true);
 			
-			$specificationsHTML[]['specification'] = $this->tpl->getContent(BACKEND_MODULE_PATH . '/layout/templates/specification.tpl');
+			$specificationsHTML[]['specification'] = $this->tpl->getContent(BACKEND_MODULE_PATH . '/Layout/Templates/Specification.tpl');
 		}
 		
 		$this->tpl->assign('specifications', $specificationsHTML);

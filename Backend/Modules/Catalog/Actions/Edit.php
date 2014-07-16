@@ -9,12 +9,27 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\HttpFoundation\File\File;
+
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+
 /**
  * This is the edit-action, it will display a form with the product data to edit
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     /**
      * All categories
@@ -130,14 +145,16 @@ class BackendCatalogEdit extends BackendBaseActionEdit
 			$this->tpl->assign('field', $specificationHTML);
 			$this->tpl->assign('spec', true);
 			
-			$specificationsHTML[]['specification'] = $this->tpl->getContent(BACKEND_MODULE_PATH . '/layout/templates/specification.tpl');
+			$specificationsHTML[]['specification'] = $this->tpl->getContent(BACKEND_MODULE_PATH . '/Layout/Templates/Specification.tpl');
 		}
 		
 		$this->tpl->assign('specifications', $specificationsHTML);
 		
-		// meta
+		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-		$this->meta->setUrlCallBack('BackendCatalogModel', 'getUrl', array($this->record['id']));
+		
+		// set callback for generating a unique URL
+		$this->meta->setUrlCallback('Backend\Modules\Catalog\Engine\Model', 'getURL', array($this->record['id']));
 
 	}
 

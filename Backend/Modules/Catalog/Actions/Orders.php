@@ -9,19 +9,27 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This is the orders-action , it will display the overview of orders
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogOrders extends BackendBaseActionIndex
+class Orders extends BackendBaseActionIndex
 {
 	/**
 	 * DataGrids
 	 *
 	 * @var	BackendDataGridDB
 	 */
-	private $dgModeration, $dgCompleted;
+	protected $dgModeration, $dgCompleted;
 
 	/**
 	 * Add productdata into the order
@@ -69,7 +77,7 @@ class BackendCatalogOrders extends BackendBaseActionIndex
 		$this->dgModeration->setPagingLimit(30);
 
 		// header labels
-		$this->dgModeration->setHeaderLabels(array('ordered_on' => SpoonFilter::ucfirst(BL::lbl('Date'))));
+		$this->dgModeration->setHeaderLabels(array('ordered_on' => \SpoonFilter::ucfirst(BL::lbl('Date'))));
 
 		// add the multicheckbox column
 		$this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
@@ -85,7 +93,7 @@ class BackendCatalogOrders extends BackendBaseActionIndex
 		$this->dgModeration->setColumnsHidden('status');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('completed' => BL::lbl('MoveToCompleted'), 'delete' => BL::lbl('Delete')), 'completed');
+		$ddmMassAction = new \SpoonFormDropdown('action', array('completed' => BL::lbl('MoveToCompleted'), 'delete' => BL::lbl('Delete')), 'completed');
 		$ddmMassAction->setAttribute('id', 'actionModeration');
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteModeration'));
 		$ddmMassAction->setOptionAttributes('completed', array('data-message-id' => 'confirmCompletedModeration'));
@@ -115,7 +123,7 @@ class BackendCatalogOrders extends BackendBaseActionIndex
 		$this->dgCompleted->setPagingLimit(30);
 
 		// header labels
-		$this->dgCompleted->setHeaderLabels(array('ordered_on' => SpoonFilter::ucfirst(BL::lbl('Date'))));
+		$this->dgCompleted->setHeaderLabels(array('ordered_on' => \SpoonFilter::ucfirst(BL::lbl('Date'))));
 
 		// add the multicheckbox column
 		$this->dgCompleted->setMassActionCheckboxes('checkbox', '[id]');
@@ -131,7 +139,7 @@ class BackendCatalogOrders extends BackendBaseActionIndex
 		$this->dgCompleted->setColumnsHidden('status');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('moderation' => BL::lbl('MoveToModeration'), 'delete' => BL::lbl('Delete')), 'moderation');
+		$ddmMassAction = new \SpoonFormDropdown('action', array('moderation' => BL::lbl('MoveToModeration'), 'delete' => BL::lbl('Delete')), 'moderation');
 		$ddmMassAction->setAttribute('id', 'actionCompleted');
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteCompleted'));
 		

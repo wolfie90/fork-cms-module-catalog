@@ -9,6 +9,14 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+ 
 /**
  * This is the comments-action , it will display the overview of product comments
  *
@@ -16,7 +24,7 @@ namespace Backend\Modules\Catalog\Actions;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogComments extends BackendBaseActionIndex
+class Comments extends BackendBaseActionIndex
 {
 	/**
 	 * DataGrids
@@ -71,7 +79,7 @@ class BackendCatalogComments extends BackendBaseActionIndex
 		$this->dgPublished->setPagingLimit(30);
 
 		// header labels
-		$this->dgPublished->setHeaderLabels(array('created_on' => SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => SpoonFilter::ucfirst(BL::lbl('Comment'))));
+		$this->dgPublished->setHeaderLabels(array('created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgPublished->setMassActionCheckboxes('checkbox', '[id]');
@@ -89,7 +97,7 @@ class BackendCatalogComments extends BackendBaseActionIndex
 		$this->dgPublished->setColumnsHidden('product_id', 'product_title', 'product_url');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('moderation' => BL::lbl('MoveToModeration'), 'spam' => BL::lbl('MoveToSpam'), 'delete' => BL::lbl('Delete')), 'spam');
+		$ddmMassAction = new \SpoonFormDropdown('action', array('moderation' => BL::lbl('MoveToModeration'), 'spam' => BL::lbl('MoveToSpam'), 'delete' => BL::lbl('Delete')), 'spam');
 		$ddmMassAction->setAttribute('id', 'actionPublished');
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeletePublished'));
 		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamPublished'));
@@ -119,7 +127,7 @@ class BackendCatalogComments extends BackendBaseActionIndex
 		$this->dgModeration->setPagingLimit(30);
 
 		// header labels
-		$this->dgModeration->setHeaderLabels(array('created_on' => SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => SpoonFilter::ucfirst(BL::lbl('Comment'))));
+		$this->dgModeration->setHeaderLabels(array('created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
@@ -137,7 +145,7 @@ class BackendCatalogComments extends BackendBaseActionIndex
 		$this->dgModeration->setColumnsHidden('product_id', 'product_title', 'product_url');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::lbl('MoveToPublished'), 'spam' => BL::lbl('MoveToSpam'), 'delete' => BL::lbl('Delete')), 'published');
+		$ddmMassAction = new \SpoonFormDropdown('action', array('published' => BL::lbl('MoveToPublished'), 'spam' => BL::lbl('MoveToSpam'), 'delete' => BL::lbl('Delete')), 'published');
 		$ddmMassAction->setAttribute('id', 'actionModeration');
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteModeration'));
 		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamModeration'));
@@ -167,7 +175,7 @@ class BackendCatalogComments extends BackendBaseActionIndex
 		$this->dgSpam->setPagingLimit(30);
 
 		// header labels
-		$this->dgSpam->setHeaderLabels(array('created_on' => SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => SpoonFilter::ucfirst(BL::lbl('Comment'))));
+		$this->dgSpam->setHeaderLabels(array('created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgSpam->setMassActionCheckboxes('checkbox', '[id]');
@@ -185,7 +193,7 @@ class BackendCatalogComments extends BackendBaseActionIndex
 		$this->dgSpam->setColumnsHidden('product_id', 'product_title', 'product_url');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::lbl('MoveToPublished'), 'moderation' => BL::lbl('MoveToModeration'), 'delete' => BL::lbl('Delete')), 'published');
+		$ddmMassAction = new \SpoonFormDropdown('action', array('published' => BL::lbl('MoveToPublished'), 'moderation' => BL::lbl('MoveToModeration'), 'delete' => BL::lbl('Delete')), 'published');
 		$ddmMassAction->setAttribute('id', 'actionSpam');
 		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteSpam'));
 		$this->dgSpam->setMassAction($ddmMassAction);

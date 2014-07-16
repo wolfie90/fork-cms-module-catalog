@@ -9,12 +9,18 @@ namespace Backend\Modules\Catalog\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Exception;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+ 
 /**
  * In this file we store all generic functions that we will be using in the Catalog module
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogModel
+class Model
 {
 	const QRY_DATAGRID_BROWSE =
 		'SELECT i.id, i.category_id, i.title AS title, i.sequence

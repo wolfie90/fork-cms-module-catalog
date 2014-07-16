@@ -9,34 +9,42 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This is the media action, it will display the overview of media for a specific product.
  *
  * @author Bart De Clercq <info@lexxweb.be>
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogMedia extends BackendBaseActionIndex
+class Media extends BackendBaseActionIndex
 {
-    /**
-     * The product id
-     *
-     * @var	int
-     */
-    private $id;
-
-    /**
-	 * The project record
+	/**
+	 * The product id
 	 *
-	 * @var	array
+	 * @var	int
 	 */
+	private $id;
+
+	/**
+	* The project record
+	*
+	* @var	array
+	*/
 	private $product;
     
 	/**
 	 * Datagrid with published items
 	 *
-	 * @var	SpoonDataGrid
+	 * @var	DataGrid
 	 */
-    private $dgImages, $dgFiles, $dgVideos;
+	protected $dgImages, $dgFiles, $dgVideos;
 
 	/**
 	 * Execute the action
@@ -51,8 +59,8 @@ class BackendCatalogMedia extends BackendBaseActionIndex
 
 			$this->getData();
 			$this->loadDataGridImages();
-            $this->loadDataGridFiles();
-            $this->loadDataGridVideos();
+			$this->loadDataGridFiles();
+			$this->loadDataGridVideos();
 			$this->parse();
 			$this->display();
 		}
@@ -74,31 +82,31 @@ class BackendCatalogMedia extends BackendBaseActionIndex
 	 */
 	protected function loadDataGridImages()
 	{
-      // set image link
-      $imageLink = FRONTEND_FILES_URL . '/' . $this->module . '/[product_id]/64x64';
-  
-      // create images datagrid
-      $this->dgImages = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_IMAGES, $this->id);
-      $this->dgImages->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
-	  $this->dgImages->setAttributes(array('id' => 'products_images_dg'));	
+	// set image link
+	$imageLink = FRONTEND_FILES_URL . '/' . $this->module . '/[product_id]/64x64';
+    
+	// create images datagrid
+	$this->dgImages = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_IMAGES, $this->id);
+	$this->dgImages->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
+	$this->dgImages->setAttributes(array('id' => 'products_images_dg'));	
 	  
-	  $this->dgImages->setColumnHidden('sequence');
-      $this->dgImages->setColumnHidden('product_id');
+	$this->dgImages->setColumnHidden('sequence');
+	$this->dgImages->setColumnHidden('product_id');
 	  
 	  $this->dgImages->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
 	  $this->dgImages->setColumnsSequence('dragAndDropHandle');
-      $this->dgImages->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
+	$this->dgImages->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
 	  	  
 	  $this->dgImages->setRowAttributes(array('data-id' => '[id]'));
-      $this->dgImages->setSortParameter('asc');
+        $this->dgImages->setSortParameter('asc');
 	  $this->dgImages->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_image') . '&amp;id=[id]&amp;product_id=[product_id]', BL::lbl('Edit'));
       
-	  $this->dgImages->setColumnFunction(array('BackendDataGridFunctions', 'showImage'), array($imageLink, '[filename]'), 'filename' );
-      $this->dgImages->setColumnAttributes('filename', array('class' => 'thumbnail'));
+	$this->dgImages->setColumnFunction(array(new BackendDataGridFunctions(), 'showImage'), array($imageLink, '[filename]'), 'filename');
+        $this->dgImages->setColumnAttributes('filename', array('class' => 'thumbnail'));
 	  $this->dgImages->addColumn('checkbox', '<span class="checkboxHolder block"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
-      $this->dgImages->setColumnsSequence('checkbox');
+        $this->dgImages->setColumnsSequence('checkbox');
       
-	  $ddmMassAction = new SpoonFormDropdown('action', array('deleteImages' => BL::lbl('Delete')), 'deleteImages');
+	  $ddmMassAction = new \SpoonFormDropdown('action', array('deleteImages' => BL::lbl('Delete')), 'deleteImages');
       $this->dgImages->setMassAction($ddmMassAction);
 	  $this->dgImages->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 
@@ -132,7 +140,7 @@ class BackendCatalogMedia extends BackendBaseActionIndex
 	  $this->dgFiles->addColumn('checkbox', '<span class="checkboxHolder block"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
       $this->dgFiles->setColumnsSequence('checkbox');
       
-      $ddmMassAction = new SpoonFormDropdown('action', array('deleteFiles' => BL::lbl('Delete')), 'deleteFiles');
+      $ddmMassAction = new \SpoonFormDropdown('action', array('deleteFiles' => BL::lbl('Delete')), 'deleteFiles');
       $this->dgFiles->setMassAction($ddmMassAction);
 	  $this->dgFiles->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 	}
@@ -164,7 +172,7 @@ class BackendCatalogMedia extends BackendBaseActionIndex
       $this->dgVideos->addColumn('checkbox', '<span class="checkboxHolder block"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
       $this->dgVideos->setColumnsSequence('checkbox');
       
-      $ddmMassAction = new SpoonFormDropdown('action', array('deleteVideos' => BL::lbl('Delete')), 'deleteVideos');
+      $ddmMassAction = new \SpoonFormDropdown('action', array('deleteVideos' => BL::lbl('Delete')), 'deleteVideos');
       $this->dgVideos->setMassAction($ddmMassAction);
 	  $this->dgVideos->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 	}

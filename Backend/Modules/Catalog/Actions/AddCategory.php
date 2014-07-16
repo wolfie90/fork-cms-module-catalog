@@ -8,13 +8,22 @@ namespace Backend\Modules\Catalog\Actions;
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
-
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+ 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+ 
 /**
  * This is the add category-action, it will display a form to create a new category
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogAddCategory extends BackendBaseActionAdd
+class AddCategory extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
@@ -78,13 +87,18 @@ class BackendCatalogAddCategory extends BackendBaseActionAdd
 				$item['sequence'] = BackendCatalogModel::getMaximumCategorySequence() + 1;
 				$item['parent_id'] = $this->frm->getField('parent_id')->getValue();				
 				
-                // the image path
+				// the image path
 				$imagePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/catalog_categories';
 				
 				// create folders if needed
-				if(!SpoonDirectory::exists($imagePath . '/150x150/')) SpoonDirectory::create($imagePath . '/150x150/');
-				if(!SpoonDirectory::exists($imagePath . '/source/')) SpoonDirectory::create($imagePath . '/source/');
-
+				$fs = new Filesystem();
+				if (!$fs->exists($imagePath . '/source')) {
+				    $fs->mkdir($imagePath . '/source');
+				}
+				if (!$fs->exists($imagePath . '/150x150')) {
+				    $fs->mkdir($imagePath . '/150x150');
+				}
+								
 				// is there an image provided?
 				if($this->frm->getField('image')->isFilled())
 				{

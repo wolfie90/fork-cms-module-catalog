@@ -9,12 +9,21 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+ 
 /**
  * This is the index-action (default), it will display the overview of products
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
 	/**
 	 * The category where is filtered on
@@ -44,9 +53,10 @@ class BackendCatalogIndex extends BackendBaseActionIndex
 	{
 		parent::execute();
 		
-		$this->categoryId = SpoonFilter::getGetValue('category', null, null, 'int');
+		$this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
 		if($this->categoryId == 0) $this->categoryId = null;
-		else {
+		else
+		{
 			// get category
 			$this->category = BackendCatalogModel::getCategory($this->categoryId);
 						

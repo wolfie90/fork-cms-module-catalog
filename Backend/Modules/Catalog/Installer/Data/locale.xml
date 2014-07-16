@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-	<backend>
-		<catalog>
+	<Backend>
+		<Catalog>
 			<item type="label" name="AddProduct">
 				<translation language="nl"><![CDATA[product toevoegen]]></translation>
 				<translation language="en"><![CDATA[add product]]></translation>
@@ -330,8 +330,8 @@
                 <translation language="nl"><![CDATA[De extensie die u wilt uploaden is niet toegestaan.]]></translation>
                 <translation language="en"><![CDATA[The extension you are trying to upload is not allowed.]]></translation>
             </item>
-		</catalog>
-		<core>
+		</Catalog>
+		<Core>
 			<item type="label" name="Catalog">
 				<translation language="nl"><![CDATA[catalogus]]></translation>
 				<translation language="en"><![CDATA[catalog]]></translation>
@@ -344,11 +344,11 @@
 				<translation language="nl"><![CDATA[Recente producten]]></translation>
 				<translation language="en"><![CDATA[Recent products]]></translation>
 			</item>
-		</core>
-	</backend>
+		</Core>
+	</Backend>
 	
-	<frontend>
-		<core>
+	<Frontend>
+		<Core>
 			<item type="label" name="ProductAdded">
 				<translation language="nl"><![CDATA[Het product is aan uw winkelwagen toegevoegd.]]></translation>
 				<translation language="en"><![CDATA[The product has been added to your shopping cart.]]></translation>
@@ -521,6 +521,6 @@
 				<translation language="nl"><![CDATA[bestelling-ontvangen]]></translation>
 				<translation language="en"><![CDATA[order-received]]></translation>
 			</item>
-		</core>
-	</frontend>
+		</Core>
+	</Frontend>
 </locale>

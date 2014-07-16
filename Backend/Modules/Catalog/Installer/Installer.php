@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
  
 use Backend\Core\Installer\ModuleInstaller;
- 
+
 /**
  * Installer for the Catalog module
  *
@@ -334,7 +334,7 @@ class Installer extends ModuleInstaller
 			// copy images into files path
 			$fs = new Filesystem();
 			if(!$fs->exists(PATH_WWW . '/src/Frontend/Files/Catalog/')) $fs->mkdir(PATH_WWW . '/src/Frontend/Files/Catalog/');
-			$fs->symlink(PATH_WWW . '/src/Backend/Modules/Catalog/Installer/Data/Images/', PATH_WWW . '/src/Frontend/Files/Catalog/test' . $productId, true);
+			$fs->mirror(PATH_WWW . '/src/Backend/Modules/Catalog/Installer/Data/Images/', PATH_WWW . '/src/Frontend/Files/Catalog/' . $productId);
 		}
 	}
 }
