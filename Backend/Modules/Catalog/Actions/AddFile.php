@@ -146,7 +146,7 @@ class AddFile extends BackendBaseActionAdd
 					$item['filename'] = time() . '.' . $file->getExtension();
 
 					// upload the file
-					$fs->move($filePath . '/' . $item['filename'], $item['filename']);
+					$file->moveFile($filePath . '/' . $item['filename']);
 				}
                 
 				$item['sequence'] = BackendCatalogModel::getMaximumFilesSequence($item['product_id'])+1;

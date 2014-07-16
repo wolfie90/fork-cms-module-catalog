@@ -8,13 +8,19 @@ namespace Backend\Modules\Catalog\Actions;
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+ 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
 
 /**
  * This is the edit file action, it will display a form to edit an existing product file.
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogEditFile extends BackendBaseActionEdit
+class EditFile extends BackendBaseActionEdit
 {
     /**
      * The allowed file extensions

@@ -9,12 +9,18 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+
 /**
  * This action will delete a product
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
@@ -31,8 +37,12 @@ class BackendCatalogDelete extends BackendBaseActionDelete
 			
 			$this->record = BackendCatalogModel::get($this->id);
 
+			// delete record
 			BackendCatalogModel::delete($this->id);
 
+			// delete search indexes
+			BackendSearchModel::removeIndex($this->getModule(), $this->id);
+			
 			BackendModel::triggerEvent(
 				$this->getModule(), 'after_delete',
 				array('id' => $this->id)

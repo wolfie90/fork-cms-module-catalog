@@ -9,12 +9,19 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This is the add specification-action, it will display a form to create a new specification
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogAddSpecification extends BackendBaseActionAdd
+class AddSpecification extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
@@ -40,7 +47,7 @@ class BackendCatalogAddSpecification extends BackendBaseActionAdd
 		$this->frm->addText('title');
 		
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
-        $this->meta->setURLCallback('BackendCatalogModel', 'getURLForSpecification');
+		$this->meta->setURLCallback('Backend\Modules\Catalog\Engine\Model', 'getURLForSpecification');
 	}
 
 	/**

@@ -9,13 +9,16 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This action is used to perform mass actions on product media (delete, ...)
  * 
- * @author Bart De Clercq <info@lexxweb.be>
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogMassMediaAction extends BackendBaseAction
+class MassMediaAction extends BackendBaseAction
 {
 	/**
 	 * Execute the action

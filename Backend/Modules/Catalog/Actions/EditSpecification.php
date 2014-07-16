@@ -9,26 +9,33 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This is the edit specification-action, it will display a form to edit a specification
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogEditSpecification extends BackendBaseActionAdd
+class EditSpecification extends BackendBaseActionEdit
 {
     /**
      * The specification id
      *
      * @var	array
      */
-    private $id;
+    protected $id;
 
     /**
      * The specification record
      *
      * @var	array
      */
-    private $record;
+    protected $record;
 
     /**
 	 * Execute the action
@@ -83,7 +90,7 @@ class BackendCatalogEditSpecification extends BackendBaseActionAdd
 		$this->frm->addText('title', $this->record['title']);
 		
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-        $this->meta->setURLCallback('BackendCatalogModel', 'getURLForSpecification');
+		$this->meta->setUrlCallback('Backend\Modules\Catalog\Engine\Model', 'getURLForSpecification', array($this->record['id']));
 	}
 
 	/**

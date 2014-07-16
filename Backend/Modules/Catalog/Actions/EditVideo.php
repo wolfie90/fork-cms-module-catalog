@@ -9,12 +9,18 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This is the edit video action, it will display a form to edit an existing product video.
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogEditVideo extends BackendBaseActionEdit
+class EditVideo extends BackendBaseActionEdit
 {
     /**
      * The product

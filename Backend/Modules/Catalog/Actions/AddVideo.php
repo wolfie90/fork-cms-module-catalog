@@ -9,21 +9,28 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This is the add action, it will display a form to add an video to a product.
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogAddVideo extends BackendBaseActionAdd
+class AddVideo extends BackendBaseActionAdd
 {
-    /**
-     * The product id
-     *
-     * @var	int
-     */
-    private $id;
+	/**
+	 * The product id
+	 *
+	 * @var	int
+	 */
+	private $id;
 
-    /**
+	/**
 	 * The product record
 	 *
 	 * @var	array
@@ -91,7 +98,7 @@ class BackendCatalogAddVideo extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validate fields
-            $this->frm->getField('title')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('NameIsRequired'));
 			$this->frm->getField('video')->isFilled(BL::err('FieldIsRequired'));
 			        
 			// no errors?

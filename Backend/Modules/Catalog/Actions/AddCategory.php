@@ -47,7 +47,7 @@ class AddCategory extends BackendBaseActionAdd
 		$this->frm = new BackendForm('addCategory');
 		
 		$this->frm->addText('title');
-        $this->frm->addImage('image');
+		$this->frm->addImage('image');
 		
 		// get the categories
 		$categories = BackendCatalogModel::getCategories(true);
@@ -55,7 +55,7 @@ class AddCategory extends BackendBaseActionAdd
 		$this->frm->addDropdown('parent_id', $categories);
 
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
-		$this->meta->setURLCallback('BackendCatalogModel', 'getURLForCategory');
+		$this->meta->setURLCallback('Backend\Modules\Catalog\Engine\Model', 'getURLForCategory');
 	}
 	
 	/**

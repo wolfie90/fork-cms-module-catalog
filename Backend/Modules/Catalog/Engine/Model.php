@@ -301,12 +301,12 @@ class Model
 
 			// delete image from disk
 			$basePath = FRONTEND_FILES_PATH . '/catalog/' . $item['product_id'];
-			SpoonFile::delete($basePath . '/source/' . $item['filename']);
-			SpoonFile::delete($basePath . '/64x64/' . $item['filename']);
-			SpoonFile::delete($basePath . '/128x128/' . $item['filename']);
-			SpoonFile::delete($basePath . '/' . BackendModel::getModuleSetting('catalog', 'width1') . 'x' . BackendModel::getModuleSetting('catalog', 'height1') . '/' . $item['filename']);
-			SpoonFile::delete($basePath . '/' . BackendModel::getModuleSetting('catalog', 'width2') . 'x' . BackendModel::getModuleSetting('catalog', 'height2') . '/' . $item['filename']);
-			SpoonFile::delete($basePath . '/' . BackendModel::getModuleSetting('catalog', 'width3') . 'x' . BackendModel::getModuleSetting('catalog', 'height3') . '/' . $item['filename']);
+			\SpoonFile::delete($basePath . '/source/' . $item['filename']);
+			\SpoonFile::delete($basePath . '/64x64/' . $item['filename']);
+			\SpoonFile::delete($basePath . '/128x128/' . $item['filename']);
+			\SpoonFile::delete($basePath . '/' . BackendModel::getModuleSetting('catalog', 'width1') . 'x' . BackendModel::getModuleSetting('catalog', 'height1') . '/' . $item['filename']);
+			\SpoonFile::delete($basePath . '/' . BackendModel::getModuleSetting('catalog', 'width2') . 'x' . BackendModel::getModuleSetting('catalog', 'height2') . '/' . $item['filename']);
+			\SpoonFile::delete($basePath . '/' . BackendModel::getModuleSetting('catalog', 'width3') . 'x' . BackendModel::getModuleSetting('catalog', 'height3') . '/' . $item['filename']);
 		}
 
 		BackendModel::invalidateFrontendCache('slideshowCache');
@@ -329,7 +329,7 @@ class Model
 
 			// delete file from disk
 			$basePath = FRONTEND_FILES_PATH . '/catalog/' . $item['product_id'];
-			SpoonFile::delete($basePath . '/source/' . $item['filename']);
+			\SpoonFile::delete($basePath . '/source/' . $item['filename']);
 		}
 	}	
 	
@@ -954,7 +954,7 @@ class Model
 	 */
 	public static function getURL($url, $id = null)
 	{
-		$url = SpoonFilter::urlise((string) $url);
+		$url = \SpoonFilter::urlise((string) $url);
 		$db = BackendModel::getContainer()->get('database');
 
 		// new item
@@ -1003,7 +1003,7 @@ class Model
 	 */
 	public static function getURLForSpecification($url, $id = null)
 	{
-		$url = SpoonFilter::urlise((string) $url);
+		$url = \SpoonFilter::urlise((string) $url);
 		$db = BackendModel::getContainer()->get('database');
 
 		// new specification
@@ -1050,7 +1050,7 @@ class Model
 	 */
 	public static function getURLForCategory($url, $id = null)
 	{
-		$url = SpoonFilter::urlise((string) $url);
+		$url = \SpoonFilter::urlise((string) $url);
 		$db = BackendModel::getContainer()->get('database');
 
 		// new category

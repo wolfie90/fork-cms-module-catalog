@@ -9,19 +9,27 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogEditOrder extends BackendBaseActionEdit
+class EditOrder extends BackendBaseActionEdit
 {
 	/**
 	 * DataGrids
 	 *
 	 * @var	BackendDataGridDB
 	 */
-    private $dgProducts;
+	protected $dgProducts;
   
 	/**
 	 * Execute the action
@@ -80,9 +88,9 @@ class BackendCatalogEditOrder extends BackendBaseActionEdit
 		$this->frm->addText('fname', $this->record['fname']);
 		$this->frm->addText('lname', $this->record['lname']);
 		$this->frm->addText('address', $this->record['address']);
-        $this->frm->addText('hnumber', $this->record['hnumber']);
-        $this->frm->addText('postal', $this->record['postal']);
-        $this->frm->addText('hometown', $this->record['hometown']);
+		$this->frm->addText('hnumber', $this->record['hnumber']);
+		$this->frm->addText('postal', $this->record['postal']);
+		$this->frm->addText('hometown', $this->record['hometown']);
 
 		// assign URL
 		//$this->tpl->assign('itemURL', BackendModel::getURLForBlock($this->getModule(), 'detail') . '/' . $this->record['product_url'] . '#order-' . $this->record['product_id']);

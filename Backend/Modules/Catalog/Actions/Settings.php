@@ -9,12 +9,17 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+
 /**
  * This is the settings action, it will display a form to set general catalog settings.
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogSettings extends BackendBaseActionEdit
+class Settings extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action

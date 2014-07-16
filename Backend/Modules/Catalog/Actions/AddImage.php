@@ -8,23 +8,31 @@ namespace Backend\Modules\Catalog\Actions;
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
-
+ 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+use Backend\Modules\Catalog\Engine\Helper as BackendCatalogHelper;
+ 
 /**
  * This is the add action, it will display a form to add an image to a product.
  *
  * @author Bart De Clercq <info@lexxweb.be> 
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogAddImage extends BackendBaseActionAdd
+class AddImage extends BackendBaseActionAdd
 {
-    /**
-     * The product id
-     *
-     * @var	int
-     */
-    private $id;
+	/**
+	 * The product id
+	 *
+	 * @var	int
+	 */
+	private $id;
 
-    /**
+	/**
 	 * The product record
 	 *
 	 * @var	array

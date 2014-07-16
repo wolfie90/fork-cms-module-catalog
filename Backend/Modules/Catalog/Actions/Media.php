@@ -118,11 +118,11 @@ class Media extends BackendBaseActionIndex
 	 */
 	protected function loadDataGridFiles()
 	{
-      // create files datagrid
-      $this->dgFiles = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_FILES, $this->id);
+	// create files datagrid
+	$this->dgFiles = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_FILES, $this->id);
 	
-      $this->dgFiles->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
-      $this->dgFiles->setAttributes(array('id' => 'products_files_dg'));	
+	$this->dgFiles->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
+	$this->dgFiles->setAttributes(array('id' => 'products_files_dg'));	
       
 	  $this->dgFiles->setColumnHidden('sequence');
 	  $this->dgFiles->setColumnHidden('product_id');

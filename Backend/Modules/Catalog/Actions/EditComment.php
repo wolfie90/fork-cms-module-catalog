@@ -9,13 +9,19 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogEditComment extends BackendBaseActionEdit
+class EditComment extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action

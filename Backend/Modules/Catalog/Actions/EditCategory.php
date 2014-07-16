@@ -9,12 +9,23 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\HttpFoundation\File\File;
+ 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This is the edit category action, it will display a form to edit an existing category.
  *
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogEditCategory extends BackendBaseActionEdit
+class EditCategory extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
@@ -64,7 +75,7 @@ class BackendCatalogEditCategory extends BackendBaseActionEdit
 		$this->frm->addDropdown('parent_id', $categories, $this->record['parent_id']);
 
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-		$this->meta->setUrlCallback('BackendCatalogModel', 'getURLForCategory', array($this->record['id']));
+		$this->meta->setUrlCallback('Backend\Modules\Catalog\Engine\Model', 'getURLForCategory', array($this->record['id']));
 	}
 
 	/**
@@ -118,13 +129,19 @@ class BackendCatalogEditCategory extends BackendBaseActionEdit
 				$item['parent_id'] = $this->frm->getField('parent_id')->getValue();				
 				$item['meta_id'] = $this->meta->save(true);
 
-                // the image path
+				// the image path
 				$imagePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/categories/' . $this->id;
 				
 				// create folders if needed
-				if(!SpoonDirectory::exists($imagePath . '/150x150/')) SpoonDirectory::create($imagePath . '/150x150/');
-				if(!SpoonDirectory::exists($imagePath . '/source/')) SpoonDirectory::create($imagePath . '/source/');
-
+				$fs = new Filesystem();
+				
+				if (!$fs->exists($imagePath . '/150x150/')) {
+				    $fs->mkdir($imagePath . '/150x150/');
+				}
+				if (!$fs->exists($imagePath . '/source/')) {
+				    $fs->mkdir($imagePath . '/source/');
+				}
+				
 				// image provided?
 				if($this->frm->getField('image')->isFilled())
 				{

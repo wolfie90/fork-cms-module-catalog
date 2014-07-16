@@ -9,13 +9,17 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
+
 /**
  * This action will delete a comment
  *
  * @author Tijs Verkoyen <tijs@verkoyen.eu>
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogDeleteCompleted extends BackendBaseActionDelete
+class DeleteCompleted extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
