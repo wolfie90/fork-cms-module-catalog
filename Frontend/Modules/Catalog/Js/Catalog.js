@@ -119,16 +119,22 @@ jsFrontend.catalog =
 
 	updateShoppingCart: function()
 	{
+		console.log('in functie...');
+		
 	    $.ajax({
 		data: {
 		    fork: { module: 'Catalog', action: 'UpdateShoppingCart' }
 		},
 		success: function (result) {
+			console.log('updating shopping cart succesfull...');
 		    var $target = $('#shoppingCartWidget');
 						
 		    if ($target && $target.length) {
 				$target.html(result.data);
 		    }
+		},
+		error: function (request, status, error) {
+			alert(request.responseText);
 		}
 	    });
 	},

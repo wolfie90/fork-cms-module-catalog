@@ -74,7 +74,7 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
      * Execute the action
      */
     public function execute()
-    {
+    {       
         parent::execute();
 
 	$this->getData();
@@ -87,14 +87,14 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
 	 */
 	private function getData(){
 		// get cookie
-		$this->orderId = CommonCookie::get('order_id');
+		$this->orderId = Cookie::get('order_id');
 		
 		// check if cookies are available
-		$cookie = CommonCookie::set('cookie', 'true');
-		$cookieExists = CommonCookie::exists('cookie');		
-		$this->cookiesEnabled = CommonCookie::hasAllowedCookies();
+		$cookie = Cookie::set('cookie', 'true');
+		$cookieExists = Cookie::exists('cookie');		
+		$this->cookiesEnabled = Cookie::hasAllowedCookies();
 		
-		die(print_r(CommonCookie::hasAllowedCookies()));
+		die(print_r(Cookie::hasAllowedCookies()));
 		
 		// check if cookies exists
 		if($this->orderId || $cookieExists)
