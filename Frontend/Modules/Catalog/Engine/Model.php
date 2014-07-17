@@ -763,7 +763,7 @@ class Model implements FrontendTagsInterface
 	 */
 	public static function existsOrder($id)
 	{
-		return (bool) BackendModel::getContainer()->get('database')->getVar(
+		return (bool) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM catalog_orders AS i
 			 WHERE i.id = ?
@@ -780,7 +780,7 @@ class Model implements FrontendTagsInterface
 	 */
 	public static function existsOrderValue($productId, $orderId)
 	{
-		return (bool) BackendModel::getContainer()->get('database')->getVar(
+		return (bool) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM catalog_orders_values AS i
 			 WHERE i.product_id = ? AND i.order_id = ?
@@ -831,7 +831,7 @@ class Model implements FrontendTagsInterface
 		$order = array();
 		
 		$order['status'] = 'pending';
-		$order['date'] = BackendModel::getUTCDate();
+		$order['date'] = FrontendModel::getUTCDate();
 		
 		// get db
 		$db = FrontendModel::getContainer()->get('database');
@@ -851,7 +851,7 @@ class Model implements FrontendTagsInterface
 	public static function insertOrderValue(array $item)
 	{
 		// set date
-		$item['date'] = BackendModel::getUTCDate();
+		$item['date'] = FrontendModel::getUTCDate();
 		
 		// get db
 		$db = FrontendModel::getContainer()->get('database');
@@ -964,7 +964,7 @@ class Model implements FrontendTagsInterface
 	public static function updateOrder($item, $orderId)
 	{
 		// set date
-		$item['date'] = BackendModel::getUTCDate();
+		$item['date'] = FrontendModel::getUTCDate();
 	
 		// get db
 		$db = FrontendModel::getContainer()->get('database');
@@ -984,7 +984,7 @@ class Model implements FrontendTagsInterface
 	public static function updateOrderValue($item, $orderId, $productId)
 	{
 		// set date
-		$item['date'] = BackendModel::getUTCDate();
+		$item['date'] = FrontendModel::getUTCDate();
 	
 		// get db
 		$db = FrontendModel::getContainer()->get('database');

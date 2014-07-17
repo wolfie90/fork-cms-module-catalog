@@ -12,6 +12,7 @@ namespace Frontend\Modules\Catalog\Ajax;
 use Common\Cookie;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
 
@@ -94,8 +95,6 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
 		$cookieExists = Cookie::exists('cookie');		
 		$this->cookiesEnabled = Cookie::hasAllowedCookies();
 		
-		die(print_r(Cookie::hasAllowedCookies()));
-		
 		// check if cookies exists
 		if($this->orderId || $cookieExists)
 		{
@@ -163,7 +162,7 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
         $this->parse();
 
         // output
-        $this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH . '/modules/catalog/layout/widgets/shopping_cart_ajax.tpl', false, true));
+        $this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH . '/Modules/Catalog/Layout/Widgets/ShoppingCartAjax.tpl', false, true));
     }
 
 }

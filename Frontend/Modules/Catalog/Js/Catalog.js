@@ -58,6 +58,9 @@ jsFrontend.catalog =
 				success: function (data) {
 					jsFrontend.catalog.updateShoppingCart();
 					jsFrontend.catalog.displayFeedback('success', 'center', jsFrontend.locale.lbl('ProductAdded'));
+				},
+				error: function (request, status, error) {
+					alert(request.responseText);
 				}
 			});
 		});
@@ -132,9 +135,6 @@ jsFrontend.catalog =
 		    if ($target && $target.length) {
 				$target.html(result.data);
 		    }
-		},
-		error: function (request, status, error) {
-			alert(request.responseText);
 		}
 	    });
 	},

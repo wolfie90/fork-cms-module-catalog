@@ -9,6 +9,7 @@ namespace Frontend\Modules\Catalog\Ajax;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -36,17 +37,17 @@ class SaveShoppingCart extends FrontendBaseAJAXAction
 		parent::execute();
 		
 		// get order values
-		$this->orderValues['product_id'] = SpoonFilter::getPostValue('productId', null, '');
-		$this->orderValues['amount'] = SpoonFilter::getPostValue('productAmount', null, '');
+		$this->orderValues['product_id'] = \SpoonFilter::getPostValue('productId', null, '');
+		$this->orderValues['amount'] = \SpoonFilter::getPostValue('productAmount', null, '');
 				
-		$action = SpoonFilter::getPostValue('action', null, '');
+		$action = \SpoonFilter::getPostValue('action', null, '');
 		
 		// get cookie 
-		$cookieOrderId = CommonCookie::get('order_id');
+		$cookieOrderId = Cookie::get('order_id');
 		
 		// check if cookies are enabled
-		$cookiesEnabled = CommonCookie::set('enabled', 'true');
-		$cookieExists = CommonCookie::exists('enabled');		
+		$cookiesEnabled = Cookie::set('enabled', 'true');
+		$cookieExists = Cookie::exists('enabled');		
 		
 		// check if cookies are set, when true update the order
 		if(isset($cookieOrderId) && FrontendCatalogModel::existsOrder($cookieOrderId) == true)
@@ -90,7 +91,7 @@ class SaveShoppingCart extends FrontendBaseAJAXAction
 			  $this->orderValues['order_id'] = $orderId;
 			  
 			  // set cookie
-			  CommonCookie::set('order_id', $orderId);
+			  Cookie::set('order_id', $orderId);
 			  
 			  // insert order values
 			  FrontendCatalogModel::insertOrderValue($this->orderValues);
