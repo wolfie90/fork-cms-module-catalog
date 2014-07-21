@@ -9,6 +9,7 @@ namespace Frontend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as Cookie;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -55,8 +56,8 @@ class OrderReceived extends FrontendBaseBlock
 	{
 		// requested page
 		$requestedPage = $this->URL->getParameter('page', 'int', 1);
-		$this->firstName = CommonCookie::get('fname');		        
-		$this->catalogUrl = FrontendNavigation::getURLForBlock('catalog');
+		$this->firstName = Cookie::get('fname');		        
+		$this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
 	}
 	
 	/**

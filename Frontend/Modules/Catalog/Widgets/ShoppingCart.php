@@ -9,7 +9,7 @@ namespace Frontend\Modules\Catalog\Widgets;
  * file that was distributed with this source code.
  */
 
-use Common\Cookie;
+use Common\Cookie as Cookie;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
@@ -29,7 +29,6 @@ class ShoppingCart extends FrontendBaseWidget
 		parent::execute();
 		$this->loadTemplate();
 		$this->getData();
-		$this->parse();
 	}
 
 	/**
@@ -38,16 +37,8 @@ class ShoppingCart extends FrontendBaseWidget
 	private function getData()
 	{
 		// check if cookie exists
-		if(!\SpoonCookie::exists('order_id')){
+		if(!Cookie::exists('order_id')){
 			return;
 		}
-	}
-	
-	/**
-	 * Parse
-	 */
-	private function parse()
-	{
-		
 	}
 }

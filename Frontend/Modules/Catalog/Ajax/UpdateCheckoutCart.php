@@ -9,8 +9,10 @@ namespace Frontend\Modules\Catalog\Ajax;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as Cookie;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
 
@@ -54,7 +56,7 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
 	 *
 	 * @var	string
 	 */
-	private $personalDataUrl;
+	private $personalDataUrl, $catalogUrl;
 		
 	/**
      * Execute the action
@@ -73,7 +75,7 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
 	 */
 	private function getData(){
 		// get cookie
-		$this->orderId = CommonCookie::get('order_id');
+		$this->orderId = Cookie::get('order_id');
 		
 		if($this->orderId)
 		{
@@ -96,7 +98,10 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
 			}
 						
 			// url for next step
-			$this->personalDataUrl = FrontendNavigation::getURLForBlock('catalog', 'personal_data');
+			$this->personalDataUrl = FrontendNavigation::getURLForBlock('Catalog', 'PersonalData');
+			
+			// url for next step
+			$this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
 		}
 	}
 	
@@ -108,6 +113,7 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
 		$this->tpl->assign('productsInShoppingCart', $this->products);
 		$this->tpl->assign('totalPrice', $this->totalPrice);
 		$this->tpl->assign('personalDataUrl', $this->personalDataUrl);
+		$this->tpl->assign('catalogUrl', $this->catalogUrl);
 		$this->tpl->assign('amountOfProducts', $this->amountOfProducts);
     }
 
@@ -126,7 +132,7 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
         $this->parse();
 
         // output
-        $this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH . '/modules/catalog/layout/templates/checkout_ajax.tpl', false, true));
+        $this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH . '/Modules/Catalog/Layout/Templates/CheckoutAjax.tpl', false, true));
     }
 
 }

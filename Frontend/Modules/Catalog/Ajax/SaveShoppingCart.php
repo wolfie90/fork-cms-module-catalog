@@ -9,7 +9,7 @@ namespace Frontend\Modules\Catalog\Ajax;
  * file that was distributed with this source code.
  */
 
-use Common\Cookie;
+use Common\Cookie as Cookie;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;

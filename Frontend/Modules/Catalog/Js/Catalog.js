@@ -151,6 +151,9 @@ jsFrontend.catalog =
 		    if ($target && $target.length) {
 				$target.html(result.data);
 		    }
+		},
+		error: function (request, status, error) {
+			alert(request.responseText);
 		}
 	    });
 	},

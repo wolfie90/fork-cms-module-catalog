@@ -9,6 +9,7 @@ namespace Frontend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as Cookie;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -73,7 +74,7 @@ class Checkout extends FrontendBaseBlock
 	private function getData()
 	{
 		// get cookie
-		$this->orderId = CommonCookie::get('order_id');
+		$this->orderId = Cookie::get('order_id');
 		
 		if($this->orderId)
 		{
@@ -99,15 +100,15 @@ class Checkout extends FrontendBaseBlock
 	 */
 	protected function parse()
 	{
-		// add css
-		$this->header->addCSS('/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
+		// add css 
+		$this->header->addCSS('/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
 		
 		// add noty js
-		$this->header->addJS('/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
+		$this->header->addJS('/src/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
 		
 		// url for next step
-		$this->personalDataUrl = FrontendNavigation::getURLForBlock('catalog', 'personal_data');
-		$this->catalogUrl = FrontendNavigation::getURLForBlock('catalog');
+		$this->personalDataUrl = FrontendNavigation::getURLForBlock('Catalog', 'PersonalData');
+		$this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
 			  
 		if(!empty($this->products)) $this->tpl->assign('productsInShoppingCart', $this->products);
 		if(!empty($this->totalPrice)) $this->tpl->assign('totalPrice', $this->totalPrice);

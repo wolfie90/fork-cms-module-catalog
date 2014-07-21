@@ -9,8 +9,11 @@ namespace Frontend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as Cookie;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
 
@@ -61,10 +64,10 @@ class PersonalData extends FrontendBaseBlock
 		$requestedPage = $this->URL->getParameter('page', 'int', 1);
 		
 		// get order
-		$this->cookieOrderId = CommonCookie::get('order_id');
+		$this->cookieOrderId = Cookie::get('order_id');
 		
 		// set checkout url
-        $this->checkoutUrl = FrontendNavigation::getURLForBlock('catalog', 'checkout');
+		$this->checkoutUrl = FrontendNavigation::getURLForBlock('Catalog', 'Checkout');
 	}
 
 	/**
@@ -76,13 +79,13 @@ class PersonalData extends FrontendBaseBlock
 		$this->frm = new FrontendForm('personalDataForm');
 		
 		// init vars
-		$email = (CommonCookie::exists('email')) ? CommonCookie::get('email') : null;
-		$fname = (CommonCookie::exists('fname')) ? CommonCookie::get('fname') : null;
-		$lname = (CommonCookie::exists('lname')) ? CommonCookie::get('lname') : null;
-		$address = (CommonCookie::exists('address')) ? CommonCookie::get('address') : null;
-		$hnumber = (CommonCookie::exists('hnumber')) ? CommonCookie::get('hnumber') : null;
-		$postal = (CommonCookie::exists('postal')) ? CommonCookie::get('postal') : null;
-		$hometown = (CommonCookie::exists('hometown')) ? CommonCookie::get('hometown') : null;
+		$email = (Cookie::exists('email')) ? Cookie::get('email') : null;
+		$fname = (Cookie::exists('fname')) ? Cookie::get('fname') : null;
+		$lname = (Cookie::exists('lname')) ? Cookie::get('lname') : null;
+		$address = (Cookie::exists('address')) ? Cookie::get('address') : null;
+		$hnumber = (Cookie::exists('hnumber')) ? Cookie::get('hnumber') : null;
+		$postal = (Cookie::exists('postal')) ? Cookie::get('postal') : null;
+		$hometown = (Cookie::exists('hometown')) ? Cookie::get('hometown') : null;
 		
 		// create elements
 		$this->frm->addText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
@@ -138,19 +141,19 @@ class PersonalData extends FrontendBaseBlock
 				setcookie((string) $argument, null, 1, '/');
 								
 				// set cookies person --> optional
-				CommonCookie::set('email', $order['email']);
-				CommonCookie::set('fname', $order['fname']);
-				CommonCookie::set('lname', $order['lname']);
-				CommonCookie::set('address', $order['address']);
-				CommonCookie::set('hnumber', $order['hnumber']);
-				CommonCookie::set('postal', $order['postal']);
-				CommonCookie::set('hometown', $order['hometown']);
-				CommonCookie::set('status', $order['status']);
+				Cookie::set('email', $order['email']);
+				Cookie::set('fname', $order['fname']);
+				Cookie::set('lname', $order['lname']);
+				Cookie::set('address', $order['address']);
+				Cookie::set('hnumber', $order['hnumber']);
+				Cookie::set('postal', $order['postal']);
+				Cookie::set('hometown', $order['hometown']);
+				Cookie::set('status', $order['status']);
 				
 				// trigger event
-				FrontendModel::triggerEvent('catalog', 'after_add_order', array('order' => $order));
+				FrontendModel::triggerEvent('Catalog', 'after_add_order', array('order' => $order));
 				
-				$url = FrontendNavigation::getURLForBlock('catalog', 'order_received');
+				$url = FrontendNavigation::getURLForBlock('Catalog', 'OrderReceived');
 				$this->redirect($url);
 			}
 		}
@@ -161,8 +164,8 @@ class PersonalData extends FrontendBaseBlock
 	 */
 	protected function parse()
 	{
-		// add css
-		$this->header->addCSS('/frontend/modules/' . $this->getModule() . '/layout/css/catalog.css');
+		// add css 
+		$this->header->addCSS('/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
 		
 		// url to checkout page
 		$this->tpl->assign('checkoutUrl', $this->checkoutUrl);

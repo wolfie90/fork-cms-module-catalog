@@ -37,7 +37,7 @@ class RecentProducts extends FrontendBaseWidget
 	{
 		// get list of recent products
 		$numItems = FrontendModel::getModuleSetting('Catalog', 'recent_products_full_num_items', 3);
-        $recentProducts = FrontendCatalogModel::getAll($numItems);
+		$recentProducts = FrontendCatalogModel::getAll($numItems);
         
 		$this->tpl->assign('widgetCatalogRecentProducts', $recentProducts);
 	}
