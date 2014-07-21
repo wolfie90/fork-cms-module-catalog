@@ -41,4 +41,4 @@ NOTE: The .zip file is too large to upload within the cms itself (because of exa
 Feel free to contribute any time. This can be done in the following ways:
 
 * Raise an [issue] (https://github.com/timvanwolfswinkel/catalog/issues)
-* Send a Pull Request with bug fixes and/or new features
+* Send a Pull Request with bug fixes and/or new features 
