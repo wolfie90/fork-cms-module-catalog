@@ -42,8 +42,8 @@ class Model implements FrontendTagsInterface
 				 INNER JOIN meta AS m ON i.meta_id = m.id
 				 INNER JOIN catalog_categories AS c ON i.category_id = c.id
 				 INNER JOIN meta AS m2 ON c.meta_id = m2.id
-				 WHERE m.url = ?',
-				array((string) $url)
+				 WHERE m.url = ? AND i.language = ?',
+				array((string) $url, FRONTEND_LANGUAGE)
 			);
 		} else {
 			$item = (array) FrontendModel::getContainer()->get('database')->getRecord(
@@ -635,8 +635,8 @@ class Model implements FrontendTagsInterface
 
 		// build the item url
 		foreach($items as &$item){
-			$item['image_thumb'] = FRONTEND_FILES_URL . '/catalog/' . $item['product_id'] . '/64x64/' . $item['filename'];
-			$item['image_big'] = FRONTEND_FILES_URL . '/catalog/' . $item['product_id'] . '/' . $settings["width1"] . 'x' . $settings["height1"] .  '/' . $item['filename'];
+			$item['image_thumb'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/64x64/' . $item['filename'];
+			$item['image_big'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/' . $settings["width1"] . 'x' . $settings["height1"] .  '/' . $item['filename'];
 		}
 		
 		return $items;

@@ -45,7 +45,7 @@ class Comments extends BackendBaseActionIndex
 	public static function addProductData($text, $title, $URL, $id)
 	{
 		// reset URL
-		$URL = BackendModel::getURLForBlock('catalog', 'detail') . '/' . $URL . '#comment-' . $id;
+		$URL = BackendModel::getURLForBlock('Catalog', 'Detail') . '/' . $URL . '#comment-' . $id;
 
 		// build HTML
 		return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $URL, $title) . '</em></p>' . "\n" . (string) $text;
@@ -72,6 +72,8 @@ class Comments extends BackendBaseActionIndex
 		 */
 		$this->dgPublished = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('published', BL::getWorkingLanguage()));
 
+		
+		
 		// active tab
 		$this->dgPublished->setActiveTab('tabPublished');
 
@@ -85,9 +87,9 @@ class Comments extends BackendBaseActionIndex
 		$this->dgPublished->setMassActionCheckboxes('checkbox', '[id]');
 
 		// assign column functions
-		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
-		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
-		$this->dgPublished->setColumnFunction(array('BackendCatalogComments', 'addProductData'), array('[text]', '[product_title]', '[product_url]', '[id]'), 'text', true);
+		$this->dgPublished->setColumnFunction(array(new BackendDataGridFunctions(), 'getTimeAgo'), '[created_on]', 'created_on', true);
+		$this->dgPublished->setColumnFunction(array(new BackendDataGridFunctions(), 'cleanupPlaintext'), '[text]', 'text', true);
+		$this->dgPublished->setColumnFunction(array(__CLASS__, 'addProductData'), array('[text]', '[product_title]', '[product_url]', '[id]'), 'text', true);
 
 		// sorting
 		$this->dgPublished->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
@@ -120,6 +122,8 @@ class Comments extends BackendBaseActionIndex
 		 */
 		$this->dgModeration = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('moderation', BL::getWorkingLanguage()));
 
+		//var_dump($this->dgModeration);
+			
 		// active tab
 		$this->dgModeration->setActiveTab('tabModeration');
 
@@ -133,9 +137,9 @@ class Comments extends BackendBaseActionIndex
 		$this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
 
 		// assign column functions
-		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
-		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
-		$this->dgModeration->setColumnFunction(array('BackendCatalogComments', 'addProductData'), array('[text]', '[product_title]', '[product_url]', '[id]'), 'text', true);
+		$this->dgModeration->setColumnFunction(array(new BackendDataGridFunctions(), 'getTimeAgo'), '[created_on]', 'created_on', true);
+		$this->dgModeration->setColumnFunction(array(new BackendDataGridFunctions(), 'cleanupPlaintext'), '[text]', 'text', true);
+		$this->dgModeration->setColumnFunction(array(__CLASS__, 'addProductData'), array('[text]', '[product_title]', '[product_url]', '[id]'), 'text', true);
 
 		// sorting
 		$this->dgModeration->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
@@ -181,9 +185,9 @@ class Comments extends BackendBaseActionIndex
 		$this->dgSpam->setMassActionCheckboxes('checkbox', '[id]');
 
 		// assign column functions
-		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
-		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
-		$this->dgSpam->setColumnFunction(array('BackendCatalogComments', 'addProductData'), array('[text]', '[product_title]', '[product_url]', '[id]'), 'text', true);
+		$this->dgSpam->setColumnFunction(array(new BackendDataGridFunctions(), 'getTimeAgo'), '[created_on]', 'created_on', true);
+		$this->dgSpam->setColumnFunction(array(new BackendDataGridFunctions(), 'cleanupPlaintext'), '[text]', 'text', true);
+		$this->dgSpam->setColumnFunction(array(__CLASS__, 'addProductData'), array('[text]', '[product_title]', '[product_url]', '[id]'), 'text', true);
 
 		// sorting
 		$this->dgSpam->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');

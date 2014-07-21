@@ -28,10 +28,10 @@ class MassCommentAction extends BackendBaseAction
 		parent::execute();
 
 		// current status
-		$from = SpoonFilter::getGetValue('from', array('published', 'moderation', 'spam'), 'published');
+		$from = \SpoonFilter::getGetValue('from', array('published', 'moderation', 'spam'), 'published');
 
 		// action to execute
-		$action = SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
+		$action = \SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
 
 		// no id's provided
 		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('comments') . '&error=no-comments-selected');
@@ -136,6 +136,6 @@ class MassCommentAction extends BackendBaseAction
 		if($action == 'delete') $report .= 'deleted';
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('comments') . '&report=' . $report . '#tab' . SpoonFilter::ucfirst($from));
+		$this->redirect(BackendModel::createURLForAction('comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
 	}
 }

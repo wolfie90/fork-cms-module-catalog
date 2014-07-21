@@ -28,10 +28,10 @@ class MassOrderAction extends BackendBaseAction
 		parent::execute();
 
 		// current status
-		$from = SpoonFilter::getGetValue('from', array('moderation', 'completed'), 'moderation');
+		$from = \SpoonFilter::getGetValue('from', array('moderation', 'completed'), 'moderation');
 
 		// action to execute
-		$action = SpoonFilter::getGetValue('action', array('moderation', 'completed', 'delete'), 'completed');
+		$action = \SpoonFilter::getGetValue('action', array('moderation', 'completed', 'delete'), 'completed');
 
 		// no id's provided
 		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('orders') . '&error=no-orders-selected');
@@ -53,6 +53,6 @@ class MassOrderAction extends BackendBaseAction
 		if($action == 'delete') $report .= 'deleted';
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('orders') . '&report=' . $report . '#tab' . SpoonFilter::ucfirst($from));
+		$this->redirect(BackendModel::createURLForAction('orders') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
 	}
 }

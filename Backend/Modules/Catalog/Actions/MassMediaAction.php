@@ -28,7 +28,7 @@ class MassMediaAction extends BackendBaseAction
 		parent::execute();
 		
 		// action to execute
-		$action = SpoonFilter::getGetValue('action', array('deleteImages', 'deleteFiles', 'deleteVideos'), 'delete');
+		$action = \SpoonFilter::getGetValue('action', array('deleteImages', 'deleteFiles', 'deleteVideos'), 'delete');
 		
 		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-selection');
 		

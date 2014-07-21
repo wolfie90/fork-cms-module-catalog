@@ -83,7 +83,7 @@ class Orders extends BackendBaseActionIndex
 		$this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
 
 		// assign column functions
-		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[ordered_on]', 'ordered_on', true);
+		$this->dgModeration->setColumnFunction(array(new BackendDataGridFunctions(), 'getTimeAgo'), '[ordered_on]', 'ordered_on', true);
 
 		// sorting
 		$this->dgModeration->setSortingColumns(array('ordered_on', 'order_nr'), 'ordered_on');
@@ -129,7 +129,7 @@ class Orders extends BackendBaseActionIndex
 		$this->dgCompleted->setMassActionCheckboxes('checkbox', '[id]');
 
 		// assign column functions
-		$this->dgCompleted->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[ordered_on]', 'ordered_on', true);
+		$this->dgCompleted->setColumnFunction(array(new BackendDataGridFunctions(), 'getTimeAgo'), '[ordered_on]', 'ordered_on', true);
 
 		// sorting
 		$this->dgCompleted->setSortingColumns(array('ordered_on'), 'ordered_on');

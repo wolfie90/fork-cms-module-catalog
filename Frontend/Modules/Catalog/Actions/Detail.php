@@ -9,9 +9,12 @@ namespace Frontend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as Cookie;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
 use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
  
 /**
@@ -105,7 +108,7 @@ class Detail extends FrontendBaseBlock
 		$this->record = FrontendCatalogModel::get($this->URL->getParameter(1));
 		$this->comments = FrontendCatalogModel::getComments($this->record['id']);
 		$this->specifications = FrontendCatalogModel::getProductSpecifications($this->record['id']);
-		$this->settings = FrontendModel::getModuleSettings('catalog');
+		$this->settings = FrontendModel::getModuleSettings('Catalog');
 		$this->images = FrontendCatalogModel::getImages($this->record['id'], $this->settings);
 		$this->files = FrontendCatalogModel::getFiles($this->record['id']);
 		$this->videos = FrontendCatalogModel::getVideos($this->record['id']);
@@ -130,9 +133,9 @@ class Detail extends FrontendBaseBlock
 		$this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
 
 		// init vars
-		$author = (CommonCookie::exists('comment_author')) ? CommonCookie::get('comment_author') : null;
-		$email = (CommonCookie::exists('comment_email') && SpoonFilter::isEmail(CommonCookie::get('comment_email'))) ? CommonCookie::get('comment_email') : null;
-		$website = (CommonCookie::exists('comment_website') && SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
+		$author = (Cookie::exists('comment_author')) ? Cookie::get('comment_author') : null;
+		$email = (Cookie::exists('comment_email') && \SpoonFilter::isEmail(Cookie::get('comment_email'))) ? Cookie::get('comment_email') : null;
+		$website = (Cookie::exists('comment_website') && \SpoonFilter::isURL(Cookie::get('comment_website'))) ? Cookie::get('comment_website') : 'http://';
 
 		// create elements
 		$this->frm->addText('author', $author)->setAttributes(array('required' => null));
@@ -146,11 +149,11 @@ class Detail extends FrontendBaseBlock
 	 */
 	protected function parse()
 	{
-		// add css
-		$this->header->addCSS('/frontend/modules/' . $this->getModule() . '/layout/css/catalog.css');
+		// add css 
+		$this->header->addCSS('/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
 		
 		// add noty js
-		$this->header->addJS('/frontend/modules/' . $this->getModule() . '/js/noty/packaged/jquery.noty.packaged.min.js');
+		$this->header->addJS('/src/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
 		
 		// add into breadcrumb
 		$this->breadcrumb->addElement($this->record['meta_title']);
@@ -217,10 +220,10 @@ class Detail extends FrontendBaseBlock
 			$this->frm->cleanupFields();
 
 			// does the key exists?
-			if(SpoonSession::exists('catalog_comment_' . $this->record['id']))
+			if(\SpoonSession::exists('catalog_comment_' . $this->record['id']))
 			{
 				// calculate difference
-				$diff = time() - (int) SpoonSession::get('catalog_comment_' . $this->record['id']);
+				$diff = time() - (int) \SpoonSession::get('catalog_comment_' . $this->record['id']);
 
 				// calculate difference, it it isn't 10 seconds the we tell the user to slow down
 				if($diff < 10 && $diff != 0) $this->frm->getField('message')->addError(FL::err('CommentTimeout'));
@@ -314,13 +317,13 @@ class Detail extends FrontendBaseBlock
 				FrontendCatalogModel::notifyAdmin($comment);
 
 				// store timestamp in session so we can block excessive usage
-				SpoonSession::set('catalog_comment_' . $this->record['id'], time());
+				\SpoonSession::set('catalog_comment_' . $this->record['id'], time());
 
 				// store author-data in cookies
 				try {
-					CommonCookie::set('comment_author', $author);
-					CommonCookie::set('comment_email', $email);
-					CommonCookie::set('comment_website', $website);
+					Cookie::set('comment_author', $author);
+					Cookie::set('comment_email', $email);
+					Cookie::set('comment_website', $website);
 				} catch(Exception $e){
 					// settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
 				}
