@@ -12,7 +12,7 @@ Download latest release from [the release page](https://github.com/timvanwolfswi
 
 Visit the [Fork CMS Documentation](http://www.fork-cms.com/community/documentation/detail/getting-started/adding-modules) to learn how to install a module.
 
-NOTE: The .zip file is too large to upload within the cms itself (because of example data). You can upload the folders in the /backend and /frontend of your website.
+NOTE: The .zip file is too large to upload within the cms itself (because of example data). You can upload the folders in the /Backend and /Frontend of your website.
 
 ## Features
 
