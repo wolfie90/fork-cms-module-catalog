@@ -50,43 +50,32 @@ class SaveShoppingCart extends FrontendBaseAJAXAction
 		$cookieExists = Cookie::exists('enabled');		
 		
 		// check if cookies are set, when true update the order
-		if(isset($cookieOrderId) && FrontendCatalogModel::existsOrder($cookieOrderId) == true)
-		{
+		if(isset($cookieOrderId) && FrontendCatalogModel::existsOrder($cookieOrderId) == true) {
 			$this->orderValues['order_id'] = $cookieOrderId;
 						
 			// action add or update
-			if($action == 'add-update')
-			{
-				if(FrontendCatalogModel::existsOrderValue($this->orderValues['product_id'], $this->orderValues['order_id']) == true)
-				{
+			if($action == 'add-update') {
+				if(FrontendCatalogModel::existsOrderValue($this->orderValues['product_id'], $this->orderValues['order_id']) == true) {
 					// update the order values
 					FrontendCatalogModel::updateOrderValue($this->orderValues, $this->orderValues['order_id'], $this->orderValues['product_id']);
 					$this->output(self::OK, null, 'Order values updated.');
-				} else
-				{
+				} else {
 					// insert order values
 					FrontendCatalogModel::insertOrderValue($this->orderValues);
 					$this->output(self::OK, null, 'Order values inserted.');
 				}
-			}
-			
-			// action delete
-			else if ($action == 'delete')
-			{
-				if(FrontendCatalogModel::existsOrderValue($this->orderValues['product_id'], $this->orderValues['order_id']) == true)
-				{
+			} else if ($action == 'delete') {
+				if(FrontendCatalogModel::existsOrderValue($this->orderValues['product_id'], $this->orderValues['order_id']) == true) {
 					// delete the order values
 					FrontendCatalogModel::deleteOrderValue($this->orderValues['order_id'], $this->orderValues['product_id']);
 					$this->output(self::OK, null, 'Order values deleted.');
 				}
 			}
-		
-		// when no cookies are set, create new cookie and insert order
 		} else {
+			// when no cookies are set, create new cookie and insert order
 			$orderId = FrontendCatalogModel::insertOrder();
 			
-			if($orderId != '')
-			{
+			if($orderId != '') {
 			  // set order id
 			  $this->orderValues['order_id'] = $orderId;
 			  

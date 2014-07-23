@@ -94,8 +94,7 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
 	$this->cookiesEnabled = Cookie::hasAllowedCookies();
 	
 	// check if cookies exists
-	if($this->orderId || $this->cookiesEnabled == true)
-	{
+	if($this->orderId || $this->cookiesEnabled == true) {
 	    // get the products
 	    $this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
 	    
@@ -106,8 +105,7 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
 	    $this->totalPrice = '0';
 	    
 	    // calculate total amount
-	    foreach($this->products as &$product)
-	    {
+	    foreach($this->products as &$product) {
 		    // calculate total
 		    $subtotal = (int)$product['subtotal_price'];
 		    $this->totalPrice = (int)$this->totalPrice;

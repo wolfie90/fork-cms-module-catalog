@@ -51,10 +51,10 @@ class Category extends FrontendBaseBlock
 	private $subcategoriesTree;
 	
 	/**
-     * URL parameters
-     *
-	 * @var	array
-	 */
+	* URL parameters
+	*
+	* @var	array
+	*/
 	private $parameters;
 
 	/**

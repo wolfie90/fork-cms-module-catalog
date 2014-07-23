@@ -74,35 +74,33 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
 	 * Get the data
 	 */
 	private function getData(){
-		// get cookie
-		$this->orderId = Cookie::get('order_id');
+	    // get cookie
+	    $this->orderId = Cookie::get('order_id');
+	    
+	    if($this->orderId) {
+		// get the products
+		$this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
 		
-		if($this->orderId)
-		{
-			// get the products
-			$this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
-			
-			// count amount of products in shopping cart
-			$this->amountOfProducts = count($this->products);
-			
-			// total price
-			$this->totalPrice = '0';
-			
-			// calculate total amount
-			foreach($this->products as &$product)
-			{
-				// calculate total
-				$subtotal = (int)$product['subtotal_price'];
-				$this->totalPrice = (int)$this->totalPrice;
-				$this->totalPrice = $this->totalPrice + $subtotal;
-			}
-						
-			// url for next step
-			$this->personalDataUrl = FrontendNavigation::getURLForBlock('Catalog', 'PersonalData');
-			
-			// url for next step
-			$this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
+		// count amount of products in shopping cart
+		$this->amountOfProducts = count($this->products);
+		
+		// total price
+		$this->totalPrice = '0';
+		
+		// calculate total amount
+		foreach($this->products as &$product) {
+			// calculate total
+			$subtotal = (int)$product['subtotal_price'];
+			$this->totalPrice = (int)$this->totalPrice;
+			$this->totalPrice = $this->totalPrice + $subtotal;
 		}
+					
+		// url for next step
+		$this->personalDataUrl = FrontendNavigation::getURLForBlock('Catalog', 'PersonalData');
+		
+		// url for next step
+		$this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
+	    }
 	}
 	
     /**
@@ -110,11 +108,11 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
      */
     private function parse()
     {
-		$this->tpl->assign('productsInShoppingCart', $this->products);
-		$this->tpl->assign('totalPrice', $this->totalPrice);
-		$this->tpl->assign('personalDataUrl', $this->personalDataUrl);
-		$this->tpl->assign('catalogUrl', $this->catalogUrl);
-		$this->tpl->assign('amountOfProducts', $this->amountOfProducts);
+	$this->tpl->assign('productsInShoppingCart', $this->products);
+	$this->tpl->assign('totalPrice', $this->totalPrice);
+	$this->tpl->assign('personalDataUrl', $this->personalDataUrl);
+	$this->tpl->assign('catalogUrl', $this->catalogUrl);
+	$this->tpl->assign('amountOfProducts', $this->amountOfProducts);
     }
 
     /**
@@ -134,5 +132,4 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
         // output
         $this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH . '/Modules/Catalog/Layout/Templates/CheckoutAjax.tpl', false, true));
     }
-
 }

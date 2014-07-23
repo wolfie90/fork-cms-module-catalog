@@ -42,8 +42,7 @@ class Categories extends FrontendBaseWidget
 		$tree = FrontendCatalogModel::getCategoryTree();
 			
 		// any categories?
-		if(!empty($categories))
-		{
+		if(!empty($categories)) {
 			// build link
 			$link = FrontendNavigation::getURLForBlock('Catalog', 'Category');
 

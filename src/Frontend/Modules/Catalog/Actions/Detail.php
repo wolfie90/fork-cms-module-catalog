@@ -214,14 +214,12 @@ class Detail extends FrontendBaseBlock
 		if(!$commentsAllowed) return false;
 
 		// is the form submitted
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// does the key exists?
-			if(\SpoonSession::exists('catalog_comment_' . $this->record['id']))
-			{
+			if(\SpoonSession::exists('catalog_comment_' . $this->record['id'])) {
 				// calculate difference
 				$diff = time() - (int) \SpoonSession::get('catalog_comment_' . $this->record['id']);
 
@@ -235,14 +233,12 @@ class Detail extends FrontendBaseBlock
 			$this->frm->getField('message')->isFilled(FL::err('MessageIsRequired'));
 
 			// validate optional fields
-			if($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://')
-			{
+			if($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://') {
 				$this->frm->getField('website')->isURL(FL::err('InvalidURL'));
 			}
 
 			// no errors?
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// get module setting
 				$spamFilterEnabled = (isset($this->settings['spamfilter']) && $this->settings['spamfilter']);
 				$moderationEnabled = (isset($this->settings['moderation']) && $this->settings['moderation']);
@@ -270,15 +266,13 @@ class Detail extends FrontendBaseBlock
 				$redirectLink = $permaLink;
 
 				// is moderation enabled
-				if($moderationEnabled)
-				{
+				if($moderationEnabled) {
 					// if the commenter isn't moderated before alter the comment status so it will appear in the moderation queue
 					if(!FrontendCatalogModel::isModerated($author, $email)) $comment['status'] = 'moderation';
 				}
 
 				// should we check if the item is spam
-				if($spamFilterEnabled)
-				{
+				if($spamFilterEnabled) {
 					// check for spam
 					$result = FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website);
 
@@ -296,14 +290,11 @@ class Detail extends FrontendBaseBlock
 				FrontendModel::triggerEvent('catalog', 'after_add_comment', array('comment' => $comment));
 
 				// append a parameter to the URL so we can show moderation
-				if(strpos($redirectLink, '?') === false)
-				{
+				if(strpos($redirectLink, '?') === false) {
 					if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#' . FL::act('Comment');
 					if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#' . FL::act('Comment');
 					if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-' . $comment['id'];
-				}
-				else
-				{
+				} else {
 					if($comment['status'] == 'moderation') $redirectLink .= '&comment=moderation#' . FL::act('Comment');
 					if($comment['status'] == 'spam') $redirectLink .= '&comment=spam#' . FL::act('Comment');
 					if($comment['status'] == 'published') $redirectLink .= '&comment=true#comment-' . $comment['id'];
