@@ -76,8 +76,7 @@ class Add extends BackendBaseActionAdd
 	{
 		$this->id = $this->getParameter('product_id', 'int', null);
 				
-		if($this->id != null)
-		{
+		if($this->id != null) {
 			$this->record = BackendCatalogModel::get($this->id);
 		}
 		
@@ -112,7 +111,7 @@ class Add extends BackendBaseActionAdd
 		$specificationsHTML = array();
 		
 		// specifications
-		foreach($this->specifications as $specification){
+		foreach($this->specifications as $specification) {
 			$specificationName = 'specification' . $specification['id'];
 			
 			// @todo check if type is text or textarea..
@@ -154,8 +153,7 @@ class Add extends BackendBaseActionAdd
 	 */
 	protected function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{			
+		if($this->frm->isSubmitted()) {			
 			$this->frm->cleanupFields();
 
 			// validation
@@ -170,8 +168,7 @@ class Add extends BackendBaseActionAdd
 			// validate meta
 			$this->meta->validate();
 
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build the item
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $fields['title']->getValue();
@@ -194,8 +191,7 @@ class Add extends BackendBaseActionAdd
 				$specificationArray = array();
 				
 				// loop trough specifications and insert values
-				foreach( $this->specifications as $specification)
-				{
+				foreach( $this->specifications as $specification) {
 					// build the specification 
 					$specificationArray['product_id'] = $item['id'];
 					$specificationArray['specification_id'] = $specification['id'];
@@ -203,8 +199,7 @@ class Add extends BackendBaseActionAdd
 					$field = 'specification' . $specification['id'];
 					
 					// check if there is an value
-					if($fields[$field]->getValue() != null)
-					{ 
+					if($fields[$field]->getValue() != null) { 
 						$specificationArray['value'] = $fields[$field]->getValue();
 						
 						// insert specification with product id and value

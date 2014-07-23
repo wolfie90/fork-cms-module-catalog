@@ -63,23 +63,20 @@ class AddCategory extends BackendBaseActionAdd
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			$this->frm->cleanupFields();
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
 			
-			if($this->frm->getField('image')->isFilled())
-			{
+			if($this->frm->getField('image')->isFilled()) {
 				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
 				$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
 			}
 			
 			$this->meta->validate();
 
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build item
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
@@ -100,8 +97,7 @@ class AddCategory extends BackendBaseActionAdd
 				}
 								
 				// is there an image provided?
-				if($this->frm->getField('image')->isFilled())
-				{
+				if($this->frm->getField('image')->isFilled()) {
 					// build the image name
 					$item['image'] = $this->meta->getUrl() . '.' . $this->frm->getField('image')->getExtension();
 
