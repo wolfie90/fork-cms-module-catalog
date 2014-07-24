@@ -71,8 +71,6 @@ class Comments extends BackendBaseActionIndex
 		 * DataGrid for the published comments.
 		 */
 		$this->dgPublished = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('published', BL::getWorkingLanguage()));
-
-		
 		
 		// active tab
 		$this->dgPublished->setActiveTab('tabPublished');
@@ -106,14 +104,12 @@ class Comments extends BackendBaseActionIndex
 		$this->dgPublished->setMassAction($ddmMassAction);
 
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit_comment'))
-		{
+		if(BackendAuthentication::isAllowedAction('edit_comment')) {
 			$this->dgPublished->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
 		}
 
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('mass_comment_action'))
-		{
+		if(BackendAuthentication::isAllowedAction('mass_comment_action')) {
 			$this->dgPublished->addColumn('mark_as_spam', null, BL::lbl('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=spam', BL::lbl('MarkAsSpam'));
 		}
 
@@ -121,8 +117,6 @@ class Comments extends BackendBaseActionIndex
 		 * DataGrid for the comments that are awaiting moderation.
 		 */
 		$this->dgModeration = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('moderation', BL::getWorkingLanguage()));
-
-		//var_dump($this->dgModeration);
 			
 		// active tab
 		$this->dgModeration->setActiveTab('tabModeration');
@@ -156,14 +150,12 @@ class Comments extends BackendBaseActionIndex
 		$this->dgModeration->setMassAction($ddmMassAction);
 
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit_comment'))
-		{
+		if(BackendAuthentication::isAllowedAction('edit_comment')) {
 			$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
 		}
 
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('mass_comment_action'))
-		{
+		if(BackendAuthentication::isAllowedAction('mass_comment_action')) {
 			$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=published', BL::lbl('Approve'));
 		}
 
@@ -203,8 +195,7 @@ class Comments extends BackendBaseActionIndex
 		$this->dgSpam->setMassAction($ddmMassAction);
 
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('mass_comment_action'))
-		{
+		if(BackendAuthentication::isAllowedAction('mass_comment_action')) {
 			$this->dgSpam->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=spam&amp;action=published', BL::lbl('Approve'));
 		}
 	}

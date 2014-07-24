@@ -51,8 +51,7 @@ class EditFile extends BackendBaseActionEdit
 	{
 		$this->id = $this->getParameter('id', 'int');
 		
-		if($this->id !== null && BackendCatalogModel::existsFile($this->id))
-		{
+		if($this->id !== null && BackendCatalogModel::existsFile($this->id)) {
 			parent::execute();
 
 			$this->getData();
@@ -86,7 +85,7 @@ class EditFile extends BackendBaseActionEdit
 		$this->frm = new BackendForm('editFile');
 		$this->frm->addText('title', $this->file['title']);
 		$this->frm->addFile('file');
-        $this->frm->getField('file')->setAttribute('extension', implode(', ', $this->allowedExtensions));
+		$this->frm->getField('file')->setAttribute('extension', implode(', ', $this->allowedExtensions));
 	}
 
 	/**
@@ -106,27 +105,24 @@ class EditFile extends BackendBaseActionEdit
 	protected function validateForm()
 	{
 		// is the form submitted?
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate fields
-            $file = $this->frm->getField('file');
+			$file = $this->frm->getField('file');
 
 			$this->frm->getField('title')->isFilled(BL::err('NameIsRequired'));
 			if($this->file['filename'] === null) $file->isFilled(BL::err('FieldIsRequired'));
 
-            // validate the file
-            if($this->frm->getField('file')->isFilled())
-            {
-                // file extension
-                $this->frm->getField('file')->isAllowedExtension($this->allowedExtensions, BL::err('FileExtensionNotAllowed'));
-            }
+			// validate the file
+			if($this->frm->getField('file')->isFilled()) {
+			    // file extension
+			    $this->frm->getField('file')->isAllowedExtension($this->allowedExtensions, BL::err('FileExtensionNotAllowed'));
+			}
 
-            // no errors?
-			if($this->frm->isCorrect())
-			{
+			// no errors?
+			if($this->frm->isCorrect()) {
 				// build image record to insert
 				$item['id'] = $this->id;
 				$item['title'] = $this->frm->getField('title')->getValue();
@@ -135,11 +131,9 @@ class EditFile extends BackendBaseActionEdit
 				// the file path
 				$filePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/' . $this->project['id'] . '/source';
 				
-				if($file->isFilled())
-				{
+				if($file->isFilled()) {
 					// overwrite the filename
-					if($item['filename'] === null)
-					{
+					if($item['filename'] === null) {
 						$item['filename'] = time() . '.' . $file->getExtension();
 					}
 

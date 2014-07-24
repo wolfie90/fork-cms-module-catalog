@@ -24,28 +24,27 @@ use Backend\Modules\Catalog\Engine\Helper as BackendCatalogHelper;
  */
 class BackendCatalogEditImage extends BackendBaseActionEdit
 {
-    /**
-     * The product
-     *
-     * @var	array
-     */
-    private $product;
+	/**
+	 * The product
+	 *
+	 * @var	array
+	 */
+	private $product;
+    
+	/**
+	 * The image of a product
+	 *
+	 * @var	array
+	 */
+	private $image;
 
-    /**
-     * The image of a product
-     *
-     * @var	array
-     */
-    private $image;
-
-    /**
+	/**
 	 * Execute the action
 	 */
 	public function execute()
 	{
 		$this->id = $this->getParameter('id', 'int');
-		if($this->id !== null && BackendCatalogModel::existsImage($this->id))
-		{
+		if($this->id !== null && BackendCatalogModel::existsImage($this->id)) {
 			parent::execute();
 
 			$this->getData();
@@ -97,8 +96,7 @@ class BackendCatalogEditImage extends BackendBaseActionEdit
 	protected function validateForm()
 	{
 		// is the form submitted?
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -109,8 +107,7 @@ class BackendCatalogEditImage extends BackendBaseActionEdit
 			if($this->image['filename'] === null) $image->isFilled(BL::err('FieldIsRequired'));
 
 			// no errors?
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build image record to insert
 				$item['id'] = $this->id;
 				$item['title'] = $this->frm->getField('title')->getValue();
@@ -122,11 +119,9 @@ class BackendCatalogEditImage extends BackendBaseActionEdit
 				$formats[] = array('size' => '64x64', 'force_aspect_ratio' => false);
 				$formats[] = array('size' => '128x128', 'force_aspect_ratio' => false);
 
-				if($image->isFilled())
-				{
+				if($image->isFilled()) {
 					// overwrite the filename
-					if($item['filename'] === null)
-					{
+					if($item['filename'] === null) {
 						$item['filename'] = time() . '.' . $image->getExtension();
 					}
 

@@ -29,8 +29,7 @@ class DeleteSpecification extends BackendBaseActionDelete
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id == null || !BackendCatalogModel::existsSpecification($this->id))
-		{
+		if($this->id == null || !BackendCatalogModel::existsSpecification($this->id)) {
 			$this->redirect(
 				BackendModel::createURLForAction('specifications') . '&error=non-existing'
 			);

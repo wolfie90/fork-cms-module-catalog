@@ -31,8 +31,7 @@ class EditComment extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendCatalogModel::existsComment($this->id))
-		{
+		if($this->id !== null && BackendCatalogModel::existsComment($this->id)) {
 			parent::execute();
 			$this->getData();
 			$this->loadForm();
@@ -82,8 +81,7 @@ class EditComment extends BackendBaseActionEdit
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -94,8 +92,7 @@ class EditComment extends BackendBaseActionEdit
 			if($this->frm->getField('website')->isFilled()) $this->frm->getField('website')->isURL(BL::err('InvalidURL'));
 
 			// no errors?
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build item
 				$item['id'] = $this->id;
 				$item['status'] = $this->record['status'];

@@ -55,14 +55,12 @@ class Index extends BackendBaseActionIndex
 		
 		$this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
 		if($this->categoryId == 0) $this->categoryId = null;
-		else
-		{
+		else {
 			// get category
 			$this->category = BackendCatalogModel::getCategory($this->categoryId);
 						
 			// reset
-			if(empty($this->category))
-			{
+			if(empty($this->category)) {
 				// reset GET to trick Spoon
 				$_GET['category'] = null;
 
@@ -83,18 +81,14 @@ class Index extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// filter category
-		if($this->categoryId != null )
-		{			
+		if($this->categoryId != null ) {			
 			// create datagrid
 			$this->dgProducts = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY, array($this->categoryId, BL::getWorkingLanguage()));
 			
 			// set the URL
 			$this->dgProducts->setURL('&amp;category=' . $this->categoryId, true);
-		}
-		
-		// dont filter category
-		else
-		{
+		} else {
+			// dont filter category
 			// create datagrid
 			$this->dgProducts = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage()));
 		}
@@ -104,8 +98,7 @@ class Index extends BackendBaseActionIndex
 		$this->dgProducts->setColumnsHidden(array('category_id', 'sequence'));
 		
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit'))
-		{			
+		if(BackendAuthentication::isAllowedAction('edit')) {			
 			// set column URLs
 			$this->dgProducts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId);
 
@@ -130,8 +123,7 @@ class Index extends BackendBaseActionIndex
 		$categories = BackendCatalogModel::getCategories(true);
 				
 		// multiple categories?
-		if(count($categories) > 1)
-		{
+		if(count($categories) > 1) {
 			// create form
 			$frm = new BackendForm('filter', null, 'get', true);
 

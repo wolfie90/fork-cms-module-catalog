@@ -55,8 +55,7 @@ class AddSpecification extends BackendBaseActionAdd
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			$this->frm->cleanupFields();
 
 			// validate fields
@@ -64,8 +63,7 @@ class AddSpecification extends BackendBaseActionAdd
 						
 			$this->meta->validate();
 
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build item
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['language'] = BL::getWorkingLanguage();

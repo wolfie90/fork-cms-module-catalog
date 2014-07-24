@@ -22,28 +22,27 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class EditVideo extends BackendBaseActionEdit
 {
-    /**
-     * The product
-     *
-     * @var	array
-     */
-    private $product;
-
-    /**
-     * The video of a product
-     *
-     * @var	array
-     */
-    private $video;
-
-    /**
+	/**
+	 * The product
+	 *
+	 * @var	array
+	 */
+	private $product;
+    
+	/**
+	 * The video of a product
+	 *
+	 * @var	array
+	 */
+	private $video;
+    
+	/**
 	 * Execute the action
 	 */
 	public function execute()
 	{
 		$this->id = $this->getParameter('id', 'int');
-		if($this->id !== null && BackendCatalogModel::existsVideo($this->id))
-		{
+		if($this->id !== null && BackendCatalogModel::existsVideo($this->id)) {
 			parent::execute();
 
 			$this->getData();
@@ -94,8 +93,7 @@ class EditVideo extends BackendBaseActionEdit
 	protected function validateForm()
 	{
 		// is the form submitted?
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -104,8 +102,7 @@ class EditVideo extends BackendBaseActionEdit
 			$this->frm->getField('video')->isFilled(BL::err('FieldIsRequired'));
 
 			// no errors?
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build image record to insert
 				$item['id'] = $this->id;
 				$item['title'] = $this->frm->getField('title')->getValue();

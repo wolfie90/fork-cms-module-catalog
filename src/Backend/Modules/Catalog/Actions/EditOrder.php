@@ -39,8 +39,7 @@ class EditOrder extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendCatalogModel::existsOrder($this->id))
-		{
+		if($this->id !== null && BackendCatalogModel::existsOrder($this->id)) {
 			parent::execute();
 			$this->getData();
 			$this->loadForm();
@@ -94,10 +93,10 @@ class EditOrder extends BackendBaseActionEdit
 
 		// assign URL
 		//$this->tpl->assign('itemURL', BackendModel::getURLForBlock($this->getModule(), 'detail') . '/' . $this->record['product_url'] . '#order-' . $this->record['product_id']);
-		
-        $this->tpl->assign('products', $this->record);
+			
+		$this->tpl->assign('products', $this->record);
 		$this->tpl->assign('dgProducts', ($this->dgProducts->getNumResults() != 0) ? $this->dgProducts->getContent() : false);
-        $this->tpl->assign('orderPerson', $this->record['fname']);
+		$this->tpl->assign('orderPerson', $this->record['fname']);
 	}
 
 	/**
@@ -105,8 +104,7 @@ class EditOrder extends BackendBaseActionEdit
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -120,8 +118,7 @@ class EditOrder extends BackendBaseActionEdit
 			$this->frm->getField('hometown')->isFilled(BL::err('HometownIsRequired'));
             
 			// no errors?
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build item
 				$order['id'] = $this->id;
 				$order['email'] = $this->frm->getField('email')->getValue();

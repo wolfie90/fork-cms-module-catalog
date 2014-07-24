@@ -23,28 +23,28 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class EditSpecification extends BackendBaseActionEdit
 {
-    /**
-     * The specification id
-     *
-     * @var	array
-     */
-    protected $id;
-
-    /**
-     * The specification record
-     *
-     * @var	array
-     */
-    protected $record;
-
-    /**
+	/**
+	 * The specification id
+	 *
+	 * @var	array
+	 */
+	protected $id;
+    
+	/**
+	 * The specification record
+	 *
+	 * @var	array
+	 */
+	protected $record;
+    
+	/**
 	 * Execute the action
 	 */
 	public function execute()
 	{
 		parent::execute();
 
-        $this->getData();
+		$this->getData();
 		$this->loadForm();
 		$this->validateForm();
 
@@ -59,8 +59,7 @@ class EditSpecification extends BackendBaseActionEdit
 	{
 		$this->id = $this->getParameter('id', 'int');
 		
-        if($this->id == null || !BackendCatalogModel::existsSpecification($this->id))
-		{
+		if($this->id == null || !BackendCatalogModel::existsSpecification($this->id)) {
 			$this->redirect(
 				BackendModel::createURLForAction('specifications') . '&error=non-existing'
 			);
@@ -86,9 +85,7 @@ class EditSpecification extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		$this->frm = new BackendForm('editSpecification');
-
 		$this->frm->addText('title', $this->record['title']);
-		
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 		$this->meta->setUrlCallback('Backend\Modules\Catalog\Engine\Model', 'getURLForSpecification', array($this->record['id']));
 	}
@@ -98,8 +95,7 @@ class EditSpecification extends BackendBaseActionEdit
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			$this->frm->cleanupFields();
 
 			// validate fields
@@ -107,8 +103,7 @@ class EditSpecification extends BackendBaseActionEdit
 						
 			$this->meta->validate();
 
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build item
 				$item['id'] = $this->id;
 				$item['title'] = $this->frm->getField('title')->getValue();

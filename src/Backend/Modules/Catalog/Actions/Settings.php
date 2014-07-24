@@ -52,8 +52,7 @@ class Settings extends BackendBaseActionEdit
 		$this->frm->addCheckbox('spamfilter', BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false));
 		
 		// no Akismet-key, so we can't enable spam-filter
-		if(BackendModel::getModuleSetting('core', 'akismet_key') == '')
-		{
+		if(BackendModel::getModuleSetting('core', 'akismet_key') == '') {
 			$this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');
 			$this->tpl->assign('noAkismetKey', true);
 		}
@@ -90,10 +89,8 @@ class Settings extends BackendBaseActionEdit
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
-			if($this->frm->isCorrect())
-			{
+		if($this->frm->isSubmitted()) {
+			if($this->frm->isCorrect()) {
 				// set our settings
 				BackendModel::setModuleSetting($this->URL->getModule(), 'overview_num_items', (int) $this->frm->getField('overview_number_of_items')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'recent_products_full_num_items', (int) $this->frm->getField('recent_products_full_number_of_items')->getValue());

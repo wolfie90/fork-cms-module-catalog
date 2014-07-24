@@ -31,29 +31,18 @@ class MassMediaAction extends BackendBaseAction
 		$action = \SpoonFilter::getGetValue('action', array('deleteImages', 'deleteFiles', 'deleteVideos'), 'delete');
 		
 		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-selection');
-		
-		// at least one id
-		else
-		{
+		else {
+			// at least one id
 			// redefine id's
 			$aIds = (array) $_GET['id'];
 			$slideshowID = (int) $_GET['product_id'];
 
 			// delete media
-			if($action == 'deleteImages')
-			{
+			if($action == 'deleteImages') {
 				BackendCatalogModel::deleteImage($aIds);
-			}
-			
-			// delete files
-			else if($action == 'deleteFiles')
-			{
+			} else if($action == 'deleteFiles') {
 				BackendCatalogModel::deleteFile($aIds);
-			}
-			
-			// delete videos
-			else if($action == 'deleteVideos')
-			{
+			} else if($action == 'deleteVideos') {
 				BackendCatalogModel::deleteVideo($aIds);
 			}
 		}

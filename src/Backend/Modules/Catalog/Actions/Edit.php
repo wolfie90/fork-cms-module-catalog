@@ -89,8 +89,7 @@ class Edit extends BackendBaseActionEdit
 	{
 		$this->id = $this->getParameter('id', 'int', null);
 		
-		if($this->id == null || !BackendCatalogModel::exists($this->id))
-		{
+		if($this->id == null || !BackendCatalogModel::exists($this->id)) {
 			$this->redirect(
 				BackendModel::createURLForAction('index') . '&error=non-existing'
 			);
@@ -126,8 +125,7 @@ class Edit extends BackendBaseActionEdit
 		$specificationsHTML = array();
 		
 		// specifications
-		foreach($this->specifications as $specification)
-		{
+		foreach($this->specifications as $specification) {
 			$specificationName = 'specification' . $specification['id'];
 			
 			$value = BackendCatalogModel::getSpecificationValue($specification['id'], $this->record['id']);
@@ -155,7 +153,6 @@ class Edit extends BackendBaseActionEdit
 		
 		// set callback for generating a unique URL
 		$this->meta->setUrlCallback('Backend\Modules\Catalog\Engine\Model', 'getURL', array($this->record['id']));
-
 	}
 
 	/**
@@ -180,8 +177,7 @@ class Edit extends BackendBaseActionEdit
 	 */
 	protected function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			$this->frm->cleanupFields();
 
 			// validation
@@ -195,8 +191,7 @@ class Edit extends BackendBaseActionEdit
 			// validate meta
 			$this->meta->validate();
 
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				$item['id'] = $this->id;
 				$item['language'] = BL::getWorkingLanguage();
 				$item['price'] = $fields['price']->getValue();
@@ -213,27 +208,21 @@ class Edit extends BackendBaseActionEdit
 				$specificationArray = array();
 				
 				// loop trough specifications and insert values
-				foreach( $this->specifications as $specification)
-				{
+				foreach( $this->specifications as $specification) {
 					$field = 'specification' . $specification['id'];
 					
 					// check if there is an value
-					if($fields[$field]->getValue() != null)
-					{ 
+					if($fields[$field]->getValue() != null) { 
 						$specificationArray['value'] = $fields[$field]->getValue();
 						$specificationArray['product_id'] = $item['id'];
 						$specificationArray['specification_id'] = $specification['id'];
 						
 						// when specification value already exists. update value
-						if(BackendCatalogModel::existsSpecificationValue($item['id'], $specification['id']) != false)
-						{
+						if(BackendCatalogModel::existsSpecificationValue($item['id'], $specification['id']) != false) {
 							// update specification with product id and value
 							BackendCatalogModel::updateSpecificationValue($specification['id'], $item['id'], $specificationArray);
-						}
-						
-						// when specification value doesnt exists, insert new value
-						else
-						{							
+						} else {							
+							// when specification value doesnt exists, insert new value
 							BackendCatalogModel::insertSpecificationValue($specificationArray);
 						}
 					}

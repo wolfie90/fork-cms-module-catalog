@@ -46,8 +46,7 @@ class AddImage extends BackendBaseActionAdd
 	{
 		$this->id = $this->getParameter('product_id', 'int');
 		
-		if($this->id !== null && BackendCatalogModel::exists($this->id))
-		{
+		if($this->id !== null && BackendCatalogModel::exists($this->id)) {
 			parent::execute();
 
 			$this->getData();
@@ -94,8 +93,7 @@ class AddImage extends BackendBaseActionAdd
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -106,8 +104,7 @@ class AddImage extends BackendBaseActionAdd
 			$image->isFilled(BL::err('FieldIsRequired'));
 
 			// no errors?
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build image record to insert
 				$item['product_id'] = $this->product['id'];
 				$item['title'] = $this->frm->getField('title')->getValue();

@@ -29,8 +29,7 @@ class DeleteCategory extends BackendBaseActionDelete
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id == null || !BackendCatalogModel::existsCategory($this->id))
-		{
+		if($this->id == null || !BackendCatalogModel::existsCategory($this->id)) {
 			$this->redirect(
 				BackendModel::createURLForAction('categories') . '&error=non-existing'
 			);

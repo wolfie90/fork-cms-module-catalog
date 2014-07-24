@@ -48,8 +48,7 @@ class EditCategory extends BackendBaseActionEdit
 	private function getData()
 	{
 		$this->id = $this->getParameter('id', 'int');
-		if($this->id == null || !BackendCatalogModel::existsCategory($this->id))
-		{
+		if($this->id == null || !BackendCatalogModel::existsCategory($this->id)) {
 			$this->redirect(
 				BackendModel::createURLForAction('categories') . '&error=non-existing'
 			);
@@ -70,7 +69,6 @@ class EditCategory extends BackendBaseActionEdit
 		
 		//hidden values
 		$categories = BackendCatalogModel::getCategories(true);
-		
 		
 		$this->frm->addDropdown('parent_id', $categories, $this->record['parent_id']);
 
@@ -97,31 +95,27 @@ class EditCategory extends BackendBaseActionEdit
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if($this->frm->isSubmitted()) {
 			$this->frm->cleanupFields();
 
 			$recordId = $this->record['id'];
 			$newParent = $this->frm->getField('parent_id')->getValue();
 			
-			if($recordId == $newParent)
-			{
-				die('same category');
+			if($recordId == $newParent) {
+				$this->frm->getField('parent_id')->setError(BL::err('SameCategory'));
 			}
 			
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
 			
-			if($this->frm->getField('image')->isFilled())
-			{
+			if($this->frm->getField('image')->isFilled()) {
 				$this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
 				$this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
 			}
 			
 			$this->meta->validate();
 			
-			if($this->frm->isCorrect())
-			{
+			if($this->frm->isCorrect()) {
 				// build item
 				$item['id'] = $this->id;
 				$item['language'] = $this->record['language'];
@@ -138,13 +132,13 @@ class EditCategory extends BackendBaseActionEdit
 				if (!$fs->exists($imagePath . '/150x150/')) {
 				    $fs->mkdir($imagePath . '/150x150/');
 				}
+				
 				if (!$fs->exists($imagePath . '/source/')) {
 				    $fs->mkdir($imagePath . '/source/');
 				}
 				
 				// image provided?
-				if($this->frm->getField('image')->isFilled())
-				{
+				if($this->frm->getField('image')->isFilled()) {
 					// build the image name
 					$item['image'] = $this->meta->getUrl() . '.' . $this->frm->getField('image')->getExtension();
 
@@ -166,7 +160,6 @@ class EditCategory extends BackendBaseActionEdit
 				$this->redirect(
 					BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']
 				);
-				
 			}
 		}
 	}

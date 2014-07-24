@@ -43,17 +43,14 @@ class MassCommentAction extends BackendBaseAction
 		if($action == 'delete') BackendCatalogModel::deleteComments($ids);
 
 		// spam
-		elseif($action == 'spam')
-		{
+		elseif($action == 'spam') {
 			// is the spamfilter active?
-			if(BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false))
-			{
+			if(BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false)) {
 				// get data
 				$comments = BackendCatalogModel::getComments($ids);
 
 				// loop comments
-				foreach($comments as $row)
-				{
+				foreach($comments as $row) {
 					// unserialize data
 					$row['data'] = unserialize($row['data']);
 
@@ -78,26 +75,19 @@ class MassCommentAction extends BackendBaseAction
 
 			// set new status
 			BackendCatalogModel::updateCommentStatuses($ids, $action);
-		}
-
-		// other actions (status updates)
-		else
-		{
+		} else {
+			// other actions data
 			// published?
-			if($action == 'published')
-			{
+			if($action == 'published') {
 				// is the spamfilter active?
-				if(BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false))
-				{
+				if(BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false)) {
 					// get data
 					$comments = BackendCatalogModel::getComments($ids);
 
 					// loop comments
-					foreach($comments as $row)
-					{
+					foreach($comments as $row) {
 						// previous status is spam
-						if($row['status'] == 'spam')
-						{
+						if($row['status'] == 'spam') {
 							// unserialize data
 							$row['data'] = unserialize($row['data']);
 
