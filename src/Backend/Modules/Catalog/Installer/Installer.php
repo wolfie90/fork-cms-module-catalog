@@ -164,8 +164,7 @@ class Installer extends ModuleInstaller
 		$this->insertExtra('Catalog', 'widget', 'ShoppingCart', 'ShoppingCart', null, 'N', 1005);
 		$this->insertExtra('Catalog', 'widget', 'RecentProducts', 'RecentProducts', null, 'N', 1006);
 		
-		foreach($this->getLanguages() as $language)
-		{
+		foreach($this->getLanguages() as $language) {
 			$this->defaultCategoryId = $this->getCategory($language);
 
 			// no category exists

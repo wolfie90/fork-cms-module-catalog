@@ -31,8 +31,7 @@ class SequenceCategories extends BackendBaseAJAXAction
 		$ids = (array) explode(',', rtrim($newIdSequence, ','));
 
 		// loop id's and set new sequence
-		foreach($ids as $i => $id)
-		{
+		foreach($ids as $i => $id) {
 			$item['id'] = $id;
 			$item['sequence'] = $i + 1;
 

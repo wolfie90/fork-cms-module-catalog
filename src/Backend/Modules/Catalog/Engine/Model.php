@@ -120,8 +120,7 @@ class Model
 		$db = BackendModel::getContainer()->get('database');
 		$item = self::getCategory($id);
 
-		if(!empty($item))
-		{
+		if(!empty($item)) {
 			$db->delete('meta', 'id = ?', array($item['meta_id']));
 			$db->delete('catalog_categories', 'id = ?', array((int) $id));
 			$db->update('catalog_products', array('category_id' => null), 'category_id = ?', array((int) $id));
@@ -209,8 +208,7 @@ class Model
 		$db = BackendModel::getContainer()->get('database');
 		$item = self::getSpecification($id);
 
-		if(!empty($item))
-		{
+		if(!empty($item)) {
 			$db->delete('meta', 'id = ?', array($item['meta_id']));
 			$db->delete('catalog_specifications', 'id = ?', array((int) $id));
 			$db->delete('catalog_specifications_values', 'specification_id = ?', array((int) $id));
@@ -272,14 +270,10 @@ class Model
 	public static function deleteRelatedProduct($productId, $relatedProductId = null)
 	{
 		// delete specific related product
-		if(isset($relatedProductId))
-		{
+		if(isset($relatedProductId)) {
 			BackendModel::getContainer()->get('database')->delete('catalog_related_products', 'product_id = ? AND related_product_id = ?', array((int) $productId, (int) $relatedProductId));
-		}
-		
-		// delete all related products from product
-		else
-		{
+		} else {
+			// delete all related products from product
 			BackendModel::getContainer()->get('database')->delete('catalog_related_products', 'product_id = ?', array((int) $productId));
 		}
 	}
@@ -291,8 +285,7 @@ class Model
 	{
 		if(empty($ids)) return;
 
-		foreach($ids as $id)
-		{
+		foreach($ids as $id) {
 			$item = self::getImage($id);
 			$product = self::get($item['product_id']);
 
@@ -319,8 +312,7 @@ class Model
 	{
 		if(empty($ids)) return;
 
-		foreach($ids as $id)
-		{
+		foreach($ids as $id) {
 			$item = self::getFile($id);
 			$product = self::get($item['product_id']);
 
@@ -340,8 +332,7 @@ class Model
 	{
 		if(empty($ids)) return;
 
-		foreach($ids as $id)
-		{
+		foreach($ids as $id) {
 			$item = self::getVideo($id);
 			$product = self::get($item['product_id']);
 			
@@ -543,8 +534,7 @@ class Model
 	{
 		$db = BackendModel::getContainer()->get('database');
 	
-		if($includeCount)
-		{
+		if($includeCount) {
 			$allCategories = (array) $db->getRecords(
 				'SELECT i.id, i.parent_id, CONCAT(i.title, " (", COUNT(p.category_id) ,")") AS title
 				 FROM catalog_categories AS i
@@ -574,10 +564,8 @@ class Model
 	 */
 	public static function buildTree(array &$tree, array $categories, $parentId = 0, $level = 0)
 	{
-		foreach($categories as $category)
-		{
-			if ($category['parent_id'] == $parentId)
-			{
+		foreach($categories as $category) {
+			if ($category['parent_id'] == $parentId) {
 				$tree[$category['id']] = str_repeat('-', $level). $category['title'];
 
 				$level++;
@@ -678,8 +666,7 @@ class Model
 		
 		$productsGroupedByCategory = array();
 		
-		foreach($allProducts as $pid => $product)
-		{			
+		foreach($allProducts as $pid => $product) {
 			$productsGroupedByCategory[$product['category_title']][$product['id']] = $product['title'];
 		}
 	
@@ -705,10 +692,8 @@ class Model
 		// build new keys (starting from zero)	
 		$i = 0;
 		
-		foreach($relatedProducts as $key => $value)
-		{
-			if(isset($relatedProducts[$key]))
-			{
+		foreach($relatedProducts as $key => $value) {
+			if(isset($relatedProducts[$key])) {
 				$relatedProducts[$i] = $relatedProducts[$key];
 				unset($relatedProducts[$key]);
 			}
@@ -800,11 +785,9 @@ class Model
 			array(BL::getWorkingLanguage(), $id)
 		);
 		
-		if($item == null)
-		{
+		if($item == null) {
 			return false;
-		} else
-		{
+		} else {
 			return true;
 		}
 	}
@@ -958,8 +941,7 @@ class Model
 		$db = BackendModel::getContainer()->get('database');
 
 		// new item
-		if($id === null)
-		{
+		if($id === null) {
 			// already exists
 			if((bool) $db->getVar(
 				'SELECT 1
@@ -972,11 +954,8 @@ class Model
 				$url = BackendModel::addNumber($url);
 				return self::getURL($url);
 			}
-		}
-		
-		// current item should be excluded
-		else
-		{
+		} else {
+			// current item should be excluded
 			// already exists
 			if((bool) $db->getVar(
 				'SELECT 1
@@ -1007,8 +986,7 @@ class Model
 		$db = BackendModel::getContainer()->get('database');
 
 		// new specification
-		if($id === null)
-		{
+		if($id === null) {
 			if((bool) $db->getVar(
 				'SELECT 1
 				 FROM catalog_specifications AS i
@@ -1054,8 +1032,7 @@ class Model
 		$db = BackendModel::getContainer()->get('database');
 
 		// new category
-		if($id === null)
-		{
+		if($id === null) {
 			if((bool) $db->getVar(
 				'SELECT 1
 				 FROM catalog_categories AS i
@@ -1067,11 +1044,8 @@ class Model
 				$url = BackendModel::addNumber($url);
 				return self::getURLForCategory($url);
 			}
-		}
-		
-		// current category should be excluded
-		else
-		{
+		} else {
+			// current category should be excluded
 			if((bool) $db->getVar(
 				'SELECT 1
 				 FROM catalog_categories AS i
@@ -1188,12 +1162,12 @@ class Model
 	public static function isCategoryAllowedToBeDeleted($id)
 	{
 		return ! (bool) BackendModel::getContainer()->get('database')->getVar('SELECT COUNT(i.id)
-														FROM catalog_products AS i
-														INNER JOIN catalog_categories AS c
-														WHERE i.category_id = ? OR c.parent_id = ?
-														',
-														array((int) $id, (int) $id));
-	}
+											FROM catalog_products AS i
+											INNER JOIN catalog_categories AS c
+											WHERE i.category_id = ? OR c.parent_id = ?
+											',
+											array((int) $id, (int) $id));
+				}
 
 	
 	/**
@@ -1223,8 +1197,7 @@ class Model
 			array('published', BL::getWorkingLanguage())
 		);
 
-		foreach($ids as $id)
-		{
+		foreach($ids as $id) {
 			// get count
 			$count = (isset($commentCounts[$id])) ? (int) $commentCounts[$id] : 0;
 
@@ -1249,31 +1222,24 @@ class Model
 		$item['product_id'] = $productId;
 		
 		// existing related products
-		if(isset($oRelatedProducts))
-		{
+		if(isset($oRelatedProducts)) {
 			// insert new records
 			$newRelatedProducts = array_diff($relatedProducts, $oRelatedProducts);
-			foreach($newRelatedProducts AS $key => $newRelatedProduct)
-			{
+			foreach($newRelatedProducts AS $key => $newRelatedProduct) {
 				$item['related_product_id'] = $newRelatedProduct;
 				self::insertRelatedProduct($item);
 			}
 			
 			// delete old records
 			$oldRelatedProducts = array_diff($oRelatedProducts, $relatedProducts);
-			foreach($oldRelatedProducts AS $key => $oldRelatedProduct)
-			{
+			foreach($oldRelatedProducts AS $key => $oldRelatedProduct) {
 				$item['related_product_id'] = $oldRelatedProduct;
 				self::deleteRelatedProduct($item['product_id'], $item['related_product_id']);
 			}
-		}
-		
-		// new related products
-		else
-		{
+		} else {
+			// new related products
 			// insert new records
-			foreach($relatedProducts AS $key => $relatedProduct)
-			{
+			foreach($relatedProducts AS $key => $relatedProduct) {
 				$item['related_product_id'] = $relatedProduct;
 				self::insertRelatedProduct($item);
 			}
@@ -1289,14 +1255,10 @@ class Model
 	public static function saveImage(array $item)
 	{
 		// update image
-		if(isset($item['id']) && self::existsImage($item['id']))
-		{
+		if(isset($item['id']) && self::existsImage($item['id'])) {
 			self::updateImage($item);
-		}
-		
-		// insert image
-		else
-		{
+		} else {
+			// insert image
 			$item['id'] = self::insertImage($item);
 		}
 
@@ -1313,14 +1275,10 @@ class Model
 	public static function saveFile(array $item)
 	{
 		// update file
-		if(isset($item['id']) && self::existsFile($item['id']))
-		{
+		if(isset($item['id']) && self::existsFile($item['id'])) {
 			self::updateFile($item);
-		}
-		
-		// insert file
-		else
-		{
+		} else {
+			// insert file
 			$item['id'] = self::insertFile($item);
 		}
 
@@ -1337,14 +1295,10 @@ class Model
 	public static function saveVideo(array $item)
 	{
 		// update video
-		if(isset($item['id']) && self::existsVideo($item['id']))
-		{
+		if(isset($item['id']) && self::existsVideo($item['id'])) {
 			self::updateVideo($item);
-		}
-		
-		// insert video
-		else
-		{
+		} else {
+			// insert video
 			$item['id'] = self::insertVideo($item);
 		}
 
@@ -1360,7 +1314,6 @@ class Model
 	public static function update(array $item)
 	{
 		$item['edited_on'] = BackendModel::getUTCDate();
-
 		BackendModel::getContainer()->get('database')->update('catalog_products', $item, 'id = ?', (int) $item['id']);
 	}
 
@@ -1423,8 +1376,7 @@ class Model
 		);
 
 		// only proceed if there are items
-		if(!empty($items))
-		{
+		if(!empty($items)) {
 			// get the ids
 			$itemIds = array_keys($items);
 
@@ -1464,8 +1416,7 @@ class Model
 		);
 
 		// only proceed if there are items
-		if(!empty($items))
-		{
+		if(!empty($items)) {
 			// get the ids
 			$itemIds = array_keys($items);
 
