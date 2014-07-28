@@ -185,8 +185,6 @@ class Model implements FrontendTagsInterface
 	*/
 	public static function getAllByCategory($categoryId, $limit = 10, $offset = 0)
 	{
-		//die(print_r($categoryId));
-		
 		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.*, m.url
 			 FROM catalog_products AS i
@@ -194,8 +192,6 @@ class Model implements FrontendTagsInterface
 			 WHERE i.category_id = ? AND i.language = ?
 			 ORDER BY i.sequence ASC, i.id DESC LIMIT ?, ?',
 			array($categoryId, FRONTEND_LANGUAGE, (int) $offset, (int) $limit));
-
-		//die(print_r($items));
 
 		// no results?
 		if(empty($items)) return array();
