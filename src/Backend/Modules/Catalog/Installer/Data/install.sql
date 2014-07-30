@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `catalog_products` (
   `category_id` int(11) NOT NULL,
   `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `price` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
   `summary` text COLLATE utf8_unicode_ci NOT NULL,
   `text` text COLLATE utf8_unicode_ci,
   `allow_comments` enum('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
