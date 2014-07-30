@@ -30,7 +30,7 @@
 							</div>
 							
 							{option:item.filename}
-								<p class="image"><img src="{$FRONTEND_FILES_URL}/catalog/{$product.id}/128x128/{$item.filename}"/></p>
+								<p class="image"><img src="{$FRONTEND_FILES_URL}/Catalog/{$product.id}/128x128/{$item.filename}"/></p>
 							{/option:item.filename}
 							
 							<div class="options">

@@ -127,16 +127,12 @@ class EditFile extends BackendBaseActionEdit
 				$item['id'] = $this->id;
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['filename'] = $this->file['filename'];
-								
+				
 				// the file path
 				$filePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/' . $this->project['id'] . '/source';
 				
 				if($file->isFilled()) {
-					// overwrite the filename
-					if($item['filename'] === null) {
-						$item['filename'] = time() . '.' . $file->getExtension();
-					}
-
+					$item['filename'] = time() . '.' . $file->getExtension();
 					$file->moveFile($filePath . '/' . $item['filename']);
 				}
 				

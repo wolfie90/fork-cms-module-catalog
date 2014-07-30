@@ -22,7 +22,7 @@ use Backend\Modules\Catalog\Engine\Helper as BackendCatalogHelper;
  * @author Bart De Clercq <info@lexxweb.be>
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogEditImage extends BackendBaseActionEdit
+class EditImage extends BackendBaseActionEdit
 {
 	/**
 	 * The product

@@ -15,7 +15,7 @@ namespace Backend\Modules\Catalog\Engine;
  * @author Bart De Clercq <info@lexxweb.be>
  * @author Tim van Wolfswinkel <tim@webleads.nl>
  */
-class BackendCatalogHelper
+class Helper
 {
 	
 	/**
@@ -34,7 +34,7 @@ class BackendCatalogHelper
 		if(empty($filefield) || empty($filename)) return false;
 
 		// create the path up to the source dir
-		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
+		if(!\SpoonDirectory::exists($path . '/source')) \SpoonDirectory::create($path . '/source');
 
 		// source path
 		$pathSource = $path . '/source';
@@ -67,7 +67,7 @@ class BackendCatalogHelper
 		if(empty($filename)) return false;
 
 		// create the path up to the source dir
-		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
+		if(!\SpoonDirectory::exists($path . '/source')) \SpoonDirectory::create($path . '/source');
 
 		// source path
 		$pathSource = $path . '/source';
@@ -77,7 +77,7 @@ class BackendCatalogHelper
 			// loop the formats
 			foreach($formats as $format) {
 				// create the path for this product
-				if(!SpoonDirectory::exists($path . '/' . $format['size'])) SpoonDirectory::create($path . '/' . $format['size']);
+				if(!\SpoonDirectory::exists($path . '/' . $format['size'])) \SpoonDirectory::create($path . '/' . $format['size']);
 
 				// exploded format
 				$explodedFormat = explode('x', $format['size']);
@@ -97,7 +97,7 @@ class BackendCatalogHelper
 				if(empty($height)) $height = null;
 
 				// make a thumbnail for the provided format
-				$thumbnail = new SpoonThumbnail($pathSource . '/' . $filename, $width, ($forceAspectRatio ? null : $height));
+				$thumbnail = new \SpoonThumbnail($pathSource . '/' . $filename, $width, ($forceAspectRatio ? null : $height));
 				$thumbnail->setAllowEnlargement($allowEnlargement);
 				$thumbnail->setForceOriginalAspectRatio($forceAspectRatio);
 				$success[] = $thumbnail->parseToFile($path . '/' . $format['size'] . '/' . $filename);
@@ -125,7 +125,7 @@ class BackendCatalogHelper
 	public static function getSupportedMethodsByModule($module)
 	{
 		$helperFile = FRONTEND_MODULES_PATH . '/' . $module . '/engine/slideshows.php';
-		$helperFileContents = SpoonFile::getContent($helperFile);
+		$helperFileContents = \SpoonFile::getContent($helperFile);
 		$results = array();
 
 		preg_match_all('/public static function (.*)\((.*)\)/', $helperFileContents, $matches);
@@ -133,7 +133,7 @@ class BackendCatalogHelper
 		if(isset($matches[1]) && !empty($matches[1])) {
 			foreach($matches[1] as $key => $method)
 			{
-				$results[$key]['class'] = 'Frontend' . SpoonFilter::toCamelCase($module) . 'SlideshowsModel';
+				$results[$key]['class'] = 'Frontend' . \SpoonFilter::toCamelCase($module) . 'SlideshowsModel';
 				$results[$key]['methods'][] = $method;
 			}
 		}
@@ -221,10 +221,10 @@ class BackendCatalogHelper
 	 */
 	public static function writeHelperFile($module)
 	{
-		$camelcasedModule = SpoonFilter::toCamelCase($module);
+		$camelcasedModule = \SpoonFilter::toCamelCase($module);
 		$helperFile = FRONTEND_MODULES_PATH . '/' . $module . '/engine/slideshows.php';
 
-		if(!SpoonFile::exists($helperFile)) {
+		if(!\SpoonFile::exists($helperFile)) {
 			$content = '<?php
 						class Frontend' . $camelcasedModule . 'SlideshowsModel
 						{
@@ -241,7 +241,7 @@ class BackendCatalogHelper
 						}
 						';
 
-			SpoonFile::setContent($helperFile, $content);
+			\SpoonFile::setContent($helperFile, $content);
 		}
 	}
 }
