@@ -689,9 +689,9 @@ class Model
 			 WHERE r.product_id = ?',
 			 array((int) $id));
 
-		// build new keys (starting from zero)	
 		$i = 0;
 		
+		// build new keys (starting from zero)	
 		foreach($relatedProducts as $key => $value) {
 			if(isset($relatedProducts[$key])) {
 				$relatedProducts[$i] = $relatedProducts[$key];
