@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 	<name>Catalog</name>
-	<version>1.0.0</version>
+	<version>1.0.2</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
 	</requirements>
