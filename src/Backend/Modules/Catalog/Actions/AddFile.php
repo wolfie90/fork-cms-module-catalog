@@ -27,22 +27,22 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class AddFile extends BackendBaseActionAdd
 {
-    /**
-     * The product id
-     *
-     * @var	int
-     */
-    private $id;
-
-    /**
-     * The allowed file extensions
-     *
-     * @var	array
-     *
-     */
-    private $allowedExtensions = array('pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pps', 'ppsx', 'zip');
-
-    /**
+	/**
+	 * The product id
+	 *
+	 * @var	int
+	 */
+	private $id;
+    
+	/**
+	 * The allowed file extensions
+	 *
+	 * @var	array
+	 *
+	 */
+	private $allowedExtensions = array('pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pps', 'ppsx', 'zip');
+    
+	/**
 	 * The product record
 	 *
 	 * @var	array

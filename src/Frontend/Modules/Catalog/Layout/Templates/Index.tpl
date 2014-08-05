@@ -7,7 +7,9 @@
 *}
 
 {option:!categoriesHTML}
+<div class="no-categories">
  {$msgNoCategories|ucfirst}
+</div>
 {/option:!categoriesHTML}
 
 {option:categoriesHTML}
