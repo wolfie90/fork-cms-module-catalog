@@ -136,7 +136,7 @@ class EditOrder extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_order', array('item' => $order));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('orders') . '&report=edited-order&id=' . $order['id'] . '&highlight=row-' . $order['id'] . '#tab' . SpoonFilter::toCamelCase($this->record['status']));
+				$this->redirect(BackendModel::createURLForAction('orders') . '&report=edited-order&id=' . $order['id'] . '&highlight=row-' . $order['id'] . '#tab' . ucwords($this->record['status']));
 			}
 		}
 	}

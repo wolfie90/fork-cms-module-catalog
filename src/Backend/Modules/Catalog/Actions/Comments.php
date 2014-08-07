@@ -79,7 +79,7 @@ class Comments extends BackendBaseActionIndex
 		$this->dgPublished->setPagingLimit(30);
 
 		// header labels
-		$this->dgPublished->setHeaderLabels(array('created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))));
+		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::lbl('Date')), 'text' => ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgPublished->setMassActionCheckboxes('checkbox', '[id]');
@@ -125,7 +125,7 @@ class Comments extends BackendBaseActionIndex
 		$this->dgModeration->setPagingLimit(30);
 
 		// header labels
-		$this->dgModeration->setHeaderLabels(array('created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))));
+		$this->dgModeration->setHeaderLabels(array('created_on' => ucfirst(BL::lbl('Date')), 'text' => ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
@@ -171,7 +171,7 @@ class Comments extends BackendBaseActionIndex
 		$this->dgSpam->setPagingLimit(30);
 
 		// header labels
-		$this->dgSpam->setHeaderLabels(array('created_on' => \SpoonFilter::ucfirst(BL::lbl('Date')), 'text' => \SpoonFilter::ucfirst(BL::lbl('Comment'))));
+		$this->dgSpam->setHeaderLabels(array('created_on' => ucfirst(BL::lbl('Date')), 'text' => ucfirst(BL::lbl('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgSpam->setMassActionCheckboxes('checkbox', '[id]');

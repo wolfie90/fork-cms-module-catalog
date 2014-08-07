@@ -53,6 +53,6 @@ class MassOrderAction extends BackendBaseAction
 		if($action == 'delete') $report .= 'deleted';
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('orders') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
+		$this->redirect(BackendModel::createURLForAction('orders') . '&report=' . $report . '#tab' . ucfirst($from));
 	}
 }

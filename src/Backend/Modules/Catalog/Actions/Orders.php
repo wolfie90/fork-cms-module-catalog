@@ -77,7 +77,7 @@ class Orders extends BackendBaseActionIndex
 		$this->dgModeration->setPagingLimit(30);
 
 		// header labels
-		$this->dgModeration->setHeaderLabels(array('ordered_on' => \SpoonFilter::ucfirst(BL::lbl('Date'))));
+		$this->dgModeration->setHeaderLabels(array('ordered_on' => ucfirst(BL::lbl('Date'))));
 
 		// add the multicheckbox column
 		$this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
@@ -121,7 +121,7 @@ class Orders extends BackendBaseActionIndex
 		$this->dgCompleted->setPagingLimit(30);
 
 		// header labels
-		$this->dgCompleted->setHeaderLabels(array('ordered_on' => \SpoonFilter::ucfirst(BL::lbl('Date'))));
+		$this->dgCompleted->setHeaderLabels(array('ordered_on' => ucfirst(BL::lbl('Date'))));
 
 		// add the multicheckbox column
 		$this->dgCompleted->setMassActionCheckboxes('checkbox', '[id]');

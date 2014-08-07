@@ -133,7 +133,7 @@ class Helper
 		if(isset($matches[1]) && !empty($matches[1])) {
 			foreach($matches[1] as $key => $method)
 			{
-				$results[$key]['class'] = 'Frontend' . \SpoonFilter::toCamelCase($module) . 'SlideshowsModel';
+				$results[$key]['class'] = 'Frontend' . ucwords($module) . 'SlideshowsModel';
 				$results[$key]['methods'][] = $method;
 			}
 		}
@@ -221,7 +221,7 @@ class Helper
 	 */
 	public static function writeHelperFile($module)
 	{
-		$camelcasedModule = \SpoonFilter::toCamelCase($module);
+		$camelcasedModule = ucwords($module);
 		$helperFile = FRONTEND_MODULES_PATH . '/' . $module . '/engine/slideshows.php';
 
 		if(!\SpoonFile::exists($helperFile)) {

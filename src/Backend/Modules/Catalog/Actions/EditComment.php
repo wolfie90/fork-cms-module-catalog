@@ -108,7 +108,7 @@ class EditComment extends BackendBaseActionEdit
 				BackendModel::triggerEvent($this->getModule(), 'after_edit_comment', array('item' => $item));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('comments') . '&report=edited-comment&id=' . $item['id'] . '&highlight=row-' . $item['id'] . '#tab' . SpoonFilter::toCamelCase($item['status']));
+				$this->redirect(BackendModel::createURLForAction('comments') . '&report=edited-comment&id=' . $item['id'] . '&highlight=row-' . $item['id'] . '#tab' . ucwords($item['status']));
 			}
 		}
 	}
