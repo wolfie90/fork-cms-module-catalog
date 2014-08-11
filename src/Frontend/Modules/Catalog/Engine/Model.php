@@ -1045,13 +1045,11 @@ class Model implements FrontendTagsInterface
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 WHERE m.url = ?', array((string)$URL));
 
-
 		// no results?
 		if(empty($item)) return array();
 
 		// create full url
 		$item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Brand') . '/' . $item['url'];
-
 
 		return $item;
 	}
@@ -1089,6 +1087,35 @@ class Model implements FrontendTagsInterface
 		}
 
 		// return
+		return $items;
+	}
+
+	/**
+	 * Get all categories
+	 *
+	 * @param int $id
+	 * @param string $url
+	 * @return array
+	 */
+	public static function getAllBrands()
+	{
+
+		$items = (array)FrontendModel::getContainer()->get('database')->getRecords('SELECT i.id, i.title,i.image, m.url, COUNT(p.id) AS total, m.data AS meta_data
+				 FROM catalog_brands AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 LEFT OUTER JOIN catalog_products AS p ON p.brand_id = i.id
+				 GROUP BY i.id
+				 ORDER BY i.sequence',null, 'id');
+
+
+		foreach($items as &$row)
+		{
+			// create full url
+			$row['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Brand') . '/' . $row['url'];
+
+			if(isset($row['meta_data'])) $row['meta_data'] = @unserialize($row['meta_data']);
+		}
+
 		return $items;
 	}
 }

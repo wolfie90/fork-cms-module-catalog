@@ -18,7 +18,7 @@ use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
 /**
  * This is the category-action, it will display the overview of products/subcategories within a category
  *
- * @author Tim van Wolfswinkel <tim@webleads.nl>
+ * @author Waldo Cosman <waldo_cosman@hotmail.com>
  */
 class Brand extends FrontendBaseBlock
 {
