@@ -21,7 +21,7 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
 /**
  * This is the add category-action, it will display a form to create a new category
  *
- * @author Waldo Cosman<waldo@comsa.be>
+ * @author Waldo Cosman<waldo_cosman@hotmail.com>
  */
 class AddBrand extends BackendBaseActionAdd
 {
@@ -58,7 +58,6 @@ class AddBrand extends BackendBaseActionAdd
 	 */
 	private function validateForm()
 	{
-
 
 		if($this->frm->isSubmitted())
 		{
@@ -105,10 +104,8 @@ class AddBrand extends BackendBaseActionAdd
 					// upload the image & generate thumbnails
 					$this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
 				}
-
 				// save the data
 				$item['id'] = BackendCatalogModel::insertBrand($item);
-
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_add_brand', array('item' => $item));
