@@ -16,8 +16,8 @@
 {/option:dataGrid}
 
 {option:!dataGrid}
-{$msgNoCategories|ucfirst}
 {/option:!dataGrid}
+{$msgNoBrands|ucfirst}
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
