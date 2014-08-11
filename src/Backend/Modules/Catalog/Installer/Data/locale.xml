@@ -234,6 +234,10 @@
 				<translation language="nl"><![CDATA[Alle afgeronde bestellingen werden verwijderd.]]></translation>
 				<translation language="en"><![CDATA[All completed orders are deleted.]]></translation>
 			</item>
+            <item type="message" name="DeletedBrand">
+                <translation language="nl"><![CDATA[Het merk werd verwijderd.]]></translation>
+                <translation language="en"><![CDATA[The brand is deleted.]]></translation>
+            </item>
 			<item type="message" name="EditCommentOn">
 				<translation language="nl"><![CDATA[bewerk reactie op &quot;%1$s&quot;]]></translation>
 				<translation language="en"><![CDATA[edit comment on &quot;%1$s&quot;]]></translation>
@@ -334,6 +338,26 @@
 			    <translation language="nl"><![CDATA[Je kunt geen categorie in zichzelf plaatsen.]]></translation>
 			    <translation language="en"><![CDATA[You cannot add a category in itself.]]></translation>
 			</item>
+            <item type="label" name="AddBrand">
+                <translation language="nl"><![CDATA[merk toevoegen]]></translation>
+                <translation language="en"><![CDATA[add brand]]></translation>
+            </item>
+            <item type="label" name="Brands">
+                <translation language="nl"><![CDATA[merken]]></translation>
+                <translation language="en"><![CDATA[brands]]></translation>
+            </item>
+            <item type="label" name="Brand">
+                <translation language="nl"><![CDATA[merk]]></translation>
+                <translation language="en"><![CDATA[brand]]></translation>
+            </item>
+            <item type="label" name="EditBrand">
+                <translation language="nl"><![CDATA[merk bewerken]]></translation>
+                <translation language="en"><![CDATA[edit brand]]></translation>
+            </item>
+            <item type="message" name="EditedBrand">
+                <translation language="nl"><![CDATA[Het merk werd opgeslagen.]]></translation>
+                <translation language="en"><![CDATA[The brand is saved.]]></translation>
+            </item>
 		</Catalog>
 		<Core>
 			<item type="label" name="Catalog">

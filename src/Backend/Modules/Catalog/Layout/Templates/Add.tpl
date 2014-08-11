@@ -92,6 +92,10 @@
 								<label for="tags">{$lblTags|ucfirst}</label>
 								{$txtTags} {$txtTagsError}
 							</div>
+                            <div class="options">
+                                <label for="brandId">{$lblBrand|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                                {$ddmBrandId} {$ddmBrandIdError}
+                            </div>
 							
 						</div>
 						
