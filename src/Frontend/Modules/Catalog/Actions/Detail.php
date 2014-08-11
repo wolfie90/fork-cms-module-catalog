@@ -80,6 +80,13 @@ class Detail extends FrontendBaseBlock
      */
     private $images;
 
+	/**
+	 * Brand from a product
+	 *
+	 * @var	array
+	 */
+	private $brand;
+
     /**
 	 * Execute the action
 	 */
@@ -113,9 +120,11 @@ class Detail extends FrontendBaseBlock
 		$this->files = FrontendCatalogModel::getFiles($this->record['id']);
 		$this->videos = FrontendCatalogModel::getVideos($this->record['id']);
 		$this->relatedProducts = FrontendCatalogModel::getRelatedProducts($this->record['id']);
-		
+		$this->brand = FrontendCatalogModel::getBrand($this->record['brand_id']);
+
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
-		
+		$this->record['brand'] = $this->brand;
+
 		// reset allow comments
 		if(!$this->settings['allow_comments']) $this->record['allow_comments'] = false;
 
