@@ -157,7 +157,14 @@ class Installer extends ModuleInstaller
 		
 		// settings
 		$this->setActionRights(1, 'Catalog', 'Settings');
-		
+
+		// categories
+		$this->setActionRights(1, 'Catalog', 'Brands');
+		$this->setActionRights(1, 'Catalog', 'AddBrand');
+		$this->setActionRights(1, 'Catalog', 'EditBrand');
+		$this->setActionRights(1, 'Catalog', 'DeleteBrand');
+		$this->setActionRights(1, 'Catalog', 'SequenceBrands');
+
 		// add extra's
 		$catalogId = $this->insertExtra('Catalog', 'block', 'Catalog', null, null, 'N', 1000);
 		$this->insertExtra('Catalog', 'widget', 'Categories', 'Categories', null, 'N', 1004);
@@ -200,6 +207,7 @@ class Installer extends ModuleInstaller
 		$this->setNavigation($navigationCatalogId, 'Specifications', 'catalog/specifications', array('catalog/add_specification', 'catalog/edit_specification'));
 		$this->setNavigation($navigationCatalogId, 'Comments', 'catalog/comments', array('catalog/edit_comment'));
 		$this->setNavigation($navigationCatalogId, 'Orders', 'catalog/orders', array('catalog/edit_order'));
+		$this->setNavigation($navigationCatalogId, 'Brands', 'catalog/brands', array('catalog/add_brand','catalog/edit_brand'));
 
 		// settings navigation
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
