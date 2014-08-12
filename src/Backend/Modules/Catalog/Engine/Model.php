@@ -68,6 +68,15 @@ class Model
 		 GROUP BY c.id
 		 ORDER BY c.sequence ASC';
 
+	const QRY_DATAGRID_BROWSE_CATEGORIES_WITH_CATEGORYID = 'SELECT c.id, c.title, COUNT(i.id) AS num_products, c.sequence
+		 FROM catalog_categories AS c
+		 LEFT OUTER JOIN catalog_products AS i
+			ON c.id = i.category_id
+			AND i.language = c.language
+		 WHERE c.parent_id = ? AND c.language = ?
+		 GROUP BY c.id
+		 ORDER BY c.sequence ASC';
+
 	const QRY_DATAGRID_BROWSE_SPECIFICATIONS = 'SELECT c.id, c.title AS specification, c.sequence
 		 FROM catalog_specifications AS c
 		 WHERE c.language = ?
@@ -541,6 +550,7 @@ class Model
 				 WHERE i.language = ?
 				 GROUP BY i.id
 				 ORDER BY i.sequence', array(BL::getWorkingLanguage()));
+
 
 			$tree = array();
 

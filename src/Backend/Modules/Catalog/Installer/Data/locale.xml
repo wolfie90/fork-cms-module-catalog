@@ -362,6 +362,10 @@
                 <translation language="nl"><![CDATA[Het merk werd opgeslagen.]]></translation>
                 <translation language="en"><![CDATA[The brand is saved.]]></translation>
             </item>
+            <item type="message" name="ShowOnlyCategoriesUnderCategory">
+                <translation language="nl"><![CDATA[Toon enkel categorieen onder de categorie:]]></translation>
+                <translation language="en"><![CDATA[Show only categories under:]]></translation>
+            </item>
 		</Catalog>
 		<Core>
 			<item type="label" name="Catalog">
