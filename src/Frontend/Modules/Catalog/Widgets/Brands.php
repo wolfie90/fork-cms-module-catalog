@@ -38,9 +38,6 @@ class Brands extends FrontendBaseWidget
 	{
 		// get categories
 		$brands = FrontendCatalogModel::getAllBrands();
-print "<pre>";
-print_r($brands);
-die();
 
 		// assign comments
 		$this->tpl->assign('widgetCatalogBrands', $brands);
