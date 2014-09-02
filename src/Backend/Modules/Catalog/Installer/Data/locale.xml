@@ -38,6 +38,10 @@
 				<translation language="nl"><![CDATA[Er zijn nog geen video's toegevoegd.]]></translation>
 				<translation language="en"><![CDATA[There are no videos added yet.]]></translation>
 			</item>
+            <item type="message" name="NoBrands">
+                <translation language="nl"><![CDATA[Er zijn nog geen merken toegevoegd.]]></translation>
+                <translation language="en"><![CDATA[There are no brands added yet.]]></translation>
+            </item>
 			<item type="label" name="EmbeddedUrl">
 				<translation language="nl"><![CDATA[embedded url]]></translation>
 				<translation language="en"><![CDATA[embedded url]]></translation>
@@ -234,6 +238,10 @@
 				<translation language="nl"><![CDATA[Alle afgeronde bestellingen werden verwijderd.]]></translation>
 				<translation language="en"><![CDATA[All completed orders are deleted.]]></translation>
 			</item>
+            <item type="message" name="DeletedBrand">
+                <translation language="nl"><![CDATA[Het merk werd verwijderd.]]></translation>
+                <translation language="en"><![CDATA[The brand is deleted.]]></translation>
+            </item>
 			<item type="message" name="EditCommentOn">
 				<translation language="nl"><![CDATA[bewerk reactie op &quot;%1$s&quot;]]></translation>
 				<translation language="en"><![CDATA[edit comment on &quot;%1$s&quot;]]></translation>
@@ -334,6 +342,30 @@
 			    <translation language="nl"><![CDATA[Je kunt geen categorie in zichzelf plaatsen.]]></translation>
 			    <translation language="en"><![CDATA[You cannot add a category in itself.]]></translation>
 			</item>
+            <item type="label" name="AddBrand">
+                <translation language="nl"><![CDATA[merk toevoegen]]></translation>
+                <translation language="en"><![CDATA[add brand]]></translation>
+            </item>
+            <item type="label" name="Brands">
+                <translation language="nl"><![CDATA[merken]]></translation>
+                <translation language="en"><![CDATA[brands]]></translation>
+            </item>
+            <item type="label" name="Brand">
+                <translation language="nl"><![CDATA[merk]]></translation>
+                <translation language="en"><![CDATA[brand]]></translation>
+            </item>
+            <item type="message" name="EditBrand">
+                <translation language="nl"><![CDATA[merk bewerken]]></translation>
+                <translation language="en"><![CDATA[edit brand]]></translation>
+            </item>
+            <item type="message" name="EditedBrand">
+                <translation language="nl"><![CDATA[Het merk werd opgeslagen.]]></translation>
+                <translation language="en"><![CDATA[The brand is saved.]]></translation>
+            </item>
+            <item type="message" name="ShowOnlyCategoriesUnderCategory">
+                <translation language="nl"><![CDATA[Toon enkel categorieen onder de categorie:]]></translation>
+                <translation language="en"><![CDATA[Show only categories under:]]></translation>
+            </item>
 		</Catalog>
 		<Core>
 			<item type="label" name="Catalog">
@@ -525,6 +557,18 @@
 				<translation language="nl"><![CDATA[bestelling-ontvangen]]></translation>
 				<translation language="en"><![CDATA[order-received]]></translation>
 			</item>
+            <item type="action" name="Brand">
+                <translation language="nl"><![CDATA[merk]]></translation>
+                <translation language="en"><![CDATA[brand]]></translation>
+            </item>
+            <item type="label" name="Brand">
+                <translation language="nl"><![CDATA[merk]]></translation>
+                <translation language="en"><![CDATA[brand]]></translation>
+            </item>
+            <item type="label" name="Brands">
+                <translation language="nl"><![CDATA[merken]]></translation>
+                <translation language="en"><![CDATA[brands]]></translation>
+            </item>
 		</Core>
 	</Frontend>
 </locale>

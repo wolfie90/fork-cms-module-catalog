@@ -66,6 +66,13 @@ class Edit extends BackendBaseActionEdit
      */
     private $relatedProducts;
 
+	/**
+	 * All brands
+	 *
+	 * @var	array
+	 */
+	private $brands;
+
     /**
 	 * Execute the action
 	 */
@@ -102,6 +109,9 @@ class Edit extends BackendBaseActionEdit
 		$this->allProductsGroupedByCategories = (array) BackendCatalogModel::getAllProductsGroupedByCategories();
 		$this->relatedProducts = (array) BackendCatalogModel::getRelatedProducts($this->id);
 		$this->specifications = (array) BackendCatalogModel::getSpecifications();
+
+		// get brands
+		$this->brands = BackendCatalogModel::getBrandsForDropdown();
 	}
 
 	/**
@@ -121,7 +131,9 @@ class Edit extends BackendBaseActionEdit
 		
 		// categories
 		$this->frm->addDropdown('category_id', $this->categories, $this->record['category_id']);
-		
+
+		$this->frm->addDropdown('brand_id', $this->brands, $this->record['brand_id']);
+
 		$specificationsHTML = array();
 		
 		// specifications
@@ -200,6 +212,7 @@ class Edit extends BackendBaseActionEdit
 				$item['text'] = $fields['text']->getValue();
 				$item['sequence'] = BackendCatalogModel::getMaximumSequence() + 1;
 				$item['category_id'] = $this->frm->getField('category_id')->getValue();
+				$item['brand_id'] = $fields['brand_id']->getValue();
 
 				$item['meta_id'] = $this->meta->save();
 

@@ -23,7 +23,8 @@
 	<div class="title"><h1>{$item.title}</h1></div>
 	<div class="price"><p><b>{$lblPrice|ucfirst}:</b> {$item.price|formatcurrency}</p></div>
 	<div class="category"><p><b>{$lblCategory|ucfirst}:</b> <a href="{$item.category_full_url}">{$item.category_title}</a></p></div>
-	
+	<div class="brand"><p><b>{$lblBrand|ucfirst}:</b> <a href="{$item.brand.full_url}">{$item.brand.title}</a></p></div>
+
 	<!--<div class="summary">{$item.summary}</div>-->
 	<div class="content">
 		<p><b>{$lblContent|ucfirst}:</b></p>

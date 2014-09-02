@@ -9,6 +9,13 @@
 	</div>
 </div>
 
+{form:filter}
+    <p class="oneLiner">
+        <label for="category">{$msgShowOnlyCategoriesUnderCategory}</label>
+        &nbsp;{$ddmCategory} {$ddmCategoryError}
+    </p>
+{/form:filter}
+
 {option:dataGrid}
 	<div class="dataGridHolder">
 		{$dataGrid}
