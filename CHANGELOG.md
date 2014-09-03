@@ -1,3 +1,10 @@
+2.1.1 (2014-xx-xx)
+--
+
+Improvements:
+
+* You can now add brands and attach products to them
+
 2.0.1 (2014-07-21)
 --
 
