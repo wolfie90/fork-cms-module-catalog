@@ -27,6 +27,7 @@ NOTE: The .zip file is too large to upload within the cms itself (because of exa
 * Add products in categories and subcategories
 * Add dynamic specifications
 * Add images, files and videos to a product
+* Add brands and attach products to them
 
 ## Improvements
 
