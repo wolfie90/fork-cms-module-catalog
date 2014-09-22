@@ -39,7 +39,7 @@ class Categories extends FrontendBaseWidget
 		$categories = FrontendCatalogModel::getAllCategories();
 		
 		// get tree of all categories
-		$tree = FrontendCatalogModel::getCategoryTree();
+		$tree = FrontendCatalogModel::getCategoriesTree();
 			
 		// any categories?
 		if(!empty($categories)) {
