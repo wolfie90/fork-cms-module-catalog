@@ -41,7 +41,9 @@ class Installer extends ModuleInstaller
 		$item['language'] = (string) $language;
 		$item['title'] = (string) $title;
 		$item['created_on'] = gmdate('Y-m-d H:i:00');
+		$item['edited_on'] = gmdate('Y-m-d H:i:00');
 		$item['parent_id'] = (int) $parentId;
+		$item['image'] = '';
 		$item['sequence'] = 1;
 
 		return (int) $this->getDB()->insert('catalog_categories', $item);
@@ -66,9 +68,6 @@ class Installer extends ModuleInstaller
 	{
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
-		// add 'catalog' as a module
-		$this->addModule('Catalog');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
@@ -214,6 +213,9 @@ class Installer extends ModuleInstaller
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Catalog', 'catalog/settings');
+
+		// add 'catalog' as a module
+		$this->addModule('Catalog');
 	}
 	
 	/**
@@ -253,6 +255,7 @@ class Installer extends ModuleInstaller
 						Etiam porttitor faucibus viverra.',
 				'text' => ' This is the main text of the product.',				
 				'created_on' => gmdate('Y-m-d H:i:00'),
+				'edited_on' => gmdate('Y-m-d H:i:00'),
 				'price' => '399',
 				'allow_comments' => 'Y',
 				'num_comments' => '0',
