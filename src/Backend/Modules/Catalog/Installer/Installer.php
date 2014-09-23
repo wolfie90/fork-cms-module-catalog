@@ -69,9 +69,6 @@ class Installer extends ModuleInstaller
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/Data/install.sql');
 
-		// add 'catalog' as a module
-		$this->addModule('Catalog');
-
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 		
@@ -216,6 +213,9 @@ class Installer extends ModuleInstaller
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Catalog', 'catalog/settings');
+
+		// add 'catalog' as a module
+		$this->addModule('Catalog');
 	}
 	
 	/**
