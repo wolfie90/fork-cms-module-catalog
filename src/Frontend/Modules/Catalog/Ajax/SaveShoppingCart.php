@@ -44,7 +44,7 @@ class SaveShoppingCart extends FrontendBaseAJAXAction
 		
 		// get cookie 
 		$cookieOrderId = Cookie::get('order_id');
-		
+
 		// check if cookies are enabled
 		$cookiesEnabled = Cookie::set('enabled', 'true');
 		$cookieExists = Cookie::exists('enabled');		

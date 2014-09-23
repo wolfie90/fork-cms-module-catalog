@@ -967,13 +967,13 @@ class Model implements FrontendTagsInterface
 	 */
 	public static function deleteOrderValue($orderId, $productId)
 	{
-		$db = BackendModel::getContainer()->get('database');
+		$db = FrontendModel::getContainer()->get('database');
 
 		// update record
 		$db->delete('catalog_orders_values', 'order_id = ? AND product_id = ?', array((int)$orderId, (int)$productId));
 
 		// invalidate the cache for catalog
-		BackendModel::invalidateFrontendCache('catalog', BL::getWorkingLanguage());
+		//FrontendModel::invalidateFrontendCache('catalog', BL::getWorkingLanguage());
 	}
 
 	/**
