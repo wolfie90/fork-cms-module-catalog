@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `catalog_videos` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
-CREATE TABLE `catalog_brands` (
+CREATE TABLE IF NOT EXISTS `catalog_brands` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `meta_id` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
