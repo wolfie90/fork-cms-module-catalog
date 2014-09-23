@@ -82,7 +82,9 @@ class AddCategory extends BackendBaseActionAdd
 				$item['language'] = BL::getWorkingLanguage();
 				$item['meta_id'] = $this->meta->save();
 				$item['sequence'] = BackendCatalogModel::getMaximumCategorySequence() + 1;
-				$item['parent_id'] = $this->frm->getField('parent_id')->getValue();				
+				if ($this->frm->getField('parent_id')->getValue() <> 'no_category') {
+					$item['parent_id'] = $this->frm->getField('parent_id')->getValue();
+				}
 				
 				// the image path
 				$imagePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/catalog_categories';
