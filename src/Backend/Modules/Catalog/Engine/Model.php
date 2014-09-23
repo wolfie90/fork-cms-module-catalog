@@ -1117,7 +1117,7 @@ class Model
 	public static function insert(array $item)
 	{
 		$item['created_on'] = BackendModel::getUTCDate();
-
+	        $item['edited_on'] = BackendModel::getUTCDate();
 		return (int)BackendModel::getContainer()->get('database')->insert('catalog_products', $item);
 	}
 
@@ -1130,6 +1130,7 @@ class Model
 	public static function insertCategory(array $item)
 	{
 		$item['created_on'] = BackendModel::getUTCDate();
+	        $item['edited_on'] = BackendModel::getUTCDate();
 		return BackendModel::getContainer()->get('database')->insert('catalog_categories', $item);
 	}
 
@@ -1208,6 +1209,7 @@ class Model
 	public static function insertBrand(array $item)
 	{
 		$item['created_on'] = BackendModel::getUTCDate();
+	        $item['edited_on'] = BackendModel::getUTCDate();
 		return BackendModel::getContainer()->get('database')->insert('catalog_brands', $item);
 	}
 
