@@ -606,6 +606,9 @@ class Model implements FrontendTagsInterface
 		{
 			$item['image_thumb'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/64x64/' . $item['filename'];
 			$item['image_big'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/' . $settings["width1"] . 'x' . $settings["height1"] . '/' . $item['filename'];
+			$item['image_dim1'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/' . $settings["width1"] . 'x' . $settings["height1"] . '/' . $item['filename'];
+			$item['image_dim2'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/' . $settings["width2"] . 'x' . $settings["height2"] . '/' . $item['filename'];
+			$item['image_dim3'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/' . $settings["width3"] . 'x' . $settings["height3"] . '/' . $item['filename'];
 		}
 
 		return $items;
@@ -849,9 +852,9 @@ class Model implements FrontendTagsInterface
 		else $key = 'CATALOG_COMMENT';
 
 		$author = $comment['author'];
-		if(mb_strlen($author) > 20) $author = mb_substr($author, 0, 19) . '…';
+		if(mb_strlen($author) > 20) $author = mb_substr($author, 0, 19) . 'Â…';
 		$text = $comment['text'];
-		if(mb_strlen($text) > 50) $text = mb_substr($text, 0, 49) . '…';
+		if(mb_strlen($text) > 50) $text = mb_substr($text, 0, 49) . 'Â…';
 
 		$alert = array('loc-key' => $key, 'loc-args' => array($author, $text));
 
