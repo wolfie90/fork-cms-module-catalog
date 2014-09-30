@@ -4,6 +4,7 @@
 Improvements:
 
 * You can now add brands and attach products to them
+* You can now use tags data in the product action template (frontend)
 
 2.0.1 (2014-07-21)
 --
