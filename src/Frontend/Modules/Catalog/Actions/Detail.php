@@ -16,6 +16,7 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
  
 /**
  * This is the detail-action, it will display a product
@@ -37,6 +38,13 @@ class Detail extends FrontendBaseBlock
      * @var	array
      */
     private $specifications;
+
+   /**
+     * The tags of a product
+     *
+     * @var	array
+     */
+    private $tags;
 
     /**
      * The comments of a product
@@ -115,6 +123,7 @@ class Detail extends FrontendBaseBlock
 		$this->record = FrontendCatalogModel::get($this->URL->getParameter(1));
 		$this->comments = FrontendCatalogModel::getComments($this->record['id']);
 		$this->specifications = FrontendCatalogModel::getProductSpecifications($this->record['id']);
+	        $this->tags = FrontendTagsModel::getForItem('Catalog', $this->record['id']);
 		$this->settings = FrontendModel::getModuleSettings('Catalog');
 		$this->images = FrontendCatalogModel::getImages($this->record['id'], $this->settings);
 		$this->files = FrontendCatalogModel::getFiles($this->record['id']);
@@ -191,6 +200,7 @@ class Detail extends FrontendBaseBlock
 		if($this->videos != null) $this->tpl->assign('videos', $this->videos);
 		if($this->files != null) $this->tpl->assign('files', $this->files);
 		$this->tpl->assign('specifications', $this->specifications);
+		$this->tpl->assign('tags', $this->tags);
 		//$this->tpl->assign('related', $this->relatedProducts);
 		
 		// count comments
