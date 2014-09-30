@@ -116,7 +116,6 @@ class Detail extends FrontendBaseBlock
 		$this->comments = FrontendCatalogModel::getComments($this->record['id']);
 		$this->specifications = FrontendCatalogModel::getProductSpecifications($this->record['id']);
 		$this->settings = FrontendModel::getModuleSettings('Catalog');
-		$this->images = FrontendCatalogModel::getImages($this->record['id'], $this->settings);
 		$this->files = FrontendCatalogModel::getFiles($this->record['id']);
 		$this->videos = FrontendCatalogModel::getVideos($this->record['id']);
 		$this->relatedProducts = FrontendCatalogModel::getRelatedProducts($this->record['id']);
@@ -187,7 +186,7 @@ class Detail extends FrontendBaseBlock
 		
 		if(!empty($this->relatedProducts)) $this->tpl->assign('related', $this->relatedProducts);
 		
-		$this->tpl->assign('images', $this->images);
+		$this->tpl->assign('images', $this->record['images']);
 		if($this->videos != null) $this->tpl->assign('videos', $this->videos);
 		if($this->files != null) $this->tpl->assign('files', $this->files);
 		$this->tpl->assign('specifications', $this->specifications);

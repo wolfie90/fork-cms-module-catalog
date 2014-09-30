@@ -37,7 +37,7 @@
 			<p><b>{$lblImages|ucfirst}:</b></p>
 			<ul>
 				{iteration:images}
-				<li><img src="{$images.image_big}" alt="{$images.title}" title="{$images.title}" /></li>
+				<li><img src="{$images.image}" alt="{$images.title}" title="{$images.title}" /></li>
 				{/iteration:images}
 			</ul>
 		</div>
