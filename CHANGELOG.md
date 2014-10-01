@@ -5,6 +5,15 @@ Improvements:
 
 * You can now add brands and attach products to them
 * You can now use tags data in the product action template (frontend)
+* You can now access different image dimensions in the product action template (frontend)
+
+Bugfixes:
+
+* Some minor wrong references in the backend model
+* Category image not required
+* Handling edited_on field when inserting a product
+* Fixed broken installer procedure
+* Fixed wrong call categoriesTree()
 
 2.0.1 (2014-07-21)
 --
