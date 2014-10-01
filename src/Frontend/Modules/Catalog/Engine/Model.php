@@ -64,9 +64,13 @@ class Model implements FrontendTagsInterface
 		$item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Detail') . '/' . $item['url'];
 		$item['category_full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $item['category_url'];
 
-		// create image
-		$img = FrontendModel::getContainer()->get('database')->getRecord('SELECT * FROM catalog_images WHERE product_id = ? ORDER BY sequence', array((int)$item['id']));
-		if($img) $item['image'] = FRONTEND_FILES_URL . '/catalog/' . $item['id'] . '/200x200/' . $img['filename'];
+		// add images
+        if ($images = self::getImages((int)$item['id'])) {
+          // Use first image as the main image
+          $item = array_merge( $images[0], $item);
+          // Add the other images as array
+          $item['images'] = $images;
+        }
 
 		return $item;
 	}
@@ -588,10 +592,9 @@ class Model implements FrontendTagsInterface
 	 * Get all images for a product
 	 *
 	 * @param int $id
-	 * @param array $settings
 	 * @return array
 	 */
-	public static function getImages($id, $settings)
+	public static function getImages($id)
 	{
 		$items = (array)FrontendModel::getContainer()->get('database')->getRecords('SELECT i.*
 			 FROM catalog_images AS i
@@ -601,14 +604,16 @@ class Model implements FrontendTagsInterface
 		// init var
 		$link = FrontendNavigation::getURLForBlock('Catalog', 'Category');
 
-		// build the item url
+		// build the item urls
 		foreach($items as &$item)
 		{
-			$item['image_thumb'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/64x64/' . $item['filename'];
-			$item['image_big'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/' . $settings["width1"] . 'x' . $settings["height1"] . '/' . $item['filename'];
-			$item['image_dim1'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/' . $settings["width1"] . 'x' . $settings["height1"] . '/' . $item['filename'];
-			$item['image_dim2'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/' . $settings["width2"] . 'x' . $settings["height2"] . '/' . $item['filename'];
-			$item['image_dim3'] = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'] . '/' . $settings["width3"] . 'x' . $settings["height3"] . '/' . $item['filename'];
+            $basePath = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'];
+			$item['image'] = $basePath . '/source/' . $item['filename'];
+			$item['image_icon'] = $basePath . '/64x64/' . $item['filename'];
+			$item['image_thumb'] = $basePath . '/128x128/' . $item['filename'];
+			$item['image_dim1'] = $basePath . '/' . FrontendModel::getModuleSetting('Catalog', 'width1') . 'x' . FrontendModel::getModuleSetting('Catalog', 'height1') . '/' . $item['filename'];
+			$item['image_dim2'] = $basePath . '/' . FrontendModel::getModuleSetting('Catalog', 'width2') . 'x' . FrontendModel::getModuleSetting('Catalog', 'height2') . '/' . $item['filename'];
+			$item['image_dim3'] = $basePath . '/' . FrontendModel::getModuleSetting('Catalog', 'width3') . 'x' . FrontendModel::getModuleSetting('Catalog', 'height3') . '/' . $item['filename'];
 		}
 
 		return $items;
@@ -669,7 +674,6 @@ class Model implements FrontendTagsInterface
 	 * Get all files for a product
 	 *
 	 * @param int $id
-	 * @param array $settings
 	 * @return array
 	 */
 	public static function getFiles($id)
@@ -852,9 +856,9 @@ class Model implements FrontendTagsInterface
 		else $key = 'CATALOG_COMMENT';
 
 		$author = $comment['author'];
-		if(mb_strlen($author) > 20) $author = mb_substr($author, 0, 19) . '';
+		if(mb_strlen($author) > 20) $author = mb_substr($author, 0, 19) . '�';
 		$text = $comment['text'];
-		if(mb_strlen($text) > 50) $text = mb_substr($text, 0, 49) . '';
+		if(mb_strlen($text) > 50) $text = mb_substr($text, 0, 49) . '�';
 
 		$alert = array('loc-key' => $key, 'loc-args' => array($author, $text));
 
@@ -948,7 +952,7 @@ class Model implements FrontendTagsInterface
 	 */
 	public static function deleteCompletedOrders()
 	{
-		$db = BackendModel::getContainer()->get('database');
+		$db = FrontendModel::getContainer()->get('database');
 
 		// get ids
 		$itemIds = (array)$db->getColumn('SELECT i.id
@@ -959,7 +963,7 @@ class Model implements FrontendTagsInterface
 		$db->delete('catalog_orders', 'status = ?', array('completed'));
 
 		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('catalog', BL::getWorkingLanguage());
+		FrontendModel::invalidateFrontendCache('catalog', FL::getWorkingLanguage());
 	}
 
 	/**
@@ -976,7 +980,7 @@ class Model implements FrontendTagsInterface
 		$db->delete('catalog_orders_values', 'order_id = ? AND product_id = ?', array((int)$orderId, (int)$productId));
 
 		// invalidate the cache for catalog
-		//FrontendModel::invalidateFrontendCache('catalog', BL::getWorkingLanguage());
+		FrontendModel::invalidateFrontendCache('catalog', FL::getWorkingLanguage());
 	}
 
 	/**
@@ -1021,7 +1025,7 @@ class Model implements FrontendTagsInterface
 		$item = (array)FrontendModel::getContainer()->get('database')->getRecord('SELECT i.*,
 			 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 			 m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-			 m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.url
+			 m.title AS meta_title, m.title_overwrite AS meta_title_overwrite, m.url AS url
 			 FROM catalog_brands AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 WHERE i.id=?', array((int)$id));
