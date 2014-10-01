@@ -25,6 +25,11 @@ class Installer extends ModuleInstaller
 	 * @var	int
 	 */
 	private $defaultCategoryId;
+
+    /**
+     * @var	int
+     */
+    private $defaultBrandId;
 		
 	/**
 	 * Add a category for a language
@@ -48,6 +53,26 @@ class Installer extends ModuleInstaller
 
 		return (int) $this->getDB()->insert('catalog_categories', $item);
 	}
+
+    /**
+     * Add a default brand
+     *
+     * @param string $language
+     * @param string $title
+     * @param string $url
+     * @return int
+     */
+    private function addBrand($title, $url)
+    {
+        // build array
+        $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
+        $item['title'] = (string) $title;
+        $item['created_on'] = gmdate('Y-m-d H:i:00');
+        $item['edited_on'] = gmdate('Y-m-d H:i:00');
+        $item['sequence'] = 1;
+
+        return (int) $this->getDB()->insert('catalog_brands', $item);
+    }
 	
 	/**
 	 * Fetch the id of the first category in this language we come across
@@ -69,7 +94,10 @@ class Installer extends ModuleInstaller
 		// load install.sql
 		$this->importSQL(dirname(__FILE__) . '/Data/install.sql');
 
-		// import locale
+        // add 'catalog' as a module
+        $this->addModule('Catalog');
+
+        // import locale
 		$this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 		
 		// general settings
@@ -179,6 +207,9 @@ class Installer extends ModuleInstaller
 			{
 				$this->defaultCategoryId = $this->addCategory($language, 'Default', 'default', 0);
 			}
+
+			// add default brand
+            $this->defaultBrandId = $this->addBrand('Samsung', 'samsung');
 			
 			// check if a page for catalog already exists in this language
 			if(!(bool) $this->getDB()->getVar(
@@ -213,9 +244,6 @@ class Installer extends ModuleInstaller
 		$navigationSettingsId = $this->setNavigation(null, 'Settings');
 		$navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
 		$this->setNavigation($navigationModulesId, 'Catalog', 'catalog/settings');
-
-		// add 'catalog' as a module
-		$this->addModule('Catalog');
 	}
 	
 	/**
@@ -239,6 +267,7 @@ class Installer extends ModuleInstaller
 			// insert sample product
 			$productId = $db->insert( 'catalog_products', array(
 				'category_id' => $this->defaultCategoryId,
+                'brand_id' => $this->defaultBrandId,
 				'meta_id' => $this->insertMeta('Samsung', 'Samsung', 'Samsung', 'samsung'),
 				'language' => $language,
 				'title' => 'Samsung UN32F5500',
@@ -299,7 +328,7 @@ class Installer extends ModuleInstaller
 						'product_id' => $productId,
 						'title' => 'Front (Screen)',
 						'filename' => '1.png',
-						'sequence' => 1				
+						'sequence' => 1
 			));
 						
 			// insert sample image 2
