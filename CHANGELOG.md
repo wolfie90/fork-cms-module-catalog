@@ -1,4 +1,9 @@
-2.1.1 (2014-xx-xx)
+2.2.1 (2014-xx-xx)
+--
+
+To be announced..
+
+2.1.1 (2014-10-01)
 --
 
 Improvements:
