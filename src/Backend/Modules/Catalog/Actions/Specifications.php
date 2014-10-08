@@ -54,7 +54,7 @@ class Specifications extends BackendBaseActionIndex
 		);
 	
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit_specification')) {
+		if(BackendAuthentication::isAllowedAction('EditSpecification')) {
 			$this->dataGrid->setColumnURL('specification', BackendModel::createURLForAction('edit_specification') . '&amp;id=[id]');
 			
 			$this->dataGrid->addColumn(

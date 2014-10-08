@@ -100,12 +100,12 @@ class Orders extends BackendBaseActionIndex
 		$this->dgModeration->setMassAction($ddmMassAction);
 		
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit_order')) {
+		if(BackendAuthentication::isAllowedAction('EditOrder')) {
 			$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_order') . '&amp;id=[id]', BL::lbl('Edit'));
 		}
 
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('mass_order_action')) {
+		if(BackendAuthentication::isAllowedAction('MassOrderAction')) {
 			$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_order_action') . '&amp;id=[id]&amp;from=moderation&amp;action=completed', BL::lbl('Approve'));
 		}
 

@@ -98,7 +98,7 @@ class Index extends BackendBaseActionIndex
 		$this->dgProducts->setColumnsHidden(array('category_id', 'sequence'));
 		
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit')) {			
+		if(BackendAuthentication::isAllowedAction('Edit')) {			
 			// set column URLs
 			$this->dgProducts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId);
 
