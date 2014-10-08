@@ -46,7 +46,7 @@ class Brands extends BackendBaseActionIndex
 		$this->dataGrid = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_BRANDS);
 
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit_brand'))
+		if(BackendAuthentication::isAllowedAction('EditBrand'))
 		{
 			$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_brand') . '&amp;id=[id]');
 
@@ -55,7 +55,7 @@ class Brands extends BackendBaseActionIndex
 
 		// sequence
 		$this->dataGrid->enableSequenceByDragAndDrop();
-		$this->dataGrid->setAttributes(array('data-action' => 'sequence_brands'));
+		$this->dataGrid->setAttributes(array('data-action' => 'SequenceBrands'));
 	}
 
 	/**

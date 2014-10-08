@@ -54,7 +54,7 @@ class Specifications extends BackendBaseActionIndex
 		);
 	
 		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit_specification')) {
+		if(BackendAuthentication::isAllowedAction('EditSpecification')) {
 			$this->dataGrid->setColumnURL('specification', BackendModel::createURLForAction('edit_specification') . '&amp;id=[id]');
 			
 			$this->dataGrid->addColumn(
@@ -66,7 +66,7 @@ class Specifications extends BackendBaseActionIndex
 
 		// sequence
 		$this->dataGrid->enableSequenceByDragAndDrop();
-		$this->dataGrid->setAttributes(array('data-action' => 'sequence_specifications'));
+		$this->dataGrid->setAttributes(array('data-action' => 'SequenceSpecifications'));
 	}
 	
 	/**
