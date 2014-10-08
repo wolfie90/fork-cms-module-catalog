@@ -102,7 +102,7 @@ class Categories extends BackendBaseActionIndex
 
 		// sequence
 		$this->dataGrid->enableSequenceByDragAndDrop();
-		$this->dataGrid->setAttributes(array('data-action' => 'sequence_categories'));
+		$this->dataGrid->setAttributes(array('data-action' => 'SequenceCategories'));
 	}
 
 	/**

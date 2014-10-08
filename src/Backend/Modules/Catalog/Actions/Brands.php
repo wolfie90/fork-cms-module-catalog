@@ -55,7 +55,7 @@ class Brands extends BackendBaseActionIndex
 
 		// sequence
 		$this->dataGrid->enableSequenceByDragAndDrop();
-		$this->dataGrid->setAttributes(array('data-action' => 'sequence_brands'));
+		$this->dataGrid->setAttributes(array('data-action' => 'SequenceBrands'));
 	}
 
 	/**

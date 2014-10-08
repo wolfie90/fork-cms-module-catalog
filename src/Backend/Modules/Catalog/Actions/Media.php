@@ -109,7 +109,7 @@ class Media extends BackendBaseActionIndex
 		$this->dgImages->setMassAction($ddmMassAction);
 		$this->dgImages->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 	
-		$this->dgImages->setAttributes(array('data-action' => "sequence_media_images"));
+		$this->dgImages->setAttributes(array('data-action' => "SequenceMediaImages"));
     }
 
 	/**

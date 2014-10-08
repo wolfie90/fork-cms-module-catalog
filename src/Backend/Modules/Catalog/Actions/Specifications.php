@@ -66,7 +66,7 @@ class Specifications extends BackendBaseActionIndex
 
 		// sequence
 		$this->dataGrid->enableSequenceByDragAndDrop();
-		$this->dataGrid->setAttributes(array('data-action' => 'sequence_specifications'));
+		$this->dataGrid->setAttributes(array('data-action' => 'SequenceSpecifications'));
 	}
 	
 	/**
