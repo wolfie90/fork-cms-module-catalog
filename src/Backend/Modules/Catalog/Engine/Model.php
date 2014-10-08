@@ -86,17 +86,20 @@ class Model
 	const QRY_DATAGRID_BROWSE_IMAGES = 'SELECT i.id, i.product_id, i.filename, i.title, i.sequence
 		 FROM catalog_images AS i
 		 WHERE i.product_id = ?
-		 GROUP BY i.id';
+		 GROUP BY i.id
+         ORDER BY i.sequence ASC';
 
 	const QRY_DATAGRID_BROWSE_FILES = 'SELECT i.id, i.product_id, i.filename, i.title, i.sequence
 		 FROM catalog_files AS i
 		 WHERE i.product_id = ?
-		 GROUP BY i.id';
+		 GROUP BY i.id
+         ORDER BY i.sequence ASC';
 
 	const QRY_DATAGRID_BROWSE_VIDEOS = 'SELECT i.id, i.product_id, i.embedded_url, i.title, i.sequence
 		 FROM catalog_videos AS i
 		 WHERE i.product_id = ?
-		 GROUP BY i.id';
+		 GROUP BY i.id
+         ORDER BY i.sequence ASC';
 
 	const QRY_DATAGRID_BROWSE_BRANDS = 'SELECT b.id, b.title, COUNT(p.id) AS num_products, b.sequence
 		 FROM catalog_brands AS b
