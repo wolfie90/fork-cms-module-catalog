@@ -70,9 +70,6 @@ jsFrontend.catalog =
 			var $this = $(this);
 			var $productId = $this.attr('id');
 			var $productAmount = $("#inputAmountOfProducts-" + $productId).val();
-			
-			console.log($productAmount);
-			
 			var $action = 'add-update';
 			
 			// execute fork action from ajax event
@@ -122,14 +119,11 @@ jsFrontend.catalog =
 
 	updateShoppingCart: function()
 	{
-		console.log('in functie...');
-		
 	    $.ajax({
 		data: {
 		    fork: { module: 'Catalog', action: 'UpdateShoppingCart' }
 		},
 		success: function (result) {
-			console.log('updating shopping cart succesfull...');
 		    var $target = $('#shoppingCartWidget');
 						
 		    if ($target && $target.length) {
