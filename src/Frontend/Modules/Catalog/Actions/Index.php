@@ -21,106 +21,106 @@ use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
  */
 class Index extends FrontendBaseBlock
 {
-	/**
-	 * The items
-	 *
-	 * @var	array
-	 */
-	private $products;
+    /**
+     * The items
+     *
+     * @var    array
+     */
+    private $products;
 
-	/**
-	 * All categories in flat view
-	 *
-	 * @var	array
-	 */
-	private $categories;
-    
-	/**
-	 * All categories in tree view
-	 *
-	 * @var	array
-	 */
-	private $categoriesTree;
+    /**
+     * All categories in flat view
+     *
+     * @var    array
+     */
+    private $categories;
 
-	/**
-	 * The pagination array
-	 * It will hold all needed parameters, some of them need initialization.
-	 *
-	 * @var	array
-	 */
-	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
+    /**
+     * All categories in tree view
+     *
+     * @var    array
+     */
+    private $categoriesTree;
 
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->getData();
-		$this->parse();
-	}
+    /**
+     * The pagination array
+     * It will hold all needed parameters, some of them need initialization.
+     *
+     * @var    array
+     */
+    protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
-	/**
-	 * Load the data, don't forget to validate the incoming data
-	 */
-	private function getData()
-	{
-		// requested page
-		$requestedPage = $this->URL->getParameter('page', 'int', 1);
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->getData();
+        $this->parse();
+    }
 
-		// set URL and limit
-		$this->pagination['url'] = FrontendNavigation::getURLForBlock('catalog');
-		$this->pagination['limit'] = FrontendModel::getModuleSetting('catalog', 'overview_num_items', 10);
+    /**
+     * Load the data, don't forget to validate the incoming data
+     */
+    private function getData()
+    {
+        // requested page
+        $requestedPage = $this->URL->getParameter('page', 'int', 1);
 
-		// populate count fields in pagination
-		$this->pagination['num_items'] = FrontendCatalogModel::getAllCount();
-		$this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
+        // set URL and limit
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('catalog');
+        $this->pagination['limit'] = FrontendModel::getModuleSetting('catalog', 'overview_num_items', 10);
 
-		// num pages is always equal to at least 1
-		if($this->pagination['num_pages'] == 0) $this->pagination['num_pages'] = 1;
+        // populate count fields in pagination
+        $this->pagination['num_items'] = FrontendCatalogModel::getAllCount();
+        $this->pagination['num_pages'] = (int)ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
-		// redirect if the request page doesn't exist
-		if($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
+        // num pages is always equal to at least 1
+        if ($this->pagination['num_pages'] == 0) $this->pagination['num_pages'] = 1;
 
-		// populate calculated fields in pagination
-		$this->pagination['requested_page'] = $requestedPage;
-		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
+        // redirect if the request page doesn't exist
+        if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
 
-		// get all categories
-		$this->categories = FrontendCatalogModel::getAllCategories();
-				
-		// get tree of all categories
-		$this->categoriesTree = FrontendCatalogModel::getCategoriesTree();
-				
-		// get all products
-		$this->products = FrontendCatalogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
-	}
+        // populate calculated fields in pagination
+        $this->pagination['requested_page'] = $requestedPage;
+        $this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
 
-	/**
-	 * Parse the page
-	 */
-	protected function parse()
-	{		
-		// add css 
-		$this->header->addCSS('/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
-		
-		// add noty js
-		$this->header->addJS('/src/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
-		
-		// assign items
-		$this->tpl->assign('products', $this->products);
-		
-		// flat array of categories
-		$this->tpl->assign('categoriesFlat', $this->categories);
+        // get all categories
+        $this->categories = FrontendCatalogModel::getAllCategories();
 
-		// multidimensional array of categories		
-		$this->tpl->assign('categoriesTree', $this->categoriesTree);
-				
-		// multidimensional html list of categories
-		$this->tpl->assign('categoriesHTML', FrontendCatalogModel::getTreeHTML($this->categoriesTree));
-		
-		// parse the pagination
-		$this->parsePagination();
-	}
+        // get tree of all categories
+        $this->categoriesTree = FrontendCatalogModel::getCategoriesTree();
+
+        // get all products
+        $this->products = FrontendCatalogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
+    }
+
+    /**
+     * Parse the page
+     */
+    protected function parse()
+    {
+        // add css
+        $this->header->addCSS('/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
+
+        // add noty js
+        $this->header->addJS('/src/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
+
+        // assign items
+        $this->tpl->assign('products', $this->products);
+
+        // flat array of categories
+        $this->tpl->assign('categoriesFlat', $this->categories);
+
+        // multidimensional array of categories
+        $this->tpl->assign('categoriesTree', $this->categoriesTree);
+
+        // multidimensional html list of categories
+        $this->tpl->assign('categoriesHTML', FrontendCatalogModel::getTreeHTML($this->categoriesTree));
+
+        // parse the pagination
+        $this->parsePagination();
+    }
 }

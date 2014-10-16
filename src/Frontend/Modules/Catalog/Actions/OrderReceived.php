@@ -14,7 +14,7 @@ use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
- 
+
 /**
  * This is the personal-data-action (default), it will display a personal data form
  *
@@ -22,50 +22,50 @@ use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
  */
 class OrderReceived extends FrontendBaseBlock
 {
-	/**
-	 * The url for catalog index
-	 *
-	 * @var	array
-	 */
-	private $catalogUrl;
+    /**
+     * The url for catalog index
+     *
+     * @var    array
+     */
+    private $catalogUrl;
 
-	/**
-	 * First name of the person that submitted the order
-	 *
-	 * @var string
-	 */
-	private $firstName;
-	
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		
-		$this->loadTemplate();
-		$this->getData();
-		
-		$this->parse();
-	}
+    /**
+     * First name of the person that submitted the order
+     *
+     * @var string
+     */
+    private $firstName;
 
-	/**
-	 * Load the data, don't forget to validate the incoming data
-	 */
-	private function getData()
-	{
-		// requested page
-		$requestedPage = $this->URL->getParameter('page', 'int', 1);
-		$this->firstName = Cookie::get('fname');		        
-		$this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
-	}
-	
-	/**
-	 * Parse the page
-	 */
-	protected function parse()
-	{
-		$this->tpl->assign('catalogUrl', $this->catalogUrl);
-		$this->tpl->assign('firstName', $this->firstName);
-	}
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+
+        $this->loadTemplate();
+        $this->getData();
+
+        $this->parse();
+    }
+
+    /**
+     * Load the data, don't forget to validate the incoming data
+     */
+    private function getData()
+    {
+        // requested page
+        $requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $this->firstName = Cookie::get('fname');
+        $this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
+    }
+
+    /**
+     * Parse the page
+     */
+    protected function parse()
+    {
+        $this->tpl->assign('catalogUrl', $this->catalogUrl);
+        $this->tpl->assign('firstName', $this->firstName);
+    }
 }

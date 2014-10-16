@@ -21,24 +21,25 @@ use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
  */
 class ShoppingCart extends FrontendBaseWidget
 {
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->getData();
-	}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->getData();
+    }
 
-	/**
-	 * Get the data
-	 */
-	private function getData()
-	{
-		// check if cookie exists
-		if(!Cookie::exists('order_id')){
-			return;
-		}
-	}
+    /**
+     * Get the data
+     */
+    private function getData()
+    {
+        // check if cookie exists
+        if (!Cookie::exists('order_id'))
+        {
+            return;
+        }
+    }
 }

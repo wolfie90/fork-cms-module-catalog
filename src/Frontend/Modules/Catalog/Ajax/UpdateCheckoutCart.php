@@ -23,96 +23,99 @@ use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
  */
 class UpdateCheckoutCart extends FrontendBaseAJAXAction
 {
-	/**
-	 * The order id
-	 *
-	 * @var	int
-	 */
-	private $orderId;
-	
-	/**
-	 * The amount of products in the shopping cart
-	 *
-	 * @var	int
-	 */
-	private $amountOfProducts;
-	
-	/**
-	 * The total amount (price) of the order
-	 *
-	 * @var	int
-	 */
-	private $totalPrice;
-	
-	/**
-	 * The products within an order
-	 *
-	 * @var	array
-	 */
-	private $products;
-	
-	/**
-	 * The url for personal data page
-	 *
-	 * @var	string
-	 */
-	private $personalDataUrl, $catalogUrl;
-		
-	/**
+    /**
+     * The order id
+     *
+     * @var    int
+     */
+    private $orderId;
+
+    /**
+     * The amount of products in the shopping cart
+     *
+     * @var    int
+     */
+    private $amountOfProducts;
+
+    /**
+     * The total amount (price) of the order
+     *
+     * @var    int
+     */
+    private $totalPrice;
+
+    /**
+     * The products within an order
+     *
+     * @var    array
+     */
+    private $products;
+
+    /**
+     * The url for personal data page
+     *
+     * @var    string
+     */
+    private $personalDataUrl, $catalogUrl;
+
+    /**
      * Execute the action
      */
     public function execute()
     {
         parent::execute();
 
-	$this->getData();
+        $this->getData();
         $this->loadTemplate();
         $this->display();
     }
 
-	/**
-	 * Get the data
-	 */
-	private function getData(){
-	    // get cookie
-	    $this->orderId = Cookie::get('order_id');
-	    
-	    if($this->orderId) {
-		// get the products
-		$this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
-		
-		// count amount of products in shopping cart
-		$this->amountOfProducts = count($this->products);
-		
-		// total price
-		$this->totalPrice = '0';
-		
-		// calculate total amount
-		foreach($this->products as &$product) {
-			// calculate total
-			$subtotal = (int)$product['subtotal_price'];
-			$this->totalPrice = (int)$this->totalPrice;
-			$this->totalPrice = $this->totalPrice + $subtotal;
-		}
-					
-		// url for next step
-		$this->personalDataUrl = FrontendNavigation::getURLForBlock('Catalog', 'PersonalData');
-		
-		// url for next step
-		$this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
-	    }
-	}
-	
+    /**
+     * Get the data
+     */
+    private function getData()
+    {
+        // get cookie
+        $this->orderId = Cookie::get('order_id');
+
+        if ($this->orderId)
+        {
+            // get the products
+            $this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
+
+            // count amount of products in shopping cart
+            $this->amountOfProducts = count($this->products);
+
+            // total price
+            $this->totalPrice = '0';
+
+            // calculate total amount
+            foreach ($this->products as &$product)
+            {
+                // calculate total
+                $subtotal = (int)$product['subtotal_price'];
+                $this->totalPrice = (int)$this->totalPrice;
+                $this->totalPrice = $this->totalPrice + $subtotal;
+            }
+
+            // url for next step
+            $this->personalDataUrl = FrontendNavigation::getURLForBlock('Catalog', 'PersonalData');
+
+            // url for next step
+            $this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
+        }
+    }
+
     /**
      * Parse the data into the template
      */
     private function parse()
     {
-	$this->tpl->assign('productsInShoppingCart', $this->products);
-	$this->tpl->assign('totalPrice', $this->totalPrice);
-	$this->tpl->assign('personalDataUrl', $this->personalDataUrl);
-	$this->tpl->assign('catalogUrl', $this->catalogUrl);
-	$this->tpl->assign('amountOfProducts', $this->amountOfProducts);
+        $this->tpl->assign('productsInShoppingCart', $this->products);
+        $this->tpl->assign('totalPrice', $this->totalPrice);
+        $this->tpl->assign('personalDataUrl', $this->personalDataUrl);
+        $this->tpl->assign('catalogUrl', $this->catalogUrl);
+        $this->tpl->assign('amountOfProducts', $this->amountOfProducts);
     }
 
     /**

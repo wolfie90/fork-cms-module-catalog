@@ -26,59 +26,59 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
     /**
      * The order id
      *
-     * @var	int
+     * @var    int
      */
     private $orderId;
-    
+
     /**
      * The amount of products in the shopping cart
      *
-     * @var	int
+     * @var    int
      */
-    private $amountOfProducts;	
+    private $amountOfProducts;
     /**
      * The total amount (price) of the order
      *
-     * @var	int
+     * @var    int
      */
     private $totalPrice;
-    
+
     /**
      * The products within an order
      *
-     * @var	array
+     * @var    array
      */
     private $products;
-    
+
     /**
      * The url for overview-page shopping-cart
      *
-     * @var	string
+     * @var    string
      */
     private $overviewUrl;
-    
+
     /**
      * The total price
      *
-     * @var	array
+     * @var    array
      */
     private $totalPriceArr;
-    
+
     /**
      * Are cookies enabled?
      *
-     * @var	string
+     * @var    string
      */
     private $cookiesEnabled;
-		
-	/**
+
+    /**
      * Execute the action
      */
     public function execute()
-    {       
+    {
         parent::execute();
 
-	$this->getData();
+        $this->getData();
         $this->loadTemplate();
         $this->display();
     }
@@ -86,53 +86,56 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
     /**
      * Get the data
      */
-    private function getData(){
-	// get cookie
-	$this->orderId = Cookie::get('order_id');
-	
-	// check if cookies are available
-	$this->cookiesEnabled = Cookie::hasAllowedCookies();
-	
-	// check if cookies exists
-	if($this->orderId || $this->cookiesEnabled == true) {
-	    // get the products
-	    $this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
-	    
-	    // count amount of products in shopping cart
-	    $this->amountOfProducts = count($this->products);
-	    
-	    // total price
-	    $this->totalPrice = '0';
-	    
-	    // calculate total amount
-	    foreach($this->products as &$product) {
-		    // calculate total
-		    $subtotal = (int)$product['subtotal_price'];
-		    $this->totalPrice = (int)$this->totalPrice;
-		    $this->totalPrice = $this->totalPrice + $subtotal;
-	    }
-	    
-	    $this->totalPriceArr['total'] = $this->totalPrice;
-	    
-	    // insert total price in db
-	    FrontendCatalogModel::updateOrder($this->totalPriceArr, $this->orderId);
-	}
+    private function getData()
+    {
+        // get cookie
+        $this->orderId = Cookie::get('order_id');
+
+        // check if cookies are available
+        $this->cookiesEnabled = Cookie::hasAllowedCookies();
+
+        // check if cookies exists
+        if ($this->orderId || $this->cookiesEnabled == true)
+        {
+            // get the products
+            $this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
+
+            // count amount of products in shopping cart
+            $this->amountOfProducts = count($this->products);
+
+            // total price
+            $this->totalPrice = '0';
+
+            // calculate total amount
+            foreach ($this->products as &$product)
+            {
+                // calculate total
+                $subtotal = (int)$product['subtotal_price'];
+                $this->totalPrice = (int)$this->totalPrice;
+                $this->totalPrice = $this->totalPrice + $subtotal;
+            }
+
+            $this->totalPriceArr['total'] = $this->totalPrice;
+
+            // insert total price in db
+            FrontendCatalogModel::updateOrder($this->totalPriceArr, $this->orderId);
+        }
     }
-	
+
     /**
      * Parse the data into the template
      */
     private function parse()
     {
-	// url for checkout
-	$this->overviewUrl = FrontendNavigation::getURLForBlock('Catalog', 'Checkout');
-	
-	if(!empty($this->products)) $this->tpl->assign('productsInShoppingCart', $this->products);
-	if(!empty($this->totalPrice)) $this->tpl->assign('totalPrice', $this->totalPrice);
-	if(!empty($this->amountOfProducts)) $this->tpl->assign('amountOfProducts', $this->amountOfProducts);
-	if($this->cookiesEnabled == true) $this->tpl->assign('cookiesEnabled', $this->cookiesEnabled);
-	
-	$this->tpl->assign('overviewUrl', $this->overviewUrl);
+        // url for checkout
+        $this->overviewUrl = FrontendNavigation::getURLForBlock('Catalog', 'Checkout');
+
+        if (!empty($this->products)) $this->tpl->assign('productsInShoppingCart', $this->products);
+        if (!empty($this->totalPrice)) $this->tpl->assign('totalPrice', $this->totalPrice);
+        if (!empty($this->amountOfProducts)) $this->tpl->assign('amountOfProducts', $this->amountOfProducts);
+        if ($this->cookiesEnabled == true) $this->tpl->assign('cookiesEnabled', $this->cookiesEnabled);
+
+        $this->tpl->assign('overviewUrl', $this->overviewUrl);
     }
 
     /**

@@ -20,26 +20,26 @@ use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
  */
 class Brands extends FrontendBaseWidget
 {
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
 
-		parent::execute();
-		$this->loadTemplate();
-		$this->parse();
-	}
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
+    }
 
-	/**
-	 * Parse
-	 */
-	private function parse()
-	{
-		// get categories
-		$brands = FrontendCatalogModel::getAllBrands();
+    /**
+     * Parse
+     */
+    private function parse()
+    {
+        // get categories
+        $brands = FrontendCatalogModel::getAllBrands();
 
-		// assign comments
-		$this->tpl->assign('widgetCatalogBrands', $brands);
-	}
+        // assign comments
+        $this->tpl->assign('widgetCatalogBrands', $brands);
+    }
 }

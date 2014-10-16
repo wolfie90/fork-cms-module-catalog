@@ -22,96 +22,98 @@ use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
  */
 class Checkout extends FrontendBaseBlock
 {
-	/**
-	 * The order id
-	 *
-	 * @var	int
-	 */
-	private $orderId;
-	
-	/**
-	 * The total amount (price) of the order
-	 *
-	 * @var	int
-	 */
-	private $totalPrice;
-	
-	/**
-	 * The products within an order
-	 *
-	 * @var	array
-	 */
-	private $products;
-	
-	/**
-	 * The url for overview-page shopping-cart
-	 *
-	 * @var	string
-	 */
-	private $personalDataUrl;
-	
-	/**
-	 * The url for catalog page
-	 *
-	 * @var	string
-	 */
-	private $catalogUrl;
+    /**
+     * The order id
+     *
+     * @var    int
+     */
+    private $orderId;
 
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->getData();
-		$this->parse();
-	}
+    /**
+     * The total amount (price) of the order
+     *
+     * @var    int
+     */
+    private $totalPrice;
 
-	/**
-	 * Load the data, don't forget to validate the incoming data
-	 */
-	private function getData()
-	{
-		// get cookie
-		$this->orderId = Cookie::get('order_id');
-		
-		if($this->orderId) {
-			// get the products
-			$this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
-			
-			// total price
-			$this->totalPrice = '0';
-			
-			// calculate total amount
-			foreach($this->products as &$product) {
-				// calculate total
-				$subtotal = (int)$product['subtotal_price'];
-				$this->totalPrice = (int)$this->totalPrice;
-				$this->totalPrice = $this->totalPrice + $subtotal;
-			}
-		}
-	}
+    /**
+     * The products within an order
+     *
+     * @var    array
+     */
+    private $products;
 
-	/**
-	 * Parse the page
-	 */
-	protected function parse()
-	{
-		// add css 
-		$this->header->addCSS('/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
-		
-		// add noty js
-		$this->header->addJS('/src/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
-		
-		// url for next step
-		$this->personalDataUrl = FrontendNavigation::getURLForBlock('Catalog', 'PersonalData');
-		$this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
-			  
-		if(!empty($this->products)) $this->tpl->assign('productsInShoppingCart', $this->products);
-		if(!empty($this->totalPrice)) $this->tpl->assign('totalPrice', $this->totalPrice);
+    /**
+     * The url for overview-page shopping-cart
+     *
+     * @var    string
+     */
+    private $personalDataUrl;
 
-		$this->tpl->assign('personalDataUrl', $this->personalDataUrl);
-		$this->tpl->assign('catalogUrl', $this->catalogUrl);
-	}
+    /**
+     * The url for catalog page
+     *
+     * @var    string
+     */
+    private $catalogUrl;
+
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->getData();
+        $this->parse();
+    }
+
+    /**
+     * Load the data, don't forget to validate the incoming data
+     */
+    private function getData()
+    {
+        // get cookie
+        $this->orderId = Cookie::get('order_id');
+
+        if ($this->orderId)
+        {
+            // get the products
+            $this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
+
+            // total price
+            $this->totalPrice = '0';
+
+            // calculate total amount
+            foreach ($this->products as &$product)
+            {
+                // calculate total
+                $subtotal = (int)$product['subtotal_price'];
+                $this->totalPrice = (int)$this->totalPrice;
+                $this->totalPrice = $this->totalPrice + $subtotal;
+            }
+        }
+    }
+
+    /**
+     * Parse the page
+     */
+    protected function parse()
+    {
+        // add css
+        $this->header->addCSS('/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/catalog.css');
+
+        // add noty js
+        $this->header->addJS('/src/Frontend/Modules/' . $this->getModule() . '/Js/noty/packaged/jquery.noty.packaged.min.js');
+
+        // url for next step
+        $this->personalDataUrl = FrontendNavigation::getURLForBlock('Catalog', 'PersonalData');
+        $this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
+
+        if (!empty($this->products)) $this->tpl->assign('productsInShoppingCart', $this->products);
+        if (!empty($this->totalPrice)) $this->tpl->assign('totalPrice', $this->totalPrice);
+
+        $this->tpl->assign('personalDataUrl', $this->personalDataUrl);
+        $this->tpl->assign('catalogUrl', $this->catalogUrl);
+    }
 }

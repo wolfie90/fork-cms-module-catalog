@@ -12,7 +12,7 @@ namespace Frontend\Modules\Catalog\Widgets;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
- 
+
 /**
  * This is a widget with the Catalog-categories
  *
@@ -20,38 +20,39 @@ use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
  */
 class Categories extends FrontendBaseWidget
 {
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->parse();
-	}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
+    }
 
-	/**
-	 * Parse
-	 */
-	private function parse()
-	{
-		// get categories
-		$categories = FrontendCatalogModel::getAllCategories();
-		
-		// get tree of all categories
-		$tree = FrontendCatalogModel::getCategoriesTree();
-			
-		// any categories?
-		if(!empty($categories)) {
-			// build link
-			$link = FrontendNavigation::getURLForBlock('Catalog', 'Category');
+    /**
+     * Parse
+     */
+    private function parse()
+    {
+        // get categories
+        $categories = FrontendCatalogModel::getAllCategories();
 
-			// loop and reset url
-			foreach($categories as &$row) $row['url'] = $link . '/' . $row['url'];
-		}
+        // get tree of all categories
+        $tree = FrontendCatalogModel::getCategoriesTree();
 
-		// assign comments
-		$this->tpl->assign('widgetCatalogCategoriesFlat', $categories);
-		$this->tpl->assign('widgetCatalogCategoriesTree', $tree);
-	}
+        // any categories?
+        if (!empty($categories))
+        {
+            // build link
+            $link = FrontendNavigation::getURLForBlock('Catalog', 'Category');
+
+            // loop and reset url
+            foreach ($categories as &$row) $row['url'] = $link . '/' . $row['url'];
+        }
+
+        // assign comments
+        $this->tpl->assign('widgetCatalogCategoriesFlat', $categories);
+        $this->tpl->assign('widgetCatalogCategoriesTree', $tree);
+    }
 }

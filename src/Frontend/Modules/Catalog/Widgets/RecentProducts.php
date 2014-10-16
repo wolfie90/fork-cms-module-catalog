@@ -21,25 +21,25 @@ use Frontend\Modules\Catalog\Engine\Model as FrontendCatalogModel;
  */
 class RecentProducts extends FrontendBaseWidget
 {
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->parse();
-	}
-	
-	/**
-	 * Parse
-	 */
-	private function parse()
-	{
-		// get list of recent products
-		$numItems = FrontendModel::getModuleSetting('Catalog', 'recent_products_full_num_items', 3);
-		$recentProducts = FrontendCatalogModel::getAll($numItems);
-        
-		$this->tpl->assign('widgetCatalogRecentProducts', $recentProducts);
-	}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
+    }
+
+    /**
+     * Parse
+     */
+    private function parse()
+    {
+        // get list of recent products
+        $numItems = FrontendModel::getModuleSetting('Catalog', 'recent_products_full_num_items', 3);
+        $recentProducts = FrontendCatalogModel::getAll($numItems);
+
+        $this->tpl->assign('widgetCatalogRecentProducts', $recentProducts);
+    }
 }
