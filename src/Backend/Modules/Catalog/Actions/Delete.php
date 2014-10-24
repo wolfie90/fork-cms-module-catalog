@@ -35,6 +35,12 @@ class Delete extends BackendBaseActionDelete
 			
 			$this->record = BackendCatalogModel::get($this->id);
 
+			// clean the tags
+			BackendTagsModel::saveTags($item['id'], '', $this->URL->getModule());
+
+			// clean the related products
+			BackendCatalogModel::saveRelatedProducts($item['id'], []);
+
 			// delete record
 			BackendCatalogModel::delete($this->id);
 
