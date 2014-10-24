@@ -1,7 +1,9 @@
 2.2.1 (2014-xx-xx)
 --
 
-To be announced..
+Bugfixes:
+
+* Clean up tags & related products when deleting a product
 
 2.1.1 (2014-10-01)
 --
