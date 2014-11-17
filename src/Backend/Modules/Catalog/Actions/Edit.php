@@ -31,40 +31,40 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
  */
 class Edit extends BackendBaseActionEdit
 {
-    /**
-     * All categories
-     *
-     * @var	array
-     */
-    private $categories;
+	/**
+	 * All categories
+	 *
+	 * @var	array
+	 */
+	private $categories;
 
-    /**
-     * Products grouped by categories
-     *
-     * @var	array
-     */
-    private $allProductsGroupedByCategories;
+	/**
+	 * Products grouped by categories
+	 *
+	 * @var	array
+	 */
+	private $allProductsGroupedByCategories;
 
-    /**
-     * All specifications
-     *
-     * @var	array
-     */
-    private $specifications;
+	/**
+	 * All specifications
+	 *
+	 * @var	array
+	 */
+	private $specifications;
 
-    /**
-     * All products
-     *
-     * @var	array
-     */
-    private $products;
+	/**
+	 * All products
+	 *
+	 * @var	array
+	 */
+	private $products;
 
-    /**
-     * All related products
-     *
-     * @var	array
-     */
-    private $relatedProducts;
+	/**
+	 * All related products
+	 *
+	 * @var	array
+	 */
+	private $relatedProducts;
 
 	/**
 	 * All brands
@@ -73,18 +73,18 @@ class Edit extends BackendBaseActionEdit
 	 */
 	private $brands;
 
-    /**
+	/**
 	 * Execute the action
 	 */
 	public function execute()
 	{
 		parent::execute();
-
+	
 		$this->loadData();
 		$this->loadForm();
 		
 		$this->validateForm();
-
+	
 		$this->parse();
 		$this->display();
 	}
@@ -210,7 +210,6 @@ class Edit extends BackendBaseActionEdit
 				$item['title'] = $fields['title']->getValue();
 				$item['summary'] = $fields['summary']->getValue();
 				$item['text'] = $fields['text']->getValue();
-				$item['sequence'] = BackendCatalogModel::getMaximumSequence() + 1;
 				$item['category_id'] = $this->frm->getField('category_id')->getValue();
 				$item['brand_id'] = $fields['brand_id']->getValue();
 
