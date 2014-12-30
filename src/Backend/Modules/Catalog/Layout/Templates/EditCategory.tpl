@@ -21,6 +21,13 @@
 					{$txtTitle} {$txtTitleError}
 				</div>
 				<div class="options">
+                  {option:item.image}
+                    <p class="image">
+                      <img src="{$item.thumb}"/>
+                      <label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
+                      {$chkDeleteImageError}
+                    </p>
+                  {/option:item.image}
 					<label for="image">{$lblImage|ucfirst}</label>
 					{$fileImage} {$fileImageError}
 				</div>
