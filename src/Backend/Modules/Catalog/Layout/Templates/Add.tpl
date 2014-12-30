@@ -20,7 +20,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-			<li><a href="#tabPermissions">{$lblComments|ucfirst}</a></li>
+			<li><a href="#tabComments">{$lblComments|ucfirst}</a></li>
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 		</ul>
 

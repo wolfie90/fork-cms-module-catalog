@@ -22,6 +22,10 @@
 			<name><![CDATA[Tim van Wolfswinkel]]></name>
 			<url><![CDATA[http://www.webleads.nl]]></url>
 		</author>
+		<author>
+			<name><![CDATA[Bart Lagerweij]]></name>
+			<url><![CDATA[http://www.webleads.nl]]></url>
+		</author>
 	</authors>
 	<events>
 		<event application="backend" name="after_add"><![CDATA[Triggered when a product is added.]]></event>
