@@ -43,7 +43,7 @@ class Brands extends BackendBaseActionIndex
 	 */
 	private function loadDataGrid()
 	{
-		$this->dataGrid = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_BRANDS);
+		$this->dataGrid = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_BRANDS, array(BL::getWorkingLanguage()));
 
 		// check if this action is allowed
 		if(BackendAuthentication::isAllowedAction('EditBrand'))

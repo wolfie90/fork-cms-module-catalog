@@ -62,10 +62,11 @@ class Installer extends ModuleInstaller
      * @param string $url
      * @return int
      */
-    private function addBrand($title, $url)
+    private function addBrand($language, $title, $url)
     {
         // build array
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
+        $item['language'] = (string)$language;
         $item['title'] = (string)$title;
         $item['created_on'] = gmdate('Y-m-d H:i:00');
         $item['edited_on'] = gmdate('Y-m-d H:i:00');
@@ -210,7 +211,7 @@ class Installer extends ModuleInstaller
             }
 
             // add default brand
-            $this->defaultBrandId = $this->addBrand('Samsung', 'samsung');
+            $this->defaultBrandId = $this->addBrand($language, 'Samsung', 'samsung');
 
             // check if a page for catalog already exists in this language
             if (!(bool)$this->getDB()->getVar(

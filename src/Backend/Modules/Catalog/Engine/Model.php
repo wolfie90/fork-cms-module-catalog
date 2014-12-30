@@ -104,6 +104,7 @@ class Model
 	const QRY_DATAGRID_BROWSE_BRANDS = 'SELECT b.id, b.title, COUNT(p.id) AS num_products, b.sequence
 		 FROM catalog_brands AS b
 		 LEFT JOIN catalog_products AS p ON p.brand_id = b.id
+		 WHERE b.language = ?
 		 GROUP BY b.id
 		 ORDER BY b.sequence ASC';
 
