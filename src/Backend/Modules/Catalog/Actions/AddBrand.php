@@ -8,6 +8,7 @@ namespace Backend\Modules\Catalog\Actions;
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+use Backend\Core\Engine\Language;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -80,9 +81,10 @@ class AddBrand extends BackendBaseActionAdd
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['meta_id'] = $this->meta->save();
 				$item['sequence'] = BackendCatalogModel::getMaximumCategorySequence() + 1;
+				$item['language'] = Language::getWorkingLanguage();
 
 				// the image path
-				$imagePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/catalog_brands';
+				$imagePath = FRONTEND_FILES_PATH . '/catalog/brands';
 
 				// create folders if needed
 				$fs = new Filesystem();

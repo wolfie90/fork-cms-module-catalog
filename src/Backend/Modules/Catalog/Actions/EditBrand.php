@@ -9,6 +9,7 @@ namespace Backend\Modules\Catalog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Language;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\File;
@@ -114,24 +115,22 @@ class EditBrand extends BackendBaseActionEdit
 				$item['meta_id'] = $this->meta->save(true);
 
 				// the image path
-				$imagePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/catalog_brands/' . $this->id;
+				$imagePath = FRONTEND_FILES_PATH . '/catalog/brands';
 
 				// create folders if needed
 				$fs = new Filesystem();
 
-				if(!$fs->exists($imagePath . '/150x150/'))
-				{
-					$fs->mkdir($imagePath . '/150x150/');
-				}
-
 				if(!$fs->exists($imagePath . '/source/'))
 				{
 					$fs->mkdir($imagePath . '/source/');
+                    $fs->mkdir($imagePath . '/150x150/');
 				}
 
 				// image provided?
 				if($this->frm->getField('image')->isFilled())
 				{
+                    BackendModel::deleteThumbnails($imagePath, $this->record['image']);
+
 					// build the image name
 					$item['image'] = $this->meta->getUrl() . '.' . $this->frm->getField('image')->getExtension();
 

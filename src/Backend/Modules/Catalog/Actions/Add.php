@@ -12,12 +12,13 @@ namespace Backend\Modules\Catalog\Actions;
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
- 
+
 /**
  * This is the add-action, it will display a form to create a new product
  *
@@ -31,21 +32,21 @@ class Add extends BackendBaseActionAdd
 	 * @var	int
 	 */
 	private $id;
-    
+
 	/**
 	 * All categories
 	 *
 	 * @var	array
 	 */
 	private $categories;
-    
+
 	/**
 	 * Products grouped by categories
 	 *
 	 * @var	array
 	 */
 	private $allProductsGroupedByCategories;
-    
+
 	/**
 	 * All specifications
 	 *
@@ -59,7 +60,7 @@ class Add extends BackendBaseActionAdd
 	 * @var	array
 	 */
 	private $brands;
-    
+
 	/**
 	 * Execute the actions
 	 */
@@ -82,17 +83,17 @@ class Add extends BackendBaseActionAdd
 	protected function loadData()
 	{
 		$this->id = $this->getParameter('product_id', 'int', null);
-				
+
 		if($this->id != null) {
 			$this->record = BackendCatalogModel::get($this->id);
 		}
-		
+
 		// get categories
 		$this->categories = BackendCatalogModel::getCategories(true);
-		
+
 		// Get all products grouped by categories
 		$this->allProductsGroupedByCategories = BackendCatalogModel::getAllProductsGroupedByCategories();
-	
+
 		// get specifications
 		$this->specifications = BackendCatalogModel::getSpecifications();
 
@@ -100,14 +101,14 @@ class Add extends BackendBaseActionAdd
 		$this->brands = BackendCatalogModel::getBrandsForDropdown();
 
 	}
-	
+
 	/**
 	 * Load the form
 	 */
 	protected function loadForm()
 	{
 		$this->frm = new BackendForm('add');
-		
+
 		// product fields
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('summary');
@@ -116,15 +117,18 @@ class Add extends BackendBaseActionAdd
 		$this->frm->addCheckbox('allow_comments', true);
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDropdown('related_products', $this->allProductsGroupedByCategories, null, true);
+
+
 		$this->frm->addDropdown('category_id', $this->categories, \SpoonFilter::getGetValue('category', null, null, 'int'));
 		$this->frm->addDropdown('brand_id', $this->brands);
+        $this->frm->getField('brand_id')->setDefaultElement('');
 
 		$specificationsHTML = array();
-		
+
 		// specifications
 		foreach($this->specifications as $specification) {
 			$specificationName = 'specification' . $specification['id'];
-			
+
 			// @todo check if type is text or textarea..
 			$specificationText = $this->frm->addText($specificationName);
 			$specificationHTML = $specificationText->parse();
@@ -203,7 +207,7 @@ class Add extends BackendBaseActionAdd
 					// build the specification 
 					$specificationArray['product_id'] = $item['id'];
 					$specificationArray['specification_id'] = $specification['id'];
-					
+
 					$field = 'specification' . $specification['id'];
 					
 					// check if there is an value

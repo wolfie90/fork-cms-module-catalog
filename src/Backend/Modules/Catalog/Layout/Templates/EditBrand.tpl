@@ -21,6 +21,9 @@
                     {$txtTitle} {$txtTitleError}
                 </div>
                 <div class="options">
+                    {option:item.image}
+                      <p><img src="{$FRONTEND_FILES_URL}/catalog/brands/150x150/{$item.image}"/></p>
+                    {/option:item.image}
                     <label for="image">{$lblImage|ucfirst}</label>
                     {$fileImage} {$fileImageError}
                 </div>
