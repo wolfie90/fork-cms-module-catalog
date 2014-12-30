@@ -116,8 +116,6 @@ class Add extends BackendBaseActionAdd
 		$this->frm->addCheckbox('allow_comments', true);
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDropdown('related_products', $this->allProductsGroupedByCategories, null, true);
-
-
 		$this->frm->addDropdown('category_id', $this->categories, \SpoonFilter::getGetValue('category', null, null, 'int'));
 		$this->frm->addDropdown('brand_id', $this->brands);
 
@@ -193,10 +191,6 @@ class Add extends BackendBaseActionAdd
 				$item['sequence'] = BackendCatalogModel::getMaximumSequence() + 1;
 				$item['category_id'] = $fields['category_id']->getValue();
 				$item['brand_id'] = $fields['brand_id']->getValue();
-
-				//$relatedProductValue = $this->frm->getField('related_products')->getValue()
-				//die($relatedProductValue);
-				
 				$item['meta_id'] = $this->meta->save();
 
 				// insert it

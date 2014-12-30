@@ -93,7 +93,7 @@
 									{$txtTags} {$txtTagsError}
 								</div>
                                 <div class="options">
-                                    <label for="brandId">{$lblBrand|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                                    <label for="brandId">{$lblBrand|ucfirst}</label>
                                     {$ddmBrandId} {$ddmBrandIdError}
                                 </div>
 							</div>
