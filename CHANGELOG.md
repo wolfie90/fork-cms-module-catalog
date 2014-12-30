@@ -4,7 +4,7 @@
 Bugfixes:
 
 * Clean up tags & related products when deleting a product
-* Added missing SEO tab in backend edit product action
+* Added missing SEO tab in backend edit product/brands action
 * Removed sequence update when editing a product
 
 2.1.1 (2014-10-01)
