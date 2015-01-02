@@ -7,6 +7,10 @@ Bugfixes:
 * Added missing SEO tab in backend edit product/brands action
 * Removed sequence update when editing a product
 * Added languages to brands
+* Added missing id parameter for sequence of specifications
+* Now showing category/brands images in backend edit action
+* Fix for allow comments on products
+* Added module settings dimensions(width) on edit image action
 
 2.1.1 (2014-10-01)
 --
