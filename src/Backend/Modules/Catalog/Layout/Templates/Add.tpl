@@ -114,7 +114,7 @@
 			</table>
 		</div>
 
-		<div id="tabPermissions">
+		<div id="tabComments">
 			<table width="100%">
 				<tr>
 					<td>

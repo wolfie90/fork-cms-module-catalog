@@ -128,8 +128,9 @@ class Edit extends BackendBaseActionEdit
 		$this->frm->addText('price' ,$this->record['price'], null, 'inputText price', 'inputTextError price');
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDropdown('related_products', $this->allProductsGroupedByCategories, $this->relatedProducts, true );
-		
-		// categories
+        $this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
+
+        // categories
 		$this->frm->addDropdown('category_id', $this->categories, $this->record['category_id']);
 
 		$this->frm->addDropdown('brand_id', $this->brands, $this->record['brand_id']);
@@ -212,6 +213,7 @@ class Edit extends BackendBaseActionEdit
 				$item['text'] = $fields['text']->getValue();
 				$item['category_id'] = $this->frm->getField('category_id')->getValue();
 				$item['brand_id'] = $fields['brand_id']->getValue();
+                $item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 
 				$item['meta_id'] = $this->meta->save();
 

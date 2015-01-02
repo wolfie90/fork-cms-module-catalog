@@ -20,6 +20,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+			<li><a href="#tabComments">{$lblComments|ucfirst}</a></li>
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 		</ul>
 
@@ -113,8 +114,18 @@
 				</tr>
 			</table>
 		</div>
-	
-		<div id="tabSEO">
+
+        <div id="tabComments">
+            <table width="100%">
+                <tr>
+                    <td>
+                        {$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="tabSEO">
 			{include:{$BACKEND_CORE_PATH}/Layout/Templates/Seo.tpl}
 		</div>
 	</div>
