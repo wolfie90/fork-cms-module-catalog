@@ -66,7 +66,8 @@ class EditCategory extends BackendBaseActionEdit
 		$this->frm = new BackendForm('editCategory');
 		$this->frm->addText('title', $this->record['title']);
 		$this->frm->addImage('image');
-		
+        $this->frm->addCheckbox('delete_image');
+
 		//hidden values
 		$categories = BackendCatalogModel::getCategories(true);
 		
@@ -136,6 +137,11 @@ class EditCategory extends BackendBaseActionEdit
 				if (!$fs->exists($imagePath . '/source/')) {
 				    $fs->mkdir($imagePath . '/source/');
 				}
+
+                if ($this->frm->getField('delete_image')->isChecked()) {
+                    BackendModel::deleteThumbnails($imagePath, $this->record['image']);
+                    $item['image'] = null;
+                }
 				
 				// image provided?
 				if($this->frm->getField('image')->isFilled()) {

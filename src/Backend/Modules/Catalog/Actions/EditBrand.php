@@ -68,8 +68,9 @@ class EditBrand extends BackendBaseActionEdit
 		$this->frm = new BackendForm('editBrand');
 		$this->frm->addText('title', $this->record['title']);
 		$this->frm->addImage('image');
+        $this->frm->addCheckbox('delete_image');
 
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 		$this->meta->setUrlCallback('Backend\Modules\Catalog\Engine\Model', 'getURLForBrand', array($this->record['id']));
 	}
 
@@ -126,7 +127,12 @@ class EditBrand extends BackendBaseActionEdit
                     $fs->mkdir($imagePath . '/150x150/');
 				}
 
-				// image provided?
+                if ($this->frm->getField('delete_image')->isChecked()) {
+                    BackendModel::deleteThumbnails($imagePath, $this->record['image']);
+                    $item['image'] = null;
+                }
+
+                // image provided?
 				if($this->frm->getField('image')->isFilled())
 				{
                     BackendModel::deleteThumbnails($imagePath, $this->record['image']);

@@ -21,13 +21,13 @@
 					{$txtTitle} {$txtTitleError}
 				</div>
 				<div class="options">
-                  {option:item.image}
-                    <p class="image">
-                      <img src="{$item.thumb}"/>
-                      <label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
-                      {$chkDeleteImageError}
-                    </p>
-                  {/option:item.image}
+                    {option:item.image}
+                        <p class="image">
+                            <p><img src="{$FRONTEND_FILES_URL}/catalog/categories/{$item.id}/150x150/{$item.image}"/></p>
+                            <label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
+                            {$chkDeleteImageError}
+                        </p>
+                    {/option:item.image}
 					<label for="image">{$lblImage|ucfirst}</label>
 					{$fileImage} {$fileImageError}
 				</div>

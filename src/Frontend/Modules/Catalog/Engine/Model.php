@@ -226,8 +226,13 @@ class Model implements FrontendTagsInterface
         {
             // set image path
             $img = FrontendModel::getContainer()->get('database')->getRecord('SELECT * FROM catalog_categories WHERE id = ?', array((int)$row['id']));
-            if ($img) $row['image'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/source/' . $img['image'];
-            else $row['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';;
+
+            if ($img){
+                $row['image'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/source/' . $img['image'];
+                $row['thumbnail'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/150x150/' . $img['image'];
+            } else {
+                $row['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';
+            };
 
             // set nested urls
             $paths = self::traverseUp($items, $row);
@@ -476,8 +481,13 @@ class Model implements FrontendTagsInterface
         {
             // set image path
             $img = FrontendModel::getContainer()->get('database')->getRecord('SELECT * FROM catalog_categories WHERE id = ?', array((int)$row['id']));
-            if ($img) $row['image'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/source/' . $img['image'];
-            else $row['image'] = '/' . APPLICATION . '/modules/projects/layout/images/dummy.png';;
+
+            if ($img){
+                $row['image'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/source/' . $img['image'];
+                $row['thumbnail'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/150x150/' . $img['image'];
+            } else {
+                $row['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';
+            };
 
             // create full url
             if ($url != null)
