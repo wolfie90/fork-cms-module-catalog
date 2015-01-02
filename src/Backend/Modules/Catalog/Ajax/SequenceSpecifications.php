@@ -36,7 +36,7 @@ class SequenceSpecifications extends BackendBaseAJAXAction
 			$item['sequence'] = $i + 1;
 
 			// update sequence
-			if(BackendCatalogModel::existsSpecification($id)) BackendCatalogModel::updateSpecification($item);
+			if(BackendCatalogModel::existsSpecification($id)) BackendCatalogModel::updateSpecification($id, $item);
 		}
 		
 		// success output
