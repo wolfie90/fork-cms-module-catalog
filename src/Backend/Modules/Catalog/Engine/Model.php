@@ -914,8 +914,10 @@ class Model
 
 		$items = (array)$db->getPairs('SELECT i.id, i.title
 			 FROM catalog_brands AS i
+			 WHERE i.language = ?
 			 GROUP BY i.id
-			 ORDER BY i.sequence', array(BL::getWorkingLanguage()));
+			 ORDER BY i.sequence',
+             array(BL::getWorkingLanguage()));
 
 		return $items;
 	}
