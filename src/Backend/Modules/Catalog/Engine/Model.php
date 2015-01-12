@@ -86,21 +86,25 @@ class Model
 	const QRY_DATAGRID_BROWSE_IMAGES = 'SELECT i.id, i.product_id, i.filename, i.title, i.sequence
 		 FROM catalog_images AS i
 		 WHERE i.product_id = ?
-		 GROUP BY i.id';
+		 GROUP BY i.id
+         ORDER BY i.sequence ASC';
 
 	const QRY_DATAGRID_BROWSE_FILES = 'SELECT i.id, i.product_id, i.filename, i.title, i.sequence
 		 FROM catalog_files AS i
 		 WHERE i.product_id = ?
-		 GROUP BY i.id';
+		 GROUP BY i.id
+         ORDER BY i.sequence ASC';
 
 	const QRY_DATAGRID_BROWSE_VIDEOS = 'SELECT i.id, i.product_id, i.embedded_url, i.title, i.sequence
 		 FROM catalog_videos AS i
 		 WHERE i.product_id = ?
-		 GROUP BY i.id';
+		 GROUP BY i.id
+         ORDER BY i.sequence ASC';
 
 	const QRY_DATAGRID_BROWSE_BRANDS = 'SELECT b.id, b.title, COUNT(p.id) AS num_products, b.sequence
 		 FROM catalog_brands AS b
 		 LEFT JOIN catalog_products AS p ON p.brand_id = b.id
+		 WHERE b.language = ?
 		 GROUP BY b.id
 		 ORDER BY b.sequence ASC';
 
@@ -130,6 +134,10 @@ class Model
 			$db->delete('meta', 'id = ?', array($item['meta_id']));
 			$db->delete('catalog_categories', 'id = ?', array((int)$id));
 			$db->update('catalog_products', array('category_id' => null), 'category_id = ?', array((int)$id));
+
+			// delete extra and pages_blocks
+			BackendModel::deleteExtraById($item['extra_id']);
+
 		}
 	}
 
@@ -910,8 +918,10 @@ class Model
 
 		$items = (array)$db->getPairs('SELECT i.id, i.title
 			 FROM catalog_brands AS i
+			 WHERE i.language = ?
 			 GROUP BY i.id
-			 ORDER BY i.sequence', array(BL::getWorkingLanguage()));
+			 ORDER BY i.sequence',
+             array(BL::getWorkingLanguage()));
 
 		return $items;
 	}
@@ -1117,7 +1127,7 @@ class Model
 	public static function insert(array $item)
 	{
 		$item['created_on'] = BackendModel::getUTCDate();
-
+	        $item['edited_on'] = BackendModel::getUTCDate();
 		return (int)BackendModel::getContainer()->get('database')->insert('catalog_products', $item);
 	}
 
@@ -1129,8 +1139,37 @@ class Model
 	 */
 	public static function insertCategory(array $item)
 	{
+
+		// insert extra
+		$item['extra_id'] = BackendModel::insertExtra(
+			'widget',
+			'Catalog',
+			'Category'
+		);
+
 		$item['created_on'] = BackendModel::getUTCDate();
-		return BackendModel::getContainer()->get('database')->insert('catalog_categories', $item);
+		$item['edited_on'] = BackendModel::getUTCDate();
+		$item['id'] = BackendModel::getContainer()->get('database')->insert('catalog_categories', $item);
+
+
+		// update data for the extra
+		BackendModel::updateExtra(
+			$item['extra_id'],
+			'data',
+			array(
+				'id' => $item['id'],
+				'extra_label' => BL::getLabel('Category') . ' ' . $item['title'],
+				'language' => $item['language'],
+				'edit_url' => BackendModel::createURLForAction(
+						'EditCategory',
+						'Catalog',
+						$item['language']
+					) . '&id=' . $item['id']
+			)
+		);
+
+
+		return $item['id'];
 	}
 
 	/**
@@ -1208,6 +1247,7 @@ class Model
 	public static function insertBrand(array $item)
 	{
 		$item['created_on'] = BackendModel::getUTCDate();
+	        $item['edited_on'] = BackendModel::getUTCDate();
 		return BackendModel::getContainer()->get('database')->insert('catalog_brands', $item);
 	}
 
@@ -1410,6 +1450,20 @@ class Model
 	{
 		$item['edited_on'] = BackendModel::getUTCDate();
 		BackendModel::getContainer()->get('database')->update('catalog_categories', $item, 'id = ?', array($item['id']));
+
+
+		// update extra
+		BackendModel::updateExtra(
+			$item['extra_id'],
+			'data',
+			array(
+				'id' => $item['id'],
+				'extra_label' => BL::getLabel('Category') . ' ' .$item['title'],
+				'language' => $item['language'],
+				'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id']
+			)
+		);
+
 	}
 
 	/**
