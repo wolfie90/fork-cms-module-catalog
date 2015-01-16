@@ -200,13 +200,11 @@ class Installer extends ModuleInstaller
         $this->insertExtra('Catalog', 'widget', 'RecentProducts', 'RecentProducts', null, 'N', 1006);
         $this->insertExtra('Catalog', 'widget', 'Brands', 'Brands', null, 'N', 1007);
 
-        foreach ($this->getLanguages() as $language)
-        {
+        foreach ($this->getLanguages() as $language) {
             $this->defaultCategoryId = $this->getCategory($language);
 
             // no category exists
-            if ($this->defaultCategoryId == 0)
-            {
+            if ($this->defaultCategoryId == 0) {
                 $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default', 0);
             }
 
@@ -221,8 +219,7 @@ class Installer extends ModuleInstaller
 				 WHERE b.extra_id = ? AND p.language = ?
 				 LIMIT 1',
                 array($catalogId, $language))
-            )
-            {
+            ) {
                 // insert page
                 $this->insertPage(array('title' => 'Catalog',
                         'language' => $language),
@@ -266,8 +263,7 @@ class Installer extends ModuleInstaller
 			 WHERE language = ?
 			 LIMIT 1',
             array($language))
-        )
-        {
+        ) {
             // insert sample product
             $productId = $db->insert('catalog_products', array(
                 'category_id' => $this->defaultCategoryId,
@@ -377,7 +373,9 @@ class Installer extends ModuleInstaller
 
             // copy images into files path
             $fs = new Filesystem();
-            if (!$fs->exists(PATH_WWW . '/src/Frontend/Files/Catalog/')) $fs->mkdir(PATH_WWW . '/src/Frontend/Files/Catalog/');
+            if (!$fs->exists(PATH_WWW . '/src/Frontend/Files/Catalog/')) {
+                $fs->mkdir(PATH_WWW . '/src/Frontend/Files/Catalog/');
+            }
             $fs->mirror(PATH_WWW . '/src/Backend/Modules/Catalog/Installer/Data/Images/', PATH_WWW . '/src/Frontend/Files/Catalog/' . $productId);
         }
     }

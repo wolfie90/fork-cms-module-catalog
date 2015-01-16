@@ -32,48 +32,48 @@ class Specifications extends BackendBaseActionIndex
     protected $dataGrid;
 
     /**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();		
-		$this->loadDataGrid();
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadDataGrid();
 
-		$this->parse();
-		$this->display();
-	}
-	
-	/**
-	 * Load the dataGrid
-	 */
-	private function loadDataGrid()
-	{
-		$this->dataGrid = new BackendDataGridDB(
-			BackendCatalogModel::QRY_DATAGRID_BROWSE_SPECIFICATIONS,
-			BL::getWorkingLanguage()
-		);
-	
-		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('EditSpecification')) {
-			$this->dataGrid->setColumnURL('specification', BackendModel::createURLForAction('edit_specification') . '&amp;id=[id]');
-			
-			$this->dataGrid->addColumn(
-				'edit', null, BL::lbl('Edit'),
-				BackendModel::createURLForAction('edit_specification') . '&amp;id=[id]',
-				BL::lbl('Edit')
-			);
-		}
+        $this->parse();
+        $this->display();
+    }
+    
+    /**
+     * Load the dataGrid
+     */
+    private function loadDataGrid()
+    {
+        $this->dataGrid = new BackendDataGridDB(
+            BackendCatalogModel::QRY_DATAGRID_BROWSE_SPECIFICATIONS,
+            BL::getWorkingLanguage()
+        );
+    
+        // check if this action is allowed
+        if (BackendAuthentication::isAllowedAction('EditSpecification')) {
+            $this->dataGrid->setColumnURL('specification', BackendModel::createURLForAction('edit_specification') . '&amp;id=[id]');
+            
+            $this->dataGrid->addColumn(
+                'edit', null, BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit_specification') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
+        }
 
-		// sequence
-		$this->dataGrid->enableSequenceByDragAndDrop();
-		$this->dataGrid->setAttributes(array('data-action' => 'SequenceSpecifications'));
-	}
-	
-	/**
-	 * Parse & display the page
-	 */
-	protected function parse()
-	{
-		$this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
-	}
+        // sequence
+        $this->dataGrid->enableSequenceByDragAndDrop();
+        $this->dataGrid->setAttributes(array('data-action' => 'SequenceSpecifications'));
+    }
+    
+    /**
+     * Parse & display the page
+     */
+    protected function parse()
+    {
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
+    }
 }

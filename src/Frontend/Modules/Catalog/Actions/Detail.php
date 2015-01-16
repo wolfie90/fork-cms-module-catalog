@@ -117,7 +117,9 @@ class Detail extends FrontendBaseBlock
     private function getData()
     {
         // validate incoming parameters
-        if ($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+        if ($this->URL->getParameter(1) === null) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
 
         // get information
         $this->record = FrontendCatalogModel::get($this->URL->getParameter(1));
@@ -134,10 +136,14 @@ class Detail extends FrontendBaseBlock
         $this->record['brand'] = $this->brand;
 
         // reset allow comments
-        if (!$this->settings['allow_comments']) $this->record['allow_comments'] = false;
+        if (!$this->settings['allow_comments']) {
+            $this->record['allow_comments'] = false;
+        }
 
         // check if record is not empty
-        if (empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+        if (empty($this->record)) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
     }
 
     /**
@@ -187,17 +193,27 @@ class Detail extends FrontendBaseBlock
         $this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
 
         // advanced SEO-attributes
-        if (isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
-        if (isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
+        if (isset($this->record['meta_data']['seo_index'])) {
+            $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
+        }
+        if (isset($this->record['meta_data']['seo_follow'])) {
+            $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
+        }
 
         // assign item information
         $this->tpl->assign('item', $this->record);
 
-        if (!empty($this->relatedProducts)) $this->tpl->assign('related', $this->relatedProducts);
+        if (!empty($this->relatedProducts)) {
+            $this->tpl->assign('related', $this->relatedProducts);
+        }
 
         $this->tpl->assign('images', $this->record['images']);
-        if ($this->videos != null) $this->tpl->assign('videos', $this->videos);
-        if ($this->files != null) $this->tpl->assign('files', $this->files);
+        if ($this->videos != null) {
+            $this->tpl->assign('videos', $this->videos);
+        }
+        if ($this->files != null) {
+            $this->tpl->assign('files', $this->files);
+        }
         $this->tpl->assign('specifications', $this->specifications);
         $this->tpl->assign('tags', $this->tags);
         //$this->tpl->assign('related', $this->relatedProducts);
@@ -205,7 +221,9 @@ class Detail extends FrontendBaseBlock
         // count comments
         $commentCount = count($this->comments);
 
-        if ($commentCount > 1) $this->tpl->assign('commentsMultiple', true);
+        if ($commentCount > 1) {
+            $this->tpl->assign('commentsMultiple', true);
+        }
 
         // assign the comments
         $this->tpl->assign('commentsCount', $commentCount);
@@ -215,10 +233,15 @@ class Detail extends FrontendBaseBlock
         $this->frm->parse($this->tpl);
 
         // some options
-        if ($this->URL->getParameter('comment', 'string') == 'moderation') $this->tpl->assign('commentIsInModeration', true);
-        if ($this->URL->getParameter('comment', 'string') == 'spam') $this->tpl->assign('commentIsSpam', true);
-        if ($this->URL->getParameter('comment', 'string') == 'true') $this->tpl->assign('commentIsAdded', true);
-
+        if ($this->URL->getParameter('comment', 'string') == 'moderation') {
+            $this->tpl->assign('commentIsInModeration', true);
+        }
+        if ($this->URL->getParameter('comment', 'string') == 'spam') {
+            $this->tpl->assign('commentIsSpam', true);
+        }
+        if ($this->URL->getParameter('comment', 'string') == 'true') {
+            $this->tpl->assign('commentIsAdded', true);
+        }
     }
 
     /**
@@ -230,22 +253,24 @@ class Detail extends FrontendBaseBlock
         $commentsAllowed = (isset($this->settings['allow_comments']) && $this->settings['allow_comments']);
 
         // comments aren't allowed so we don't have to validate
-        if (!$commentsAllowed) return false;
+        if (!$commentsAllowed) {
+            return false;
+        }
 
         // is the form submitted
-        if ($this->frm->isSubmitted())
-        {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
             // does the key exists?
-            if (\SpoonSession::exists('catalog_comment_' . $this->record['id']))
-            {
+            if (\SpoonSession::exists('catalog_comment_' . $this->record['id'])) {
                 // calculate difference
                 $diff = time() - (int)\SpoonSession::get('catalog_comment_' . $this->record['id']);
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
-                if ($diff < 10 && $diff != 0) $this->frm->getField('message')->addError(FL::err('CommentTimeout'));
+                if ($diff < 10 && $diff != 0) {
+                    $this->frm->getField('message')->addError(FL::err('CommentTimeout'));
+                }
             }
 
             // validate required fields
@@ -254,14 +279,12 @@ class Detail extends FrontendBaseBlock
             $this->frm->getField('message')->isFilled(FL::err('MessageIsRequired'));
 
             // validate optional fields
-            if ($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://')
-            {
+            if ($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://') {
                 $this->frm->getField('website')->isURL(FL::err('InvalidURL'));
             }
 
             // no errors?
-            if ($this->frm->isCorrect())
-            {
+            if ($this->frm->isCorrect()) {
                 // get module setting
                 $spamFilterEnabled = (isset($this->settings['spamfilter']) && $this->settings['spamfilter']);
                 $moderationEnabled = (isset($this->settings['moderation']) && $this->settings['moderation']);
@@ -270,7 +293,9 @@ class Detail extends FrontendBaseBlock
                 $author = $this->frm->getField('author')->getValue();
                 $email = $this->frm->getField('email')->getValue();
                 $website = $this->frm->getField('website')->getValue();
-                if (trim($website) == '' || $website == 'http://') $website = null;
+                if (trim($website) == '' || $website == 'http://') {
+                    $website = null;
+                }
                 $text = $this->frm->getField('message')->getValue();
 
                 // build array
@@ -289,23 +314,27 @@ class Detail extends FrontendBaseBlock
                 $redirectLink = $permaLink;
 
                 // is moderation enabled
-                if ($moderationEnabled)
-                {
+                if ($moderationEnabled) {
                     // if the commenter isn't moderated before alter the comment status so it will appear in the moderation queue
-                    if (!FrontendCatalogModel::isModerated($author, $email)) $comment['status'] = 'moderation';
+                    if (!FrontendCatalogModel::isModerated($author, $email)) {
+                        $comment['status'] = 'moderation';
+                    }
                 }
 
                 // should we check if the item is spam
-                if ($spamFilterEnabled)
-                {
+                if ($spamFilterEnabled) {
                     // check for spam
                     $result = FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website);
 
                     // if the comment is spam alter the comment status so it will appear in the spam queue
-                    if ($result) $comment['status'] = 'spam';
+                    if ($result) {
+                        $comment['status'] = 'spam';
+                    }
 
                     // if the status is unknown then we should moderate it manually
-                    elseif ($result == 'unknown') $comment['status'] = 'moderation';
+                    elseif ($result == 'unknown') {
+                        $comment['status'] = 'moderation';
+                    }
                 }
 
                 // insert comment
@@ -315,16 +344,26 @@ class Detail extends FrontendBaseBlock
                 FrontendModel::triggerEvent('catalog', 'after_add_comment', array('comment' => $comment));
 
                 // append a parameter to the URL so we can show moderation
-                if (strpos($redirectLink, '?') === false)
-                {
-                    if ($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#' . FL::act('Comment');
-                    if ($comment['status'] == 'spam') $redirectLink .= '?comment=spam#' . FL::act('Comment');
-                    if ($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-' . $comment['id'];
-                } else
-                {
-                    if ($comment['status'] == 'moderation') $redirectLink .= '&comment=moderation#' . FL::act('Comment');
-                    if ($comment['status'] == 'spam') $redirectLink .= '&comment=spam#' . FL::act('Comment');
-                    if ($comment['status'] == 'published') $redirectLink .= '&comment=true#comment-' . $comment['id'];
+                if (strpos($redirectLink, '?') === false) {
+                    if ($comment['status'] == 'moderation') {
+                        $redirectLink .= '?comment=moderation#' . FL::act('Comment');
+                    }
+                    if ($comment['status'] == 'spam') {
+                        $redirectLink .= '?comment=spam#' . FL::act('Comment');
+                    }
+                    if ($comment['status'] == 'published') {
+                        $redirectLink .= '?comment=true#comment-' . $comment['id'];
+                    }
+                } else {
+                    if ($comment['status'] == 'moderation') {
+                        $redirectLink .= '&comment=moderation#' . FL::act('Comment');
+                    }
+                    if ($comment['status'] == 'spam') {
+                        $redirectLink .= '&comment=spam#' . FL::act('Comment');
+                    }
+                    if ($comment['status'] == 'published') {
+                        $redirectLink .= '&comment=true#comment-' . $comment['id'];
+                    }
                 }
 
                 // set title
@@ -338,13 +377,11 @@ class Detail extends FrontendBaseBlock
                 \SpoonSession::set('catalog_comment_' . $this->record['id'], time());
 
                 // store author-data in cookies
-                try
-                {
+                try {
                     Cookie::set('comment_author', $author);
                     Cookie::set('comment_email', $email);
                     Cookie::set('comment_website', $website);
-                } catch (Exception $e)
-                {
+                } catch (Exception $e) {
                     // settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
                 }
 

@@ -37,8 +37,7 @@ class ShoppingCart extends FrontendBaseWidget
     private function getData()
     {
         // check if cookie exists
-        if (!Cookie::exists('order_id'))
-        {
+        if (!Cookie::exists('order_id')) {
             return;
         }
     }
