@@ -46,5 +46,5 @@ NOTE: The .zip file is too large to upload within the cms itself (because of exa
 
 Feel free to contribute any time. This can be done in the following ways:
 
-* Raise an [issue] (https://github.com/timvanwolfswinkel/catalog/issues)
-* Send a Pull Request with bug fixes and/or new features 
+* Raise an [Issue] (https://github.com/timvanwolfswinkel/catalog/issues)
+* Send a [Pull Request] (https://github.com/timvanwolfswinkel/fork-cms-module-catalog/pulls) with bug fixes and/or new features 
