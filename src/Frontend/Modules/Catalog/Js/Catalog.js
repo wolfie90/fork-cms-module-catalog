@@ -32,7 +32,7 @@ jsFrontend.catalog =
 		});
 		
 		// add or update product
-		$addToShoppingCart.live('click', function(){
+		$addToShoppingCart.click(function(){
 			var $this = $(this);
 			
 			var $productId = $this.attr('id');
@@ -66,7 +66,7 @@ jsFrontend.catalog =
 		});
 		
 		// add or update product
-		$editProductAmountInCheckout.live('click', function(){
+		$editProductAmountInCheckout.click(function(){
 			var $this = $(this);
 			var $productId = $this.attr('id');
 			var $productAmount = $("#inputAmountOfProducts-" + $productId).val();
@@ -93,7 +93,7 @@ jsFrontend.catalog =
 		jsFrontend.catalog.updateShoppingCart();
 		
 		// delete product
-		$removeFromShoppingCart.live('click', function(){
+		$removeFromShoppingCart.click(function(){
 			var $this = $(this);
 						
 			var $productId = $this.attr('id');
