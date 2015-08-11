@@ -25,130 +25,133 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class Index extends BackendBaseActionIndex
 {
-	/**
-	 * The category where is filtered on
-	 *
-	 * @var	array
-	 */
-	private $category;
+    /**
+     * The category where is filtered on
+     *
+     * @var	array
+     */
+    private $category;
 
-	/**
-	 * The id of the category where is filtered on
-	 *
-	 * @var	int
-	 */
-	private $categoryId;
+    /**
+     * The id of the category where is filtered on
+     *
+     * @var	int
+     */
+    private $categoryId;
 
-	/**
-	 * DataGrids
-	 *
-	 * @var	SpoonDataGrid
-	 */
-	private $dgProducts;
-	
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		
-		$this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-		if($this->categoryId == 0) $this->categoryId = null;
-		else {
-			// get category
-			$this->category = BackendCatalogModel::getCategory($this->categoryId);
-						
-			// reset
-			if(empty($this->category)) {
-				// reset GET to trick Spoon
-				$_GET['category'] = null;
+    /**
+     * DataGrids
+     *
+     * @var	SpoonDataGrid
+     */
+    private $dgProducts;
+    
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        
+        $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
+        if ($this->categoryId == 0) {
+            $this->categoryId = null;
+        } else {
+            // get category
+            $this->category = BackendCatalogModel::getCategory($this->categoryId);
+                        
+            // reset
+            if (empty($this->category)) {
+                // reset GET to trick Spoon
+                $_GET['category'] = null;
 
-				// reset
-				$this->categoryId = null;
-			}
-		}
-		
-		$this->loadDataGrid();
+                // reset
+                $this->categoryId = null;
+            }
+        }
+        
+        $this->loadDataGrid();
 
-		$this->parse();
-		$this->display();
-	}
+        $this->parse();
+        $this->display();
+    }
 
-	/**
-	 * Load the dataGrid
-	 */
-	private function loadDataGrid()
-	{
-		// filter category
-		if($this->categoryId != null ) {			
-			// create datagrid
-			$this->dgProducts = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY, array($this->categoryId, BL::getWorkingLanguage()));
-			
-			// set the URL
-			$this->dgProducts->setURL('&amp;category=' . $this->categoryId, true);
-		} else {
-			// dont filter category
-			// create datagrid
-			$this->dgProducts = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage()));
-		}
+    /**
+     * Load the dataGrid
+     */
+    private function loadDataGrid()
+    {
+        // filter category
+        if ($this->categoryId != null) {
+            // create datagrid
+            $this->dgProducts = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY, array($this->categoryId, BL::getWorkingLanguage()));
+            
+            // set the URL
+            $this->dgProducts->setURL('&amp;category=' . $this->categoryId, true);
+        } else {
+            // dont filter category
+            // create datagrid
+            $this->dgProducts = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage()));
+        }
 
-		// our JS needs to know an id, so we can highlight it
-		$this->dgProducts->setRowAttributes(array('id' => 'row-[id]'));
-		$this->dgProducts->setColumnsHidden(array('category_id', 'sequence'));
-		
-		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('Edit')) {			
-			// set column URLs
-			$this->dgProducts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId);
+        // our JS needs to know an id, so we can highlight it
+        $this->dgProducts->setRowAttributes(array('id' => 'row-[id]'));
+        $this->dgProducts->setColumnsHidden(array('category_id', 'sequence'));
+        
+        // check if this action is allowed
+        if (BackendAuthentication::isAllowedAction('Edit')) {
+            // set column URLs
+            $this->dgProducts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId);
 
-			// add edit and media column
-			$this->dgProducts->addColumn('media', null, BL::lbl('Media'), BackendModel::createURLForAction('media') . '&amp;id=[id]', BL::lbl('Media'));
-			$this->dgProducts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId, BL::lbl('Edit'));
-		
-			// set media column function
-			$this->dgProducts->setColumnFunction(array(__CLASS__, 'setMediaLink'), array('[id]'), 'media');
-		}
-	}
+            // add edit and media column
+            $this->dgProducts->addColumn('media', null, BL::lbl('Media'), BackendModel::createURLForAction('media') . '&amp;id=[id]', BL::lbl('Media'));
+            $this->dgProducts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId, BL::lbl('Edit'));
+        
+            // set media column function
+            $this->dgProducts->setColumnFunction(array(__CLASS__, 'setMediaLink'), array('[id]'), 'media');
+        }
+    }
 
-	/**
-	 * Parse the page
-	 */
-	protected function parse()
-	{		
-		// parse the datagrid for all products
-		$this->tpl->assign('dgProducts', ($this->dgProducts->getNumResults() != 0) ? $this->dgProducts->getContent() : false);
-	
-		// get categories
-		$categories = BackendCatalogModel::getCategories(true);
-				
-		// multiple categories?
-		if(count($categories) > 1) {
-			// create form
-			$frm = new BackendForm('filter', null, 'get', true);
+    /**
+     * Parse the page
+     */
+    protected function parse()
+    {
+        // parse the datagrid for all products
+        $this->tpl->assign('dgProducts', ($this->dgProducts->getNumResults() != 0) ? $this->dgProducts->getContent() : false);
+    
+        // get categories
+        $categories = BackendCatalogModel::getCategories(true);
+                
+        // multiple categories?
+        if (count($categories) > 1) {
+            // create form
+            $frm = new BackendForm('filter', null, 'get', true);
 
-			// create element
-			$frm->addDropdown('category', $categories, $this->categoryId);
-			$frm->getField('category')->setDefaultElement('');
-			
-			// parse the form
-			$frm->parse($this->tpl);
-		}
+            // create element
+            $frm->addDropdown('category', $categories, $this->categoryId);
+            $frm->getField('category')->setDefaultElement('');
+            
+            // parse the form
+            $frm->parse($this->tpl);
+        }
 
-		// parse category
-		if(!empty($this->category)) $this->tpl->assign('filterCategory', $this->category);	
-	}
-	
-	/**
-	 * Sets a link to the media overview
-	 *
-	 * @param int $productId The specific id of the product
-	 * @return string
-	 */
-	public static function setMediaLink($productId)
-	{
-		return '<a class="button icon iconEdit linkButton" href="' . BackendModel::createURLForAction('media') . '&product_id=' . $productId . '">
+        // parse category
+        if (!empty($this->category)) {
+            $this->tpl->assign('filterCategory', $this->category);
+        }
+    }
+    
+    /**
+     * Sets a link to the media overview
+     *
+     * @param int $productId The specific id of the product
+     * @return string
+     */
+    public static function setMediaLink($productId)
+    {
+        return '<a class="button icon iconEdit linkButton" href="' . BackendModel::createURLForAction('media') . '&product_id=' . $productId . '">
 					<span>' . BL::lbl('ManageMedia') . '</span>
 				</a>';
-	}
+    }
 }

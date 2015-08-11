@@ -20,33 +20,35 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class SequenceMediaImages extends BackendBaseAJAXAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        // call parent, this will probably add some general CSS/JS or other required files
+        parent::execute();
 
-		// get parameters
-		$newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
+        // get parameters
+        $newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
 
-		// list id
-		$ids = (array) explode(',', rtrim($newIdSequence, ','));
+        // list id
+        $ids = (array) explode(',', rtrim($newIdSequence, ','));
 
-		// loop id's and set new sequence
-		foreach($ids as $i => $id) {
-			// build item
-			$item['id'] = (int) $id;
+        // loop id's and set new sequence
+        foreach ($ids as $i => $id) {
+            // build item
+            $item['id'] = (int) $id;
 
-			// change sequence
-			$item['sequence'] = $i + 1;
+            // change sequence
+            $item['sequence'] = $i + 1;
 
-			// update sequence
-			if(BackendCatalogModel::existsImage($item['id'])) BackendCatalogModel::updateImage($item);
-		}
+            // update sequence
+            if (BackendCatalogModel::existsImage($item['id'])) {
+                BackendCatalogModel::updateImage($item);
+            }
+        }
 
-		// success output
-		$this->output(self::OK, null, 'sequence updated');
-	}
+        // success output
+        $this->output(self::OK, null, 'sequence updated');
+    }
 }

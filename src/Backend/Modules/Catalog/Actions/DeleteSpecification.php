@@ -21,32 +21,32 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class DeleteSpecification extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		$this->id = $this->getParameter('id', 'int');
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        $this->id = $this->getParameter('id', 'int');
 
-		// does the item exist
-		if($this->id == null || !BackendCatalogModel::existsSpecification($this->id)) {
-			$this->redirect(
-				BackendModel::createURLForAction('specifications') . '&error=non-existing'
-			);
-		}
+        // does the item exist
+        if ($this->id == null || !BackendCatalogModel::existsSpecification($this->id)) {
+            $this->redirect(
+                BackendModel::createURLForAction('specifications') . '&error=non-existing'
+            );
+        }
 
-		// fetch the specification
-		$this->record = (array) BackendCatalogModel::getSpecification($this->id);
+        // fetch the specification
+        $this->record = (array) BackendCatalogModel::getSpecification($this->id);
 
-		// delete item
-		BackendCatalogModel::deleteSpecification($this->id);
-		
-		// trigger event
-		BackendModel::triggerEvent($this->getModule(), 'after_delete_specification', array('item' => $this->record));
+        // delete item
+        BackendCatalogModel::deleteSpecification($this->id);
+        
+        // trigger event
+        BackendModel::triggerEvent($this->getModule(), 'after_delete_specification', array('item' => $this->record));
 
-		// specification was deleted, so redirect
-		$this->redirect(
-			BackendModel::createURLForAction('specifications') . '&report=deleted-specification&var=' . urlencode($this->record['title'])
-		);
-	}
+        // specification was deleted, so redirect
+        $this->redirect(
+            BackendModel::createURLForAction('specifications') . '&report=deleted-specification&var=' . urlencode($this->record['title'])
+        );
+    }
 }

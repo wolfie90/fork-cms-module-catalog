@@ -25,7 +25,6 @@ class Brands extends FrontendBaseWidget
      */
     public function execute()
     {
-
         parent::execute();
         $this->loadTemplate();
         $this->parse();

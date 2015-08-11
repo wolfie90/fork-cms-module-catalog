@@ -84,12 +84,16 @@ class Category extends FrontendBaseBlock
         $this->parameters = $this->URL->getParameters();
         $url = end($this->parameters);
 
-        if ($url === null) $this->redirect(FrontendNavigation::getURL(404));
+        if ($url === null) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
 
         // get by URL
         $this->record = FrontendCatalogModel::getCategory($url);
 
-        if (empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+        if (empty($this->record)) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
 
         // get subcategories
         $this->subcategories = FrontendCatalogModel::getAllCategories($this->record['id'], $this->record['url']);
@@ -113,10 +117,14 @@ class Category extends FrontendBaseBlock
         $this->pagination['num_pages'] = (int)ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
         // num pages is always equal to at least 1
-        if ($this->pagination['num_pages'] == 0) $this->pagination['num_pages'] = 1;
+        if ($this->pagination['num_pages'] == 0) {
+            $this->pagination['num_pages'] = 1;
+        }
 
         // redirect if the request page doesn't exist
-        if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
+        if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
 
         // populate calculated fields in pagination
         $this->pagination['requested_page'] = $requestedPage;
@@ -140,8 +148,7 @@ class Category extends FrontendBaseBlock
         $baseUrl = FrontendNavigation::getURLForBlock('catalog', 'category');
 
         // get full urls
-        foreach ($paths as $key => $value)
-        {
+        foreach ($paths as $key => $value) {
             $category = FrontendCatalogModel::getCategoryById($key);
             $breadcrumbPaths = FrontendCatalogModel::traverseUp($categories, $category);
             $url = implode('/', $breadcrumbPaths);
@@ -164,8 +171,12 @@ class Category extends FrontendBaseBlock
         $this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
 
         // advanced SEO-attributes
-        if (isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
-        if (isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
+        if (isset($this->record['meta_data']['seo_index'])) {
+            $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
+        }
+        if (isset($this->record['meta_data']['seo_follow'])) {
+            $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
+        }
 
         // assign items
         $this->tpl->assign('products', $this->products);

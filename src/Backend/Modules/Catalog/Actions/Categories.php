@@ -25,116 +25,108 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class Categories extends BackendBaseActionIndex
 {
-	/**
-	 * The category where is filtered on
-	 *
-	 * @var    array
-	 */
-	private $category;
+    /**
+     * The category where is filtered on
+     *
+     * @var    array
+     */
+    private $category;
 
-	/**
-	 * The id of the category where is filtered on
-	 *
-	 * @var    int
-	 */
-	private $categoryId;
+    /**
+     * The id of the category where is filtered on
+     *
+     * @var    int
+     */
+    private $categoryId;
 
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// set category id
-		$this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-		if($this->categoryId == 0) $this->categoryId = null;
-		else
-		{
-			// get category
-			$this->category = BackendCatalogModel::getCategory($this->categoryId);
+        // set category id
+        $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
+        if ($this->categoryId == 0) {
+            $this->categoryId = null;
+        } else {
+            // get category
+            $this->category = BackendCatalogModel::getCategory($this->categoryId);
 
-			// reset
-			if(empty($this->category))
-			{
-				// reset GET to trick Spoon
-				$_GET['category'] = null;
+            // reset
+            if (empty($this->category)) {
+                // reset GET to trick Spoon
+                $_GET['category'] = null;
 
-				// reset
-				$this->categoryId = null;
-			}
-		}
+                // reset
+                $this->categoryId = null;
+            }
+        }
 
-		$this->loadDataGrid();
-		$this->loadFilterForm();
-		$this->parse();
-		$this->display();
-	}
+        $this->loadDataGrid();
+        $this->loadFilterForm();
+        $this->parse();
+        $this->display();
+    }
 
-	/**
-	 * Load the dataGrid
-	 */
-	private function loadDataGrid()
-	{
+    /**
+     * Load the dataGrid
+     */
+    private function loadDataGrid()
+    {
+        // filter on category?
+        if ($this->categoryId != null) {
+            // create datagrid
+            $this->dataGrid = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_CATEGORIES_WITH_CATEGORYID, array($this->categoryId, BL::getWorkingLanguage()));
 
-		// filter on category?
-		if($this->categoryId != null)
-		{
-			// create datagrid
-			$this->dataGrid = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_CATEGORIES_WITH_CATEGORYID, array($this->categoryId, BL::getWorkingLanguage()));
+            // set the URL
+            $this->dataGrid->setURL('&amp;category=' . $this->categoryId, true);
+        } else {
+            $this->dataGrid = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
+        }
 
-			// set the URL
-			$this->dataGrid->setURL('&amp;category=' . $this->categoryId, true);
-		}
-		else
-		{
+        // check if this action is allowed
+        if (BackendAuthentication::isAllowedAction('EditCategory')) {
+            $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
 
-			$this->dataGrid = new BackendDataGridDB(BackendCatalogModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
-		}
+            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
+        }
 
-		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('EditCategory'))
-		{
-			$this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
+        // sequence
+        $this->dataGrid->enableSequenceByDragAndDrop();
+        $this->dataGrid->setAttributes(array('data-action' => 'SequenceCategories'));
+    }
 
-			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
-		}
+    /**
+     * Parse & display the page
+     */
+    protected function parse()
+    {
+        $this->tpl->assign('dataGrid', (string)$this->dataGrid->getContent());
+    }
 
-		// sequence
-		$this->dataGrid->enableSequenceByDragAndDrop();
-		$this->dataGrid->setAttributes(array('data-action' => 'SequenceCategories'));
-	}
+    private function loadFilterForm()
+    {
+        // get categories
+        $categories = BackendCatalogModel::getCategories(true);
 
-	/**
-	 * Parse & display the page
-	 */
-	protected function parse()
-	{
-		$this->tpl->assign('dataGrid', (string)$this->dataGrid->getContent());
-	}
+        // multiple categories?
+        if (count($categories) > 1) {
+            // create form
+            $frm = new BackendForm('filter', null, 'get', false);
 
-	private function loadFilterForm()
-	{
-
-
-		// get categories
-		$categories = BackendCatalogModel::getCategories(true);
-
-		// multiple categories?
-		if(count($categories) > 1)
-		{
-			// create form
-			$frm = new BackendForm('filter', null, 'get', false);
-
-			// create element
-			$frm->addDropdown('category', $categories, $this->categoryId);
+            // create element
+            $frm->addDropdown('category', $categories, $this->categoryId);
 //			$frm->getField('category')->setDefaultElement('');
 
-			// parse the form
-			$frm->parse($this->tpl);
-		}
+            // parse the form
+            $frm->parse($this->tpl);
+        }
 
-		// parse category
-		if(!empty($this->category)) $this->tpl->assign('filterCategory', $this->category);
-	}
+        // parse category
+        if (!empty($this->category)) {
+            $this->tpl->assign('filterCategory', $this->category);
+        }
+    }
 }

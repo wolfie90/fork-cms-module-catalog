@@ -21,15 +21,15 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class DeleteSpam extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		BackendCatalogModel::deleteSpamComments();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        BackendCatalogModel::deleteSpamComments();
 
-		// item was deleted, so redirect
-		$this->redirect(BackendModel::createURLForAction('comments') . '&report=deleted-spam#tabSpam');
-	}
+        // item was deleted, so redirect
+        $this->redirect(BackendModel::createURLForAction('comments') . '&report=deleted-spam#tabSpam');
+    }
 }

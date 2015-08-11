@@ -78,8 +78,7 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
         // get cookie
         $this->orderId = Cookie::get('order_id');
 
-        if ($this->orderId)
-        {
+        if ($this->orderId) {
             // get the products
             $this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
 
@@ -90,8 +89,7 @@ class UpdateCheckoutCart extends FrontendBaseAJAXAction
             $this->totalPrice = '0';
 
             // calculate total amount
-            foreach ($this->products as &$product)
-            {
+            foreach ($this->products as &$product) {
                 // calculate total
                 $subtotal = (int)$product['subtotal_price'];
                 $this->totalPrice = (int)$this->totalPrice;

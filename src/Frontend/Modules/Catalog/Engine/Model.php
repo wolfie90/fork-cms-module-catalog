@@ -32,8 +32,7 @@ class Model implements FrontendTagsInterface
      */
     public static function get($url = null, $id = null)
     {
-        if (!$id)
-        {
+        if (!$id) {
             $item = (array)FrontendModel::getContainer()->get('database')->getRecord('SELECT i.*,
 				 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 				 m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
@@ -43,8 +42,7 @@ class Model implements FrontendTagsInterface
 				 INNER JOIN catalog_categories AS c ON i.category_id = c.id
 				 INNER JOIN meta AS m2 ON c.meta_id = m2.id
 				 WHERE m.url = ? AND i.language = ?', array((string)$url, FRONTEND_LANGUAGE));
-        } else
-        {
+        } else {
             $item = (array)FrontendModel::getContainer()->get('database')->getRecord('SELECT i.*,
 				 m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 				 m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
@@ -57,15 +55,16 @@ class Model implements FrontendTagsInterface
         }
 
         // no results?
-        if (empty($item)) return array();
+        if (empty($item)) {
+            return array();
+        }
 
         // create full url
         $item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Detail') . '/' . $item['url'];
         $item['category_full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $item['category_url'];
 
         // add images
-        if ($images = self::getImages((int)$item['id']))
-        {
+        if ($images = self::getImages((int)$item['id'])) {
             // Use first image as the main image
             $item = array_merge($images[0], $item);
             // Add the other images as array
@@ -106,12 +105,14 @@ class Model implements FrontendTagsInterface
 			 WHERE o.order_id = ?', array((int)$id));
 
         // calculate total amount
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             // get image
             $img = FrontendModel::getContainer()->get('database')->getRecord('SELECT * FROM catalog_images WHERE product_id = ? ORDER BY sequence', array((int)$item['product_id']));
-            if ($img) $item['image'] = FRONTEND_FILES_URL . '/catalog/' . $item['product_id'] . '/64x64/' . $img['filename'];
-            else $item['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';
+            if ($img) {
+                $item['image'] = FRONTEND_FILES_URL . '/catalog/' . $item['product_id'] . '/64x64/' . $img['filename'];
+            } else {
+                $item['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';
+            }
 
             // create full url
             $item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Detail') . '/' . $item['url'];
@@ -141,14 +142,15 @@ class Model implements FrontendTagsInterface
 			 ORDER BY i.created_on ASC, i.id DESC LIMIT ?, ?', array(FRONTEND_LANGUAGE, (int)$offset, (int)$limit));
 
         // no results?
-        if (empty($items)) return array();
+        if (empty($items)) {
+            return array();
+        }
 
         // get detail action url
         $detailUrl = FrontendNavigation::getURLForBlock('Catalog', 'Detail');
 
         // prepare items for search
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             $item['full_url'] = $detailUrl . '/' . $item['url'];
         }
 
@@ -184,17 +186,21 @@ class Model implements FrontendTagsInterface
 			 ORDER BY i.sequence ASC, i.id DESC LIMIT ?, ?', array($categoryId, FRONTEND_LANGUAGE, (int)$offset, (int)$limit));
 
         // no results?
-        if (empty($items)) return array();
+        if (empty($items)) {
+            return array();
+        }
 
         // get detail action url
         $detailUrl = FrontendNavigation::getURLForBlock('Catalog', 'Detail');
 
         // prepare items for search
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             $img = FrontendModel::getContainer()->get('database')->getRecord('SELECT * FROM catalog_images WHERE product_id = ? ORDER BY sequence', array((int)$item['id']));
-            if ($img) $item['image'] = FRONTEND_FILES_URL . '/catalog/' . $item['id'] . '/200x200/' . $img['filename'];
-            else $item['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';
+            if ($img) {
+                $item['image'] = FRONTEND_FILES_URL . '/catalog/' . $item['id'] . '/200x200/' . $img['filename'];
+            } else {
+                $item['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';
+            }
 
             $item['full_url'] = $detailUrl . '/' . $item['url'];
         }
@@ -222,12 +228,11 @@ class Model implements FrontendTagsInterface
         $baseUrl = FrontendNavigation::getURLForBlock('Catalog', 'Category');
 
         // loop items and unserialize
-        foreach ($items as &$row)
-        {
+        foreach ($items as &$row) {
             // set image path
             $img = FrontendModel::getContainer()->get('database')->getRecord('SELECT * FROM catalog_categories WHERE id = ?', array((int)$row['id']));
 
-            if ($img){
+            if ($img) {
                 $row['image'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/source/' . $img['image'];
                 $row['thumbnail'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/150x150/' . $img['image'];
             } else {
@@ -236,22 +241,21 @@ class Model implements FrontendTagsInterface
 
             // set nested urls
             $paths = self::traverseUp($items, $row);
-            if (!empty($paths))
-            {
+            if (!empty($paths)) {
                 $url = implode('/', $paths);
                 $row['full_url'] = $baseUrl . '/' . $url;
             }
 
-            if (isset($row['meta_data'])) $row['meta_data'] = @unserialize($row['meta_data']);
+            if (isset($row['meta_data'])) {
+                $row['meta_data'] = @unserialize($row['meta_data']);
+            }
         }
 
         // convert flat array in tree
-        if ($id != null)
-        {
+        if ($id != null) {
             // parent id is given
             $items = self::buildTree($items, $id);
-        } else
-        {
+        } else {
             $items = self::buildTree($items);
         }
 
@@ -274,22 +278,18 @@ class Model implements FrontendTagsInterface
 		 ORDER BY i.publish_on DESC', array('active', 'N'));
 
         // has items
-        if (!empty($items))
-        {
+        if (!empty($items)) {
             // init var
             $link = FrontendNavigation::getURLForBlock('Catalog', 'Detail');
             $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Catalog/Images', true);
 
             // reset url
-            foreach ($items as &$row)
-            {
+            foreach ($items as &$row) {
                 $row['full_url'] = $link . '/' . $row['url'];
 
                 // image?
-                if (isset($row['image']))
-                {
-                    foreach ($folders as $folder)
-                    {
+                if (isset($row['image'])) {
+                    foreach ($folders as $folder) {
                         $row['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
                     }
                 }
@@ -327,29 +327,24 @@ class Model implements FrontendTagsInterface
         $children = array();
 
         // loop parents
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             $children[(!empty($item['parent_id']) ? $item['parent_id'] : 0)][] = &$item;
             unset($item);
         }
 
         // loop children
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             // if children
-            if (isset($children[$item['id']]))
-            {
+            if (isset($children[$item['id']])) {
                 // insert
                 $item['children'] = $children[$item['id']];
             }
         }
 
         // check if children exists
-        if (isset($children[$id]))
-        {
+        if (isset($children[$id])) {
             return $children[$id];
-        } else
-        {
+        } else {
             // if no children return empty array
             return array();
         }
@@ -365,13 +360,11 @@ class Model implements FrontendTagsInterface
         $html = '<ul>';
 
         // loop tree
-        foreach ($tree as &$item)
-        {
+        foreach ($tree as &$item) {
             // set parent
             $html .= '<li><a href="' . $item['full_url'] . '">' . $item['title'] . '</a>';
 
-            if (!empty($item['children']))
-            {
+            if (!empty($item['children'])) {
                 $html .= '<ul>' . self::getTreeChildren($item['children']) . '</ul>';
             }
 
@@ -380,11 +373,9 @@ class Model implements FrontendTagsInterface
 
         $html .= "</ul>";
 
-        if ($html == '<ul></ul>')
-        {
+        if ($html == '<ul></ul>') {
             return array();
-        } else
-        {
+        } else {
             return $html;
         }
     }
@@ -399,14 +390,11 @@ class Model implements FrontendTagsInterface
         $html = '';
 
         // loop children tree
-        foreach ($treeChildren as &$item)
-        {
-
+        foreach ($treeChildren as &$item) {
             // set children
             $html .= '<li><a href="' . $item['full_url'] . '">' . $item['title'] . '</a>';
 
-            if (!empty($item['children']))
-            {
+            if (!empty($item['children'])) {
                 $html .= '<ul>' . self::getTreeChildren($item['children']) . '</ul>';
             }
 
@@ -426,14 +414,11 @@ class Model implements FrontendTagsInterface
     public static function traverseUp($items, $item)
     {
         $paths = array();
-        while (!empty($item))
-        {
+        while (!empty($item)) {
             $paths[$item['id']] = $item['url'];
-            if (!empty($items[$item['parent_id']]) && !isset($paths[$item['parent_id']]))
-            {
+            if (!empty($items[$item['parent_id']]) && !isset($paths[$item['parent_id']])) {
                 $item = $items[$item['parent_id']];
-            } else
-            {
+            } else {
                 $paths[$item['id']] = $item['url'];
                 $item = null;
             }
@@ -453,10 +438,8 @@ class Model implements FrontendTagsInterface
      */
     public static function getAllCategories($id = 0, $url = null)
     {
-
         // category id given
-        if ($id != 0)
-        {
+        if ($id != 0) {
             $items = (array)FrontendModel::getContainer()->get('database')->getRecords('SELECT c.id, c.title, m.url, COUNT(p.id) AS total, m.data AS meta_data
 				 FROM catalog_categories AS c
 				 INNER JOIN meta AS m ON c.meta_id = m.id
@@ -464,8 +447,7 @@ class Model implements FrontendTagsInterface
 				 WHERE c.parent_id = ? AND c.language = ?
 				 GROUP BY c.id
 				 ORDER BY c.sequence', array($id, FRONTEND_LANGUAGE), 'id');
-        } else
-        {
+        } else {
             // no category given
             $items = (array)FrontendModel::getContainer()->get('database')->getRecords('SELECT c.id, c.title, m.url, COUNT(p.id) AS total, m.data AS meta_data, parent_id
 				 FROM catalog_categories AS c
@@ -477,12 +459,11 @@ class Model implements FrontendTagsInterface
         }
 
         // loop items and unserialize
-        foreach ($items as &$row)
-        {
+        foreach ($items as &$row) {
             // set image path
             $img = FrontendModel::getContainer()->get('database')->getRecord('SELECT * FROM catalog_categories WHERE id = ?', array((int)$row['id']));
 
-            if ($img){
+            if ($img) {
                 $row['image'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/source/' . $img['image'];
                 $row['thumbnail'] = FRONTEND_FILES_URL . '/catalog/categories/' . $row['id'] . '/150x150/' . $img['image'];
             } else {
@@ -490,15 +471,15 @@ class Model implements FrontendTagsInterface
             };
 
             // create full url
-            if ($url != null)
-            {
+            if ($url != null) {
                 $row['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $url . '/' . $row['url'];
-            } else
-            {
+            } else {
                 $row['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $row['url'];
             }
 
-            if (isset($row['meta_data'])) $row['meta_data'] = @unserialize($row['meta_data']);
+            if (isset($row['meta_data'])) {
+                $row['meta_data'] = @unserialize($row['meta_data']);
+            }
         }
 
         return $items;
@@ -521,7 +502,9 @@ class Model implements FrontendTagsInterface
 			 WHERE m.url = ? AND i.language = ?', array((string)$URL, FRONTEND_LANGUAGE));
 
         // no results?
-        if (empty($item)) return array();
+        if (empty($item)) {
+            return array();
+        }
 
         // create full url
         $item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $item['url'];
@@ -546,7 +529,9 @@ class Model implements FrontendTagsInterface
 			 WHERE i.id = ? AND i.language = ?', array((int)$id, FRONTEND_LANGUAGE));
 
         // no results?
-        if (empty($item)) return array();
+        if (empty($item)) {
+            return array();
+        }
 
         // create full url
         $item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Category') . '/' . $item['url'];
@@ -583,8 +568,7 @@ class Model implements FrontendTagsInterface
 			 ORDER BY c.id ASC', array((int)$id, 'published', FRONTEND_LANGUAGE));
 
         // loop comments and create gravatar id
-        foreach ($comments as &$row)
-        {
+        foreach ($comments as &$row) {
             $row['gravatar_id'] = md5($row['email']);
         }
 
@@ -609,8 +593,7 @@ class Model implements FrontendTagsInterface
         $link = FrontendNavigation::getURLForBlock('Catalog', 'Category');
 
         // build the item urls
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             $basePath = FRONTEND_FILES_URL . '/Catalog/' . $item['product_id'];
             $item['image'] = $basePath . '/source/' . $item['filename'];
             $item['image_icon'] = $basePath . '/64x64/' . $item['filename'];
@@ -637,34 +620,30 @@ class Model implements FrontendTagsInterface
 		 ORDER BY i.sequence', array((int)$id));
 
         // build the image thumbnail for youtube/vimeo
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             // YOUTUBE
-            if (strpos($item['embedded_url'], 'youtube') !== false)
-            {
+            if (strpos($item['embedded_url'], 'youtube') !== false) {
                 $ytQuery = parse_url($item['embedded_url'], PHP_URL_QUERY);
                 parse_str($ytQuery, $ytData);
 
-                if (isset($ytData['v']))
-                {
+                if (isset($ytData['v'])) {
                     $item['video_id'] = $ytData['v'];
                     $item['url'] = "http://www.youtube.com/v/" . $ytData['v'] . "?fs=1&amp;autoplay=1";
                     $item['image'] = "http://i3.ytimg.com/vi/" . $ytData['v'] . "/default.jpg";
                 }
                 // VIMEO
-            } else if (strpos($item['embedded_url'], 'vimeo') !== false)
-            {
+            } elseif (strpos($item['embedded_url'], 'vimeo') !== false) {
                 $vmLink = str_replace('http://vimeo.com/', 'http://vimeo.com/api/v2/video/', $item['embedded_url']) . '.php';
                 $vmData = unserialize(file_get_contents($vmLink));
 
-                if (isset($vmData[0]['id']))
-                {
-                    $item['video_id'] = $vmData[0]['id'];;
+                if (isset($vmData[0]['id'])) {
+                    $item['video_id'] = $vmData[0]['id'];
+                    ;
                     $item['url'] = "http://player.vimeo.com/video/" . $vmData[0]['id'] . "?autoplay=1";
-                    $item['image'] = $vmData[0]['thumbnail_small'];;
+                    $item['image'] = $vmData[0]['thumbnail_small'];
+                    ;
                 }
-            } else
-            {
+            } else {
                 // NO YOUTUBE OR VIMEO URL GIVEN..
             }
         }
@@ -686,8 +665,7 @@ class Model implements FrontendTagsInterface
 			 ORDER BY i.sequence', array((int)$id));
 
         // build the item url
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             $item['url'] = FRONTEND_FILES_URL . '/catalog/' . $item['product_id'] . '/source/' . $item['filename'];
         }
 
@@ -722,8 +700,7 @@ class Model implements FrontendTagsInterface
 
         $relatedProducts = array();
 
-        foreach ($relatedIds as $relatedProduct)
-        {
+        foreach ($relatedIds as $relatedProduct) {
             $relatedProducts[] = self::get(null, $relatedProduct['related_product_id']);
         }
 
@@ -774,8 +751,7 @@ class Model implements FrontendTagsInterface
         $comment['id'] = (int)$db->insert('catalog_comments', $comment);
 
         // recalculate if published
-        if ($comment['status'] == 'published')
-        {
+        if ($comment['status'] == 'published') {
             // num comments
             $numComments = (int)FrontendModel::getContainer()->get('database')->getVar('SELECT COUNT(i.id) AS comment_count
 				 FROM catalog_comments AS i
@@ -851,16 +827,25 @@ class Model implements FrontendTagsInterface
     public static function notifyAdmin(array $comment)
     {
         // don't notify admin in case of spam
-        if ($comment['status'] == 'spam') return;
+        if ($comment['status'] == 'spam') {
+            return;
+        }
 
         // build data for push notification
-        if ($comment['status'] == 'moderation') $key = 'CATALOG_COMMENT_MOD';
-        else $key = 'CATALOG_COMMENT';
+        if ($comment['status'] == 'moderation') {
+            $key = 'CATALOG_COMMENT_MOD';
+        } else {
+            $key = 'CATALOG_COMMENT';
+        }
 
         $author = $comment['author'];
-        if (mb_strlen($author) > 20) $author = mb_substr($author, 0, 19) . '�';
+        if (mb_strlen($author) > 20) {
+            $author = mb_substr($author, 0, 19) . '�';
+        }
         $text = $comment['text'];
-        if (mb_strlen($text) > 50) $text = mb_substr($text, 0, 49) . '�';
+        if (mb_strlen($text) > 50) {
+            $text = mb_substr($text, 0, 49) . '�';
+        }
 
         $alert = array('loc-key' => $key, 'loc-args' => array($author, $text));
 
@@ -879,25 +864,21 @@ class Model implements FrontendTagsInterface
         $backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('Comments', 'Catalog') . '#tabModeration';
 
         // notify on all comments
-        if ($notifyByMailOnComment)
-        {
+        if ($notifyByMailOnComment) {
             // init var
             $variables = null;
 
             // comment to moderate
-            if ($comment['status'] == 'moderation')
-            {
+            if ($comment['status'] == 'moderation') {
                 $variables['message'] = vsprintf(FL::msg('CatalogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['product_title'], $backendURL));
-            } elseif ($comment['status'] == 'published')
-            {
+            } elseif ($comment['status'] == 'published') {
                 // comment was published
                 $variables['message'] = vsprintf(FL::msg('CatalogEmailNotificationsNewComment'), array($comment['author'], $URL, $comment['product_title']));
             }
 
             // send the mail
             FrontendMailer::addEmail(FL::msg('NotificationSubject'), FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl', $variables);
-        } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation')
-        {
+        } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation') {
             // only notify on new comments to moderate and if the comment is one to moderate
             // set variables
             $variables['message'] = vsprintf(FL::msg('CatalogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['product_title'], $backendURL));
@@ -1005,8 +986,7 @@ class Model implements FrontendTagsInterface
         $detailUrl = FrontendNavigation::getURLForBlock('Catalog', 'Detail');
 
         // prepare items for search
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             $item['full_url'] = $detailUrl . '/' . $item['url'];
         }
 
@@ -1053,7 +1033,9 @@ class Model implements FrontendTagsInterface
 			 WHERE m.url = ?', array((string)$URL));
 
         // no results?
-        if (empty($item)) return array();
+        if (empty($item)) {
+            return array();
+        }
 
         // create full url
         $item['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Brand') . '/' . $item['url'];
@@ -1078,17 +1060,21 @@ class Model implements FrontendTagsInterface
 			 ORDER BY i.sequence ASC, i.id DESC LIMIT ?, ?', array($brandId, FRONTEND_LANGUAGE, (int)$offset, (int)$limit));
 
         // no results?
-        if (empty($items)) return array();
+        if (empty($items)) {
+            return array();
+        }
 
         // get detail action url
         $detailUrl = FrontendNavigation::getURLForBlock('Catalog', 'Detail');
 
         // prepare items for search
-        foreach ($items as &$item)
-        {
+        foreach ($items as &$item) {
             $img = FrontendModel::getContainer()->get('database')->getRecord('SELECT * FROM catalog_images WHERE product_id = ? ORDER BY sequence', array((int)$item['id']));
-            if ($img) $item['image'] = FRONTEND_FILES_URL . '/catalog/' . $item['id'] . '/200x200/' . $img['filename'];
-            else $item['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';
+            if ($img) {
+                $item['image'] = FRONTEND_FILES_URL . '/catalog/' . $item['id'] . '/200x200/' . $img['filename'];
+            } else {
+                $item['image'] = '/' . APPLICATION . '/modules/catalog/layout/images/dummy.png';
+            }
 
             $item['full_url'] = $detailUrl . '/' . $item['url'];
         }
@@ -1106,7 +1092,6 @@ class Model implements FrontendTagsInterface
      */
     public static function getAllBrands()
     {
-
         $items = (array)FrontendModel::getContainer()->get('database')->getRecords('SELECT i.id, i.title,i.image, m.url, COUNT(p.id) AS total, m.data AS meta_data
 				 FROM catalog_brands AS i
 				 INNER JOIN meta AS m ON i.meta_id = m.id
@@ -1115,12 +1100,13 @@ class Model implements FrontendTagsInterface
 				 ORDER BY i.sequence', null, 'id');
 
 
-        foreach ($items as &$row)
-        {
+        foreach ($items as &$row) {
             // create full url
             $row['full_url'] = FrontendNavigation::getURLForBlock('Catalog', 'Brand') . '/' . $row['url'];
 
-            if (isset($row['meta_data'])) $row['meta_data'] = @unserialize($row['meta_data']);
+            if (isset($row['meta_data'])) {
+                $row['meta_data'] = @unserialize($row['meta_data']);
+            }
         }
 
         return $items;
