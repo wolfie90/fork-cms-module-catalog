@@ -19,26 +19,28 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class SequenceBrands extends BackendBaseAJAXAction
 {
-	public function execute()
-	{
-		parent::execute();
+    public function execute()
+    {
+        parent::execute();
 
-		// get parameters
-		$newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
+        // get parameters
+        $newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
 
-		// list id
-		$ids = (array) explode(',', rtrim($newIdSequence, ','));
+        // list id
+        $ids = (array) explode(',', rtrim($newIdSequence, ','));
 
-		// loop id's and set new sequence
-		foreach($ids as $i => $id) {
-			$item['id'] = $id;
-			$item['sequence'] = $i + 1;
+        // loop id's and set new sequence
+        foreach ($ids as $i => $id) {
+            $item['id'] = $id;
+            $item['sequence'] = $i + 1;
 
-			// update sequence
-			if(BackendCatalogModel::existsBrand($id)) BackendCatalogModel::updateBrand($item);
-		}
+            // update sequence
+            if (BackendCatalogModel::existsBrand($id)) {
+                BackendCatalogModel::updateBrand($item);
+            }
+        }
 
-		// success output
-		$this->output(self::OK, null, 'sequence updated');
-	}
+        // success output
+        $this->output(self::OK, null, 'sequence updated');
+    }
 }

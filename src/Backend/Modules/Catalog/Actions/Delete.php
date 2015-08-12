@@ -22,38 +22,39 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  */
 class Delete extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{		
-		$this->id = $this->getParameter('id', 'int');
-		
-		// does the item exist
-		if($this->id !== null && BackendCatalogModel::exists($this->id)) {	
-			parent::execute();
-			
-			$this->record = BackendCatalogModel::get($this->id);
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        $this->id = $this->getParameter('id', 'int');
+        
+        // does the item exist
+        if ($this->id !== null && BackendCatalogModel::exists($this->id)) {
+            parent::execute();
+            
+            $this->record = BackendCatalogModel::get($this->id);
 
-			// clean the tags
-			BackendTagsModel::saveTags($item['id'], '', $this->URL->getModule());
+            // clean the tags
+            BackendTagsModel::saveTags($item['id'], '', $this->URL->getModule());
 
-			// clean the related products
-			BackendCatalogModel::saveRelatedProducts($item['id'], array());
+            // clean the related products
+            BackendCatalogModel::saveRelatedProducts($item['id'], array());
 
-			// delete record
-			BackendCatalogModel::delete($this->id);
+            // delete record
+            BackendCatalogModel::delete($this->id);
 
-			// delete search indexes
-			BackendSearchModel::removeIndex($this->getModule(), $this->id);
-			
-			BackendModel::triggerEvent(
-				$this->getModule(), 'after_delete',
-				array('id' => $this->id)
-			);
+            // delete search indexes
+            BackendSearchModel::removeIndex($this->getModule(), $this->id);
+            
+            BackendModel::triggerEvent(
+                $this->getModule(), 'after_delete',
+                array('id' => $this->id)
+            );
 
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
-		}
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
-	}
+            $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        }
+    }
 }

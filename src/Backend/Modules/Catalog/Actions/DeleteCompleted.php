@@ -21,15 +21,15 @@ use Backend\Modules\Catalog\Engine\Model as BackendCatalogModel;
  */
 class DeleteCompleted extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		BackendCatalogModel::deleteCompletedOrders();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        BackendCatalogModel::deleteCompletedOrders();
 
-		// item was deleted, so redirect
-		$this->redirect(BackendModel::createURLForAction('orders') . '&report=deleted-completed#tabCompleted');
-	}
+        // item was deleted, so redirect
+        $this->redirect(BackendModel::createURLForAction('orders') . '&report=deleted-completed#tabCompleted');
+    }
 }

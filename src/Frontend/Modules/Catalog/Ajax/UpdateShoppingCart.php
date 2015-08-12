@@ -95,8 +95,7 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
         $this->cookiesEnabled = Cookie::hasAllowedCookies();
 
         // check if cookies exists
-        if ($this->orderId || $this->cookiesEnabled == true)
-        {
+        if ($this->orderId || $this->cookiesEnabled == true) {
             // get the products
             $this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
 
@@ -107,8 +106,7 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
             $this->totalPrice = '0';
 
             // calculate total amount
-            foreach ($this->products as &$product)
-            {
+            foreach ($this->products as &$product) {
                 // calculate total
                 $subtotal = (int)$product['subtotal_price'];
                 $this->totalPrice = (int)$this->totalPrice;
@@ -130,10 +128,18 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
         // url for checkout
         $this->overviewUrl = FrontendNavigation::getURLForBlock('Catalog', 'Checkout');
 
-        if (!empty($this->products)) $this->tpl->assign('productsInShoppingCart', $this->products);
-        if (!empty($this->totalPrice)) $this->tpl->assign('totalPrice', $this->totalPrice);
-        if (!empty($this->amountOfProducts)) $this->tpl->assign('amountOfProducts', $this->amountOfProducts);
-        if ($this->cookiesEnabled == true) $this->tpl->assign('cookiesEnabled', $this->cookiesEnabled);
+        if (!empty($this->products)) {
+            $this->tpl->assign('productsInShoppingCart', $this->products);
+        }
+        if (!empty($this->totalPrice)) {
+            $this->tpl->assign('totalPrice', $this->totalPrice);
+        }
+        if (!empty($this->amountOfProducts)) {
+            $this->tpl->assign('amountOfProducts', $this->amountOfProducts);
+        }
+        if ($this->cookiesEnabled == true) {
+            $this->tpl->assign('cookiesEnabled', $this->cookiesEnabled);
+        }
 
         $this->tpl->assign('overviewUrl', $this->overviewUrl);
     }
@@ -155,5 +161,4 @@ class UpdateShoppingCart extends FrontendBaseAJAXAction
         // output
         $this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH . '/Modules/Catalog/Layout/Widgets/ShoppingCartAjax.tpl', false, true));
     }
-
 }

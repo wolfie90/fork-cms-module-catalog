@@ -105,8 +105,7 @@ class PersonalData extends FrontendBaseBlock
     private function validateForm()
     {
         // is the form submitted
-        if ($this->frm->isSubmitted())
-        {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -120,8 +119,7 @@ class PersonalData extends FrontendBaseBlock
             $this->frm->getField('hometown')->isFilled(FL::err('MessageIsRequired'));
 
             // correct?
-            if ($this->frm->isCorrect())
-            {
+            if ($this->frm->isCorrect()) {
                 // build array
                 $order['email'] = $this->frm->getField('email')->getValue();
                 $order['fname'] = $this->frm->getField('fname')->getValue();

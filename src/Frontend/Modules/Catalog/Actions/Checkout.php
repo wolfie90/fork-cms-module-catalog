@@ -76,8 +76,7 @@ class Checkout extends FrontendBaseBlock
         // get cookie
         $this->orderId = Cookie::get('order_id');
 
-        if ($this->orderId)
-        {
+        if ($this->orderId) {
             // get the products
             $this->products = FrontendCatalogModel::getProductsByOrder($this->orderId);
 
@@ -85,8 +84,7 @@ class Checkout extends FrontendBaseBlock
             $this->totalPrice = '0';
 
             // calculate total amount
-            foreach ($this->products as &$product)
-            {
+            foreach ($this->products as &$product) {
                 // calculate total
                 $subtotal = (int)$product['subtotal_price'];
                 $this->totalPrice = (int)$this->totalPrice;
@@ -110,8 +108,12 @@ class Checkout extends FrontendBaseBlock
         $this->personalDataUrl = FrontendNavigation::getURLForBlock('Catalog', 'PersonalData');
         $this->catalogUrl = FrontendNavigation::getURLForBlock('Catalog');
 
-        if (!empty($this->products)) $this->tpl->assign('productsInShoppingCart', $this->products);
-        if (!empty($this->totalPrice)) $this->tpl->assign('totalPrice', $this->totalPrice);
+        if (!empty($this->products)) {
+            $this->tpl->assign('productsInShoppingCart', $this->products);
+        }
+        if (!empty($this->totalPrice)) {
+            $this->tpl->assign('totalPrice', $this->totalPrice);
+        }
 
         $this->tpl->assign('personalDataUrl', $this->personalDataUrl);
         $this->tpl->assign('catalogUrl', $this->catalogUrl);
