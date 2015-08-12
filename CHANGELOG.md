@@ -11,6 +11,7 @@ Bugfixes:
 * Now showing category/brands images in backend edit action
 * Fix for allow comments on products
 * Added module settings dimensions(width) on edit image action
+* Updates for newest Fork CMS version
 
 2.1.1 (2014-10-01)
 --
