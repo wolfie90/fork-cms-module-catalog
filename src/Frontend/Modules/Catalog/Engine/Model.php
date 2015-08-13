@@ -584,6 +584,8 @@ class Model implements FrontendTagsInterface
      */
     public static function getImages($id)
     {
+        $settings = FrontendModel::get('fork.settings')->getForModule('Catalog');
+
         $items = (array)FrontendModel::getContainer()->get('database')->getRecords('SELECT i.*
 			 FROM catalog_images AS i
 			 WHERE i.product_id = ?
@@ -598,9 +600,9 @@ class Model implements FrontendTagsInterface
             $item['image'] = $basePath . '/source/' . $item['filename'];
             $item['image_icon'] = $basePath . '/64x64/' . $item['filename'];
             $item['image_thumb'] = $basePath . '/128x128/' . $item['filename'];
-            $item['image_dim1'] = $basePath . '/' . FrontendModel::getModuleSetting('Catalog', 'width1') . 'x' . FrontendModel::getModuleSetting('Catalog', 'height1') . '/' . $item['filename'];
-            $item['image_dim2'] = $basePath . '/' . FrontendModel::getModuleSetting('Catalog', 'width2') . 'x' . FrontendModel::getModuleSetting('Catalog', 'height2') . '/' . $item['filename'];
-            $item['image_dim3'] = $basePath . '/' . FrontendModel::getModuleSetting('Catalog', 'width3') . 'x' . FrontendModel::getModuleSetting('Catalog', 'height3') . '/' . $item['filename'];
+            $item['image_dim1'] = $basePath . '/' . $settings['width1'] . 'x' . $settings['height1'] . '/' . $item['filename'];
+            $item['image_dim2'] = $basePath . '/' . $settings['width2'] . 'x' . $settings['height2'] . '/' . $item['filename'];
+            $item['image_dim3'] = $basePath . '/' . $settings['width3'] . 'x' . $settings['height3'] . '/' . $item['filename'];
         }
 
         return $items;
@@ -856,8 +858,12 @@ class Model implements FrontendTagsInterface
         FrontendModel::pushToAppleApp($alert, null, 'default', $data);
 
         // get settings
-        $notifyByMailOnComment = FrontendModel::getModuleSetting('catalog', 'notify_by_email_on_new_comment', false);
-        $notifyByMailOnCommentToModerate = FrontendModel::getModuleSetting('catalog', 'notify_by_email_on_new_comment_to_moderate', false);
+        $notifyByMailOnComment =  FrontendModel::get('fork.settings')->get('Catalog', 'notify_by_email_on_new_comment', false);
+        $notifyByMailOnCommentToModerate = FrontendModel::get('fork.settings')->get(
+            'Catalog',
+            'notify_by_email_on_new_comment_to_moderate',
+            false
+        );
 
         // create URLs
         $URL = SITE_URL . FrontendNavigation::getURLForBlock('Catalog', 'Detail') . '/' . $comment['product_url'] . '#comment-' . $comment['id'];
@@ -868,23 +874,59 @@ class Model implements FrontendTagsInterface
             // init var
             $variables = null;
 
-            // comment to moderate
             if ($comment['status'] == 'moderation') {
-                $variables['message'] = vsprintf(FL::msg('CatalogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['product_title'], $backendURL));
+                // comment to moderate
+                $variables['message'] = vsprintf(
+                    FL::msg('CatalogEmailNotificationsNewCommentToModerate'),
+                    array($comment['author'], $URL, $comment['product_title'], $backendURL)
+                );
             } elseif ($comment['status'] == 'published') {
                 // comment was published
-                $variables['message'] = vsprintf(FL::msg('CatalogEmailNotificationsNewComment'), array($comment['author'], $URL, $comment['product_title']));
+                $variables['message'] = vsprintf(
+                    FL::msg('CatalogEmailNotificationsNewComment'),
+                    array($comment['author'], $URL, $comment['product_title'])
+                );
             }
 
-            // send the mail
-            FrontendMailer::addEmail(FL::msg('NotificationSubject'), FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl', $variables);
-        } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation') {
-            // only notify on new comments to moderate and if the comment is one to moderate
-            // set variables
-            $variables['message'] = vsprintf(FL::msg('CatalogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['product_title'], $backendURL));
+            $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
+            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
+            $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
+            $message = \Common\Mailer\Message::newInstance(FL::msg('NotificationSubject'))
+                ->setFrom(array($from['email'] => $from['name']))
+                ->setTo(array($to['email'] => $to['name']))
+                ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                ->parseHtml(
+                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
+                    $variables,
+                    true
+                )
+            ;
 
             // send the mail
-            FrontendMailer::addEmail(FL::msg('NotificationSubject'), FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl', $variables);
+            FrontendModel::get('mailer')->send($message);
+        } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation') {
+            // only notify on new comments to moderate and if the comment is one to moderate
+            $variables['message'] = vsprintf(
+                FL::msg('CatalogEmailNotificationsNewCommentToModerate'),
+                array($comment['author'], $URL, $comment['product_title'], $backendURL)
+            );
+
+            $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
+            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
+            $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
+            $message = \Common\Mailer\Message::newInstance(FL::msg('NotificationSubject'))
+                ->setFrom(array($from['email'] => $from['name']))
+                ->setTo(array($to['email'] => $to['name']))
+                ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                ->parseHtml(
+                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
+                    $variables,
+                    true
+                )
+            ;
+
+            // send the mail
+            FrontendModel::get('mailer')->send($message);
         }
     }
 
