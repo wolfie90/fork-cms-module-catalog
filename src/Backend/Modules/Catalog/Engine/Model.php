@@ -133,6 +133,9 @@ class Model
             $db->delete('meta', 'id = ?', array($item['meta_id']));
             $db->delete('catalog_categories', 'id = ?', array((int)$id));
             $db->update('catalog_products', array('category_id' => null), 'category_id = ?', array((int)$id));
+
+            // delete extra and pages_blocks
+            BackendModel::deleteExtraById($item['extra_id']);
         }
     }
 
@@ -1109,9 +1112,34 @@ class Model
      */
     public static function insertCategory(array $item)
     {
+        // insert extra
+        $item['extra_id'] = BackendModel::insertExtra(
+            'widget',
+            'Catalog',
+            'Category'
+        );
+
         $item['created_on'] = BackendModel::getUTCDate();
         $item['edited_on'] = BackendModel::getUTCDate();
-        return BackendModel::getContainer()->get('database')->insert('catalog_categories', $item);
+        $item['id'] = BackendModel::getContainer()->get('database')->insert('catalog_categories', $item);
+
+        // update data for the extra
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
+            array(
+                'id' => $item['id'],
+                'extra_label' => BL::getLabel('Category') . ' ' . $item['title'],
+                'language' => $item['language'],
+                'edit_url' => BackendModel::createURLForAction(
+                        'EditCategory',
+                        'Catalog',
+                        $item['language']
+                    ) . '&id=' . $item['id']
+            )
+        );
+
+        return $item['id'];
     }
 
     /**
@@ -1378,6 +1406,18 @@ class Model
     {
         $item['edited_on'] = BackendModel::getUTCDate();
         BackendModel::getContainer()->get('database')->update('catalog_categories', $item, 'id = ?', array($item['id']));
+
+        // update extra
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
+            array(
+                'id' => $item['id'],
+                'extra_label' => BL::getLabel('Category') . ' ' .$item['title'],
+                'language' => $item['language'],
+                'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id']
+            )
+        );
     }
 
     /**

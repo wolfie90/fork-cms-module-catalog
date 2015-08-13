@@ -87,7 +87,7 @@ class AddCategory extends BackendBaseActionAdd
                 }
                 
                 // the image path
-                $imagePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/catalog_categories';
+                $imagePath = FRONTEND_FILES_PATH . '/' . $this->getModule() . '/categories';
                 
                 // create folders if needed
                 $fs = new Filesystem();
