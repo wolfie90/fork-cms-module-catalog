@@ -224,25 +224,22 @@ class Edit extends BackendBaseActionEdit
                 BackendCatalogModel::update($item);
                 $item['id'] = $this->id;
                 $specificationArray = array();
-                
+
                 // loop trough specifications and insert values
                 foreach ($this->specifications as $specification) {
                     $field = 'specification' . $specification['id'];
-                    
-                    // check if there is an value
-                    if ($fields[$field]->getValue() != null) {
-                        $specificationArray['value'] = $fields[$field]->getValue();
-                        $specificationArray['product_id'] = $item['id'];
-                        $specificationArray['specification_id'] = $specification['id'];
-                        
-                        // when specification value already exists. update value
-                        if (BackendCatalogModel::existsSpecificationValue($item['id'], $specification['id']) != false) {
-                            // update specification with product id and value
-                            BackendCatalogModel::updateSpecificationValue($specification['id'], $item['id'], $specificationArray);
-                        } else {
-                            // when specification value doesnt exists, insert new value
-                            BackendCatalogModel::insertSpecificationValue($specificationArray);
-                        }
+
+                    $specificationArray['value'] = $fields[$field]->getValue();
+                    $specificationArray['product_id'] = $item['id'];
+                    $specificationArray['specification_id'] = $specification['id'];
+
+                    // when specification value already exists. update value
+                    if (BackendCatalogModel::existsSpecificationValue($item['id'], $specification['id']) != false) {
+                        // update specification with product id and value
+                        BackendCatalogModel::updateSpecificationValue($specification['id'], $item['id'], $specificationArray);
+                    } else {
+                        // when specification value doesnt exists, insert new value
+                        BackendCatalogModel::insertSpecificationValue($specificationArray);
                     }
                 }
                 
