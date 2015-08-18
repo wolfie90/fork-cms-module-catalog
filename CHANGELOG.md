@@ -1,6 +1,10 @@
 2.2.1 (2015-xx-xx)
 --
 
+Improvements
+
+* Upgraded to newest Fork CMS version (3.9.4)
+
 Bugfixes:
 
 * Clean up tags & related products when deleting a product
@@ -11,7 +15,7 @@ Bugfixes:
 * Now showing category/brands images in backend edit action
 * Fix for allow comments on products
 * Added module settings dimensions(width) on edit image action
-* Updates for newest Fork CMS version
+* Fix for extra id in category widget
 
 2.1.1 (2014-10-01)
 --
