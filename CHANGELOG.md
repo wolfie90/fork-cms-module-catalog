@@ -1,9 +1,15 @@
 2.2.1 (2015-xx-xx)
 --
 
+<<<<<<< HEAD
 Improvements
 
 * Upgraded to newest Fork CMS version (3.9.4)
+=======
+Improvements:
+
+* Updated to newest Fork CMS version (3.9.4)
+>>>>>>> origin/master
 
 Bugfixes:
 
@@ -15,7 +21,10 @@ Bugfixes:
 * Now showing category/brands images in backend edit action
 * Fix for allow comments on products
 * Added module settings dimensions(width) on edit image action
+<<<<<<< HEAD
 * Fix for extra id in category widget
+=======
+>>>>>>> origin/master
 
 2.1.1 (2014-10-01)
 --
