@@ -126,7 +126,7 @@ class Detail extends FrontendBaseBlock
         $this->comments = FrontendCatalogModel::getComments($this->record['id']);
         $this->specifications = FrontendCatalogModel::getProductSpecifications($this->record['id']);
         $this->tags = FrontendTagsModel::getForItem('Catalog', $this->record['id']);
-        $this->settings = $this->get('fork.settings')->get('Catalog');
+        $this->settings = $this->get('fork.settings')->getForModule('Catalog');
         $this->files = FrontendCatalogModel::getFiles($this->record['id']);
         $this->videos = FrontendCatalogModel::getVideos($this->record['id']);
         $this->relatedProducts = FrontendCatalogModel::getRelatedProducts($this->record['id']);
