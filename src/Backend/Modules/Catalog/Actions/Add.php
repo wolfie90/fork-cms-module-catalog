@@ -137,8 +137,8 @@ class Add extends BackendBaseActionAdd
             $this->tpl->assign('label', $specification['title']);
             $this->tpl->assign('field', $specificationHTML);
             $this->tpl->assign('spec', true);
-            
-            $specificationsHTML[]['specification'] = $this->tpl->getContent(BACKEND_MODULE_PATH . '/Layout/Templates/Specification.tpl');
+
+            $specificationsHTML[]['specification'] = $this->tpl->getContent(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Templates/Specification.tpl');
         }
         
         $this->tpl->assign('specifications', $specificationsHTML);
