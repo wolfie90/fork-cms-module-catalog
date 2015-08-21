@@ -106,6 +106,7 @@ class EditImage extends BackendBaseActionEdit
             $image = $this->frm->getField('image');
 
             $this->frm->getField('title')->isFilled(BL::err('NameIsRequired'));
+
             if ($this->image['filename'] === null) {
                 $image->isFilled(BL::err('FieldIsRequired'));
             }
@@ -117,14 +118,31 @@ class EditImage extends BackendBaseActionEdit
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['filename'] = $this->image['filename'];
 
+                // settings for image formats
+                $settings = BackendModel::get('fork.settings')->getForModule('Catalog');
+
                 // set files path for this record
                 $path = FRONTEND_FILES_PATH . '/' . $this->module . '/' . $this->product['id'];
+
+                // set formats
                 $formats = array();
                 $formats[] = array('size' => '64x64', 'force_aspect_ratio' => false);
                 $formats[] = array('size' => '128x128', 'force_aspect_ratio' => false);
-                $formats[] = array('size' => BackendModel::getModuleSetting($this->URL->getModule(), 'width1') . 'x' . BackendModel::getModuleSetting($this->URL->getModule(), 'height1'), 'allow_enlargement' => BackendModel::getModuleSetting($this->URL->getModule(), 'allow_enlargment1'), 'force_aspect_ratio' => BackendModel::getModuleSetting($this->URL->getModule(), 'force_aspect_ratio1'));
-                $formats[] = array('size' => BackendModel::getModuleSetting($this->URL->getModule(), 'width2') . 'x' . BackendModel::getModuleSetting($this->URL->getModule(), 'height2'), 'allow_enlargement' => BackendModel::getModuleSetting($this->URL->getModule(), 'allow_enlargment2'), 'force_aspect_ratio' => BackendModel::getModuleSetting($this->URL->getModule(), 'force_aspect_ratio2'));
-                $formats[] = array('size' => BackendModel::getModuleSetting($this->URL->getModule(), 'width3') . 'x' . BackendModel::getModuleSetting($this->URL->getModule(), 'height3'), 'allow_enlargement' => BackendModel::getModuleSetting($this->URL->getModule(), 'allow_enlargment3'), 'force_aspect_ratio' => BackendModel::getModuleSetting($this->URL->getModule(), 'force_aspect_ratio3'));
+                $formats[] = array(
+                    'size' => $settings['width1'] . 'x' . $settings['height1'],
+                    'allow_enlargement' => $settings['allow_enlargement1'],
+                    'force_aspect_ratio' => $settings['force_aspect_ratio1']
+                );
+                $formats[] = array(
+                    'size' => $settings['width2'] . 'x' . $settings['height2'],
+                    'allow_enlargement' => $settings['allow_enlargement2'],
+                    'force_aspect_ratio' => $settings['force_aspect_ratio2']
+                );
+                $formats[] = array(
+                    'size' => $settings['width3'] . 'x' . $settings['height3'],
+                    'allow_enlargement' => $settings['allow_enlargement3'],
+                    'force_aspect_ratio' => $settings['force_aspect_ratio3']
+                );
 
                 if ($image->isFilled()) {
                     // overwrite the filename
