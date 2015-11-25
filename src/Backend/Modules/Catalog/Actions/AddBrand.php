@@ -106,7 +106,7 @@ class AddBrand extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add_brand', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('brands') . '&report=added-brand&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createURLForAction('Brands') . '&report=added-brand&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
             }
         }
     }
